@@ -1,0 +1,13 @@
+# Composer dependencies
+vendor/
+composer.lock
+
+# Operating System garbage
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.idea/
+.vscode/
+*.suo
+*.user

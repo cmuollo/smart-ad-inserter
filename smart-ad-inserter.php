@@ -1,10 +1,10 @@
 <?php
 /**
- * The plugin bootstrap file
+ * File di bootstrap principale del plugin
  *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and starts the plugin.
+ * Questo file viene letto da WordPress per generare le informazioni del plugin
+ * all'interno dell'area amministrativa. Include tutte le dipendenze utilizzate,
+ * registra le funzioni di attivazione e disattivazione e avvia l'esecuzione del plugin.
  *
  * @link              https://github.com/cmuollo/smart-ad-inserter
  * @since             1.0.0
@@ -13,7 +13,7 @@
  * @wordpress-plugin
  * Plugin Name:       Smart Ad Inserter
  * Plugin URI:        https://github.com/cmuollo/smart-ad-inserter
- * Description:       WordPress Server-Side plugin for Cumulative Layout Shift (CLS) optimization.
+ * Description:       Plugin WordPress server-side per l'ottimizzazione del Cumulative Layout Shift (CLS).
  * Version:           1.0.0
  * Author:            Carmine Muollo
  * License:           GPL-2.0+
@@ -22,27 +22,27 @@
  * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
+// Se questo file viene chiamato direttamente, interrompi l'esecuzione.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 /**
- * Include the Composer autoloader if it exists.
+ * Inclusione dell'Autoloader generato da Composer per caricare le classi automaticamente.
  */
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 }
 
 /**
- * The code that runs during plugin activation.
+ * Logica eseguita durante l'attivazione del plugin.
  */
 function activate_smart_ad_inserter() {
 	SmartAdInserter\SmartAdInserterActivator::activate();
 }
 
 /**
- * The code that runs during plugin deactivation.
+ * Logica eseguita durante la disattivazione del plugin.
  */
 function deactivate_smart_ad_inserter() {
 	SmartAdInserter\SmartAdInserterDeactivator::deactivate();
@@ -52,7 +52,7 @@ register_activation_hook( __FILE__, 'activate_smart_ad_inserter' );
 register_deactivation_hook( __FILE__, 'deactivate_smart_ad_inserter' );
 
 /**
- * Begins execution of the plugin.
+ * Avvia il ciclo di vita e l'esecuzione del plugin.
  */
 function run_smart_ad_inserter() {
 	if ( class_exists( 'SmartAdInserter\\SmartAdInserter' ) ) {

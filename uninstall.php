@@ -1,19 +1,19 @@
 <?php
 /**
- * Fired when the plugin is uninstalled.
+ * Eseguito al momento della disinstallazione del plugin.
  *
  * @link              https://github.com/cmuollo/smart-ad-inserter
  * @since             1.0.0
  * @package           Smart_Ad_Inserter
  */
 
-// If uninstall not called from WordPress, exit.
+// Se la disinstallazione non è invocata da WordPress, esci.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// Delete settings option
+// Elimina l'opzione contenente le impostazioni salvate nel database
 delete_option( 'smart_ad_inserter_settings' );
 
-// Delete any transients
+// Elimina i dati temporanei della cache delle posizioni strutturali (Transients)
 delete_transient( 'sai_structural_ads_locations' );

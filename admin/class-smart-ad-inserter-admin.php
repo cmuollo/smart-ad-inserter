@@ -2,10 +2,10 @@
 namespace SmartAdInserter\Admin;
 
 /**
- * The admin-specific functionality of the plugin.
+ * Gestisce tutte le funzionalità specifiche del pannello di amministrazione (backend).
  *
- * Defines the plugin name, version, and hooks for backend styles, scripts,
- * menus, and REST API.
+ * Registra i fogli di stile, gli script JavaScript, crea la pagina delle impostazioni
+ * ed inizializza gli endpoint della REST API personalizzata.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -15,27 +15,27 @@ namespace SmartAdInserter\Admin;
 class SmartAdInserterAdmin {
 
 	/**
-	 * The ID of this plugin.
+	 * L'ID di questo plugin.
 	 *
 	 * @since    1.0.0
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string    $plugin_name    L'ID del plugin.
 	 */
 	protected $plugin_name;
 
 	/**
-	 * The version of this plugin.
+	 * La versione di questo plugin.
 	 *
 	 * @since    1.0.0
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string    $version    La versione del plugin.
 	 */
 	protected $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Inizializza le proprietà della classe.
 	 *
 	 * @since    1.0.0
-	 * @param    string    $plugin_name       The name of this plugin.
-	 * @param    string    $version           The version of this plugin.
+	 * @param    string    $plugin_name       Il nome univoco del plugin.
+	 * @param    string    $version           La versione del plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
@@ -43,7 +43,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Register the stylesheets for the admin area.
+	 * Registra ed accoda i fogli di stile per l'area amministrativa.
 	 *
 	 * @since    1.0.0
 	 */
@@ -58,7 +58,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Register the JavaScript for the admin area.
+	 * Registra ed accoda i file Javascript per l'area amministrativa.
 	 *
 	 * @since    1.0.0
 	 */
@@ -73,13 +73,13 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Add a menu item to the settings menu in the admin dashboard.
+	 * Aggiunge la voce di menu all'interno delle impostazioni di WordPress.
 	 *
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
 		add_options_page(
-			'Smart Ad Inserter Settings',
+			'Smart Ad Inserter Impostazioni',
 			'Smart Ad Inserter',
 			'manage_options',
 			$this->plugin_name,
@@ -88,7 +88,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Render the settings page.
+	 * Esegue il rendering della pagina di configurazione.
 	 *
 	 * @since    1.0.0
 	 */
@@ -97,7 +97,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Register REST API routes for saving and retrieving settings.
+	 * Registra le rotte della REST API personalizzata per il recupero ed il salvataggio asincrono.
 	 *
 	 * @since    1.0.0
 	 */
@@ -121,7 +121,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Retrieve settings callback.
+	 * Callback REST per recuperare le impostazioni attuali.
 	 *
 	 * @since    1.0.0
 	 */
@@ -131,14 +131,14 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Save settings callback.
+	 * Callback REST per salvare le nuove impostazioni configurate.
 	 *
 	 * @since    1.0.0
 	 */
 	public function save_settings( \WP_REST_Request $request ) {
 		$settings = $request->get_json_params();
 
-		// Clean structural cache transients
+		// Pulisce i transient della cache delle posizioni ad ogni modifica
 		delete_transient( 'sai_structural_ads_locations' );
 
 		update_option( 'smart_ad_inserter_settings', $settings );
@@ -146,7 +146,7 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Check capability of the user to manage settings.
+	 * Verifica che l'utente corrente abbia le autorizzazioni di amministratore.
 	 *
 	 * @since    1.0.0
 	 */

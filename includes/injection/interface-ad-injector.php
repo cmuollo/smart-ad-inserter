@@ -2,9 +2,10 @@
 namespace SmartAdInserter\Injection;
 
 /**
- * Interface AdInjectorInterface
+ * Interfaccia comune per tutte le classi concrete di iniezione.
  *
- * Defines the contract that all concrete ad injection classes must implement.
+ * Rappresenta l'interfaccia nel pattern Strategy. Specifica il contratto comune
+ * che tutti i moduli di iniezione (legati al contenuto o strutturali) devono soddisfare.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -14,11 +15,11 @@ namespace SmartAdInserter\Injection;
 interface AdInjectorInterface {
 
 	/**
-	 * Perform the ad injection logic on the provided content or HTML.
+	 * Esegue l'analisi e la manipolazione dell'HTML per inserire i banner pubblicitari.
 	 *
 	 * @since    1.0.0
-	 * @param    string    $subject    The content or page HTML to manipulate.
-	 * @return   string                The modified subject.
+	 * @param    string    $subject    L'HTML originario da analizzare e modificare.
+	 * @return   string                L'HTML risultante contenente i tag dei banner.
 	 */
 	public function inject( string $subject ): string;
 }

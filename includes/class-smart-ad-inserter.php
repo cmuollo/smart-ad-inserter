@@ -2,10 +2,10 @@
 namespace SmartAdInserter;
 
 /**
- * The core plugin class.
+ * La classe core principale del plugin.
  *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
+ * Questa classe viene utilizzata per impostare l'internazionalizzazione, gli hook di backend
+ * per l'amministrazione, e gli hook di frontend per il caricamento delle posizioni pubblicitarie.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -15,34 +15,34 @@ namespace SmartAdInserter;
 class SmartAdInserter {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks.
+	 * Gestore (Loader) per la registrazione centralizzata di azioni e filtri.
 	 *
 	 * @since    1.0.0
-	 * @var      SmartAdInserterLoader    $loader    Maintains and registers all hooks.
+	 * @var      SmartAdInserterLoader    $loader    Memorizza e registra gli hook.
 	 */
 	protected $loader;
 
 	/**
-	 * The unique identifier of this plugin.
+	 * L'identificatore univoco del plugin.
 	 *
 	 * @since    1.0.0
-	 * @var      string    $plugin_name    The string identifier.
+	 * @var      string    $plugin_name    L'ID univoco del plugin.
 	 */
 	protected $plugin_name;
 
 	/**
-	 * The current version of the plugin.
+	 * La versione corrente del plugin.
 	 *
 	 * @since    1.0.0
-	 * @var      string    $version    The current version.
+	 * @var      string    $version    La versione del plugin.
 	 */
 	protected $version;
 
 	/**
-	 * Define the core functionality of the plugin.
+	 * Costruttore e inizializzazione del plugin.
 	 *
-	 * Set the plugin name and version, load dependencies, define the locale,
-	 * and register hooks for the admin and public modules.
+	 * Imposta il nome, la versione, carica le dipendenze, definisce la lingua locale,
+	 * e registra i vari hook per i moduli amministrativi e pubblici.
 	 *
 	 * @since    1.0.0
 	 */
@@ -57,7 +57,7 @@ class SmartAdInserter {
 	}
 
 	/**
-	 * Load the required dependencies for this plugin.
+	 * Carica le classi di base e le dipendenze interne del plugin.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -67,7 +67,7 @@ class SmartAdInserter {
 	}
 
 	/**
-	 * Define the locale for internationalization.
+	 * Imposta la lingua locale ed i file di internazionalizzazione.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -78,7 +78,7 @@ class SmartAdInserter {
 	}
 
 	/**
-	 * Register all of the hooks related to the admin area functionality.
+	 * Registra tutti gli hook associati all'area di amministrazione (backend).
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -93,7 +93,7 @@ class SmartAdInserter {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality.
+	 * Registra tutti gli hook associati all'area pubblica del sito (frontend).
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -105,13 +105,13 @@ class SmartAdInserter {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_head', $plugin_public, 'insert_global_head_scripts' );
 
-		// Strategy pattern triggers
+		// Aggancio delle strategie di iniezione differita
 		$this->loader->add_filter( 'the_content', $plugin_public, 'inject_content_ads' );
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'setup_structural_ads_buffer' );
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
+	 * Esegue il loader per agganciare le funzioni registrate a WordPress.
 	 *
 	 * @since    1.0.0
 	 */
@@ -120,24 +120,24 @@ class SmartAdInserter {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it.
+	 * Restituisce il nome univoco identificatore del plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
+	 * @return    string    Il nome del plugin.
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
 
 	/**
-	 * Retrieve the version number of the plugin.
+	 * Restituisce la versione del plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
+	 * @return    string    La versione del plugin.
 	 */
 	public function get_version() {
 		return $this->version;
 	}
 }
-// Alias for compatibility
+// Alias di compatibilità globale per l'inizializzazione
 class_alias( 'SmartAdInserter\\SmartAdInserter', 'SmartAdInserter' );

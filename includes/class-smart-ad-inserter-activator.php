@@ -2,7 +2,9 @@
 namespace SmartAdInserter;
 
 /**
- * Fired during plugin activation.
+ * Gestisce la logica di attivazione del plugin.
+ *
+ * Inizializza i valori di default delle opzioni se non già presenti nel database.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -12,7 +14,7 @@ namespace SmartAdInserter;
 class SmartAdInserterActivator {
 
 	/**
-	 * Initialize default settings in wp_options if they do not exist.
+	 * Inizializza le impostazioni di default nella tabella wp_options.
 	 *
 	 * @since    1.0.0
 	 */

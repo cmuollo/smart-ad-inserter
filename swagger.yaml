@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Smart Ad Inserter API
+  description: |
+    Specifica delle API REST per il plugin WordPress "Smart Ad Inserter".
+    Questo set di endpoint consente il recupero e il salvataggio asincrono delle configurazioni del plugin, 
+    suddivise per impostazioni globali e posizioni pubblicitarie reattive anti-CLS.
+  version: 1.0.0
+servers:
+  - url: /wp-json/smart-ad-inserter/v1
+    description: Server WordPress locale (WP REST API)
+paths:
+  /settings:
+    get:
+      summary: Recupera le impostazioni del plugin
+      description: Restituisce l'intero payload JSON con lo script globale dell'head e le impostazioni di pre-allocazione spaziale per ciascuna posizione ad.
+      responses:
+        '200':
+          description: Operazione completata con successo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginSettings'
+        '401':
+          description: Non autorizzato (richiede permessi manage_options)
+    post:
+      summary: Salva le impostazioni del plugin
+      description: Aggiorna la configurazione memorizzata nel database ed invalida la cache delle posizioni strutturali (Transients).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PluginSettings'
+      responses:
+        '200':
+          description: Impostazioni salvate con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Non autorizzato
+        '400':
+          description: Richiesta non valida
+components:
+  schemas:
+    PluginSettings:
+      type: object
+      properties:
+        global_scripts:
+          type: string
+          description: Script JS globale (GPT, Prebid) inserito in <head>
+          example: "<script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>"
+        positions:
+          type: object
+          properties:
+            atf:
+              $ref: '#/components/schemas/AdPosition'
+            btf:
+              $ref: '#/components/schemas/AdPosition'
+            masthead:
+              $ref: '#/components/schemas/AdPosition'
+            sidebar_top:
+              $ref: '#/components/schemas/AdPosition'
+    AdPosition:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Stato di attivazione della posizione pubblicitaria
+          example: true
+        code:
+          type: string
+          description: Codice HTML/JS del banner o tag pubblicitario
+          example: "<div id='div-gpt-ad-1234567-0'></div>"
+        min_height_desktop:
+          type: integer
+          description: Altezza minima desktop (in pixel) per prevenire il CLS
+          example: 250
+        min_height_mobile:
+          type: integer
+          description: Altezza minima mobile/tablet (in pixel) per prevenire il CLS
+          example: 250
+        custom_selector:
+          type: string
+          description: Selettore XPath/CSS personalizzato per posizioni strutturali (opzionale)
+          example: "//aside[@id='primary']"

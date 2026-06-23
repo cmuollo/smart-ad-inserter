@@ -4,9 +4,11 @@ namespace SmartAdInserter\Injection;
 use DOMDocument;
 
 /**
- * Class ContentInjector
+ * Gestisce l'iniezione degli annunci posizionati all'interno dell'articolo (Content-based).
  *
- * Concrete strategy to handle in-content ad placement (Above The Fold, Below The Fold).
+ * Questa classe implementa la strategia concreta per il posizionamento dei banner
+ * legati al flusso del testo dell'articolo (es. ATF - Above The Fold, BTF - Below The Fold).
+ * Utilizza DOMDocument applicato al solo frammento dell'articolo per identificare il tag <p>.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -16,7 +18,7 @@ use DOMDocument;
 class ContentInjector implements AdInjectorInterface {
 
 	/**
-	 * Position configuration settings.
+	 * Mappa delle opzioni di configurazione delle posizioni.
 	 *
 	 * @since    1.0.0
 	 * @var      array
@@ -24,7 +26,7 @@ class ContentInjector implements AdInjectorInterface {
 	protected $settings;
 
 	/**
-	 * Initialize with configuration settings.
+	 * Inizializza la classe con le opzioni configurate.
 	 *
 	 * @since    1.0.0
 	 */
@@ -33,17 +35,17 @@ class ContentInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Inject ads based on the content strategy.
+	 * Esegue l'iniezione in base alle strategie configurate sul contenuto.
 	 *
 	 * @since    1.0.0
 	 */
 	public function inject( string $content ): string {
-		// ATF (Above The Fold) injection
+		// Iniezione ATF (Subito prima del primo paragrafo dell'articolo)
 		if ( ! empty( $this->settings['atf']['active'] ) && ! empty( $this->settings['atf']['code'] ) ) {
 			$content = $this->inject_atf( $content );
 		}
 
-		// BTF (Below The Fold) injection
+		// Iniezione BTF (Al fondo del testo dell'articolo)
 		if ( ! empty( $this->settings['btf']['active'] ) && ! empty( $this->settings['btf']['code'] ) ) {
 			$content = $this->inject_btf( $content );
 		}
@@ -52,7 +54,10 @@ class ContentInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Inject ATF ad wrapper right before the first paragraph.
+	 * Inietta il wrapper pubblicitario ATF prima del primo paragrafo del testo.
+	 *
+	 * Utilizza DOMDocument sul solo frammento di testo per garantire leggerezza e velocità
+	 * di parsing lato server, azzerando il CLS grazie alle altezze minime pre-allocate.
 	 *
 	 * @since    1.0.0
 	 */
@@ -61,6 +66,7 @@ class ContentInjector implements AdInjectorInterface {
 		$min_h_desktop = $this->settings['atf']['min_height_desktop'] ?? 250;
 		$min_h_mobile  = $this->settings['atf']['min_height_mobile'] ?? 250;
 
+		// Wrapper protettivo anti-CLS con altezze minime inline
 		$wrapper = sprintf(
 			'<div class="sai-ad-wrapper sai-atf" style="min-height:%dpx; --min-h-mobile:%dpx;">%s</div>',
 			$min_h_desktop,
@@ -70,7 +76,7 @@ class ContentInjector implements AdInjectorInterface {
 
 		libxml_use_internal_errors( true );
 		$dom = new DOMDocument();
-		// Load as UTF-8 wrapped inside a div to avoid parsing errors
+		// Forza il caricamento in UTF-8 per evitare la corruzione degli accenti italiani
 		$dom->loadHTML( '<?xml encoding="UTF-8"><div>' . $content . '</div>', LIBXML_HTML_NODEFDTD );
 		libxml_clear_errors();
 
@@ -82,7 +88,7 @@ class ContentInjector implements AdInjectorInterface {
 			$first_p->parentNode->insertBefore( $fragment, $first_p );
 		}
 
-		// Extract content back from outer wrapper div
+		// Estrae l'HTML interno privo del wrapper div inserito per il parsing
 		$root_div    = $dom->getElementsByTagName( 'div' )->item( 0 );
 		$new_content = '';
 		if ( $root_div ) {
@@ -95,7 +101,7 @@ class ContentInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Concat BTF ad wrapper at the end of the content.
+	 * Inietta il wrapper pubblicitario BTF concatenandolo al fondo del testo.
 	 *
 	 * @since    1.0.0
 	 */

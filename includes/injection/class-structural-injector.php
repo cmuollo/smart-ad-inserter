@@ -5,9 +5,12 @@ use DOMDocument;
 use DOMXPath;
 
 /**
- * Class StructuralInjector
+ * Gestisce l'iniezione degli annunci posizionati all'esterno dell'articolo (Strutturali).
  *
- * Concrete strategy to handle structural layout ad placement (Masthead, Sidebar).
+ * Questa classe implementa la strategia concreta per il posizionamento dei banner
+ * legati all'interfaccia ed al layout del tema (es. Masthead, Sidebar Top).
+ * Utilizza DOMDocument + DOMXPath per manipolare l'HTML completo della pagina web
+ * catturato tramite buffering dell'output (Output Buffering).
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -17,7 +20,7 @@ use DOMXPath;
 class StructuralInjector implements AdInjectorInterface {
 
 	/**
-	 * Position configuration settings.
+	 * Mappa delle opzioni di configurazione delle posizioni.
 	 *
 	 * @since    1.0.0
 	 * @var      array
@@ -25,7 +28,7 @@ class StructuralInjector implements AdInjectorInterface {
 	protected $settings;
 
 	/**
-	 * Initialize with configuration settings.
+	 * Inizializza la classe con le opzioni configurate.
 	 *
 	 * @since    1.0.0
 	 */
@@ -34,25 +37,26 @@ class StructuralInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Inject ads based on the structural strategy.
+	 * Esegue l'iniezione in base alle strategie configurate sul layout della pagina.
 	 *
 	 * @since    1.0.0
 	 */
 	public function inject( string $html ): string {
 		libxml_use_internal_errors( true );
 		$dom = new DOMDocument();
+		// Forza il caricamento in UTF-8 per evitare la corruzione dei caratteri accentati del tema
 		$dom->loadHTML( '<?xml encoding="UTF-8">' . $html, LIBXML_HTML_NODEFDTD );
 		libxml_clear_errors();
 
 		$xpath    = new DOMXPath( $dom );
 		$modified = false;
 
-		// Masthead injection
+		// Iniezione Masthead (Sotto l'header globale del sito)
 		if ( ! empty( $this->settings['masthead']['active'] ) && ! empty( $this->settings['masthead']['code'] ) ) {
 			$modified = $this->inject_masthead( $dom, $xpath ) || $modified;
 		}
 
-		// Sidebar Top injection
+		// Iniezione Sidebar Top (All'inizio della barra laterale)
 		if ( ! empty( $this->settings['sidebar_top']['active'] ) && ! empty( $this->settings['sidebar_top']['code'] ) ) {
 			$modified = $this->inject_sidebar_top( $dom, $xpath ) || $modified;
 		}
@@ -61,7 +65,9 @@ class StructuralInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Inject Masthead ad right after <header> or .site-header.
+	 * Inietta il contenitore pubblicitario Masthead sotto l'intestazione della pagina.
+	 *
+	 * Individua l'elemento <header> o classi CSS standard come .site-header.
 	 *
 	 * @since    1.0.0
 	 */
@@ -83,13 +89,15 @@ class StructuralInjector implements AdInjectorInterface {
 		$fragment->appendXML( $ad_code );
 		$wrapper->appendChild( $fragment );
 
-		// Insert ad container right after header
+		// Inserisce il banner subito dopo il nodo header (come elemento fratello successivo)
 		$header->parentNode->insertBefore( $wrapper, $header->nextSibling );
 		return true;
 	}
 
 	/**
-	 * Inject Sidebar Top ad prepend to <aside> or .sidebar.
+	 * Inietta il contenitore pubblicitario Sidebar Top in cima alla barra laterale.
+	 *
+	 * Utilizza selettori XPath personalizzati configurabili dall'admin per temi particolari.
 	 *
 	 * @since    1.0.0
 	 */
@@ -112,7 +120,7 @@ class StructuralInjector implements AdInjectorInterface {
 		$fragment->appendXML( $ad_code );
 		$wrapper->appendChild( $fragment );
 
-		// Prepend to sidebar (before first child)
+		// Previene slittamenti inserendo come primo elemento figlio della barra laterale
 		if ( $sidebar->firstChild ) {
 			$sidebar->insertBefore( $wrapper, $sidebar->firstChild );
 		} else {

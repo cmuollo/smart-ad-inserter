@@ -2,10 +2,10 @@
 namespace SmartAdInserter;
 
 /**
- * Register all actions and filters for the plugin.
+ * Registra tutte le azioni (Actions) ed i filtri (Filters) di WordPress.
  *
- * Maintain a list of all hooks that are registered throughout
- * the plugin, and register them with the WordPress API when run() is called.
+ * Mantiene un elenco centralizzato di tutti gli hook registrati all'interno del plugin
+ * e li esegue tramite le API native del core di WordPress al caricamento del plugin.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -15,23 +15,23 @@ namespace SmartAdInserter;
 class SmartAdInserterLoader {
 
 	/**
-	 * The array of actions registered with WordPress.
+	 * La collezione di azioni registrate con WordPress.
 	 *
 	 * @since    1.0.0
-	 * @var      array    $actions    The actions registered with WordPress to run when the hook is called.
+	 * @var      array    $actions    Le azioni da registrare con WordPress.
 	 */
 	protected $actions;
 
 	/**
-	 * The array of filters registered with WordPress.
+	 * La collezione di filtri registrati con WordPress.
 	 *
 	 * @since    1.0.0
-	 * @var      array    $filters    The filters registered with WordPress to run when the hook is called.
+	 * @var      array    $filters    I filtri da registrare con WordPress.
 	 */
 	protected $filters;
 
 	/**
-	 * Initialize the collections used to maintain the actions and filters.
+	 * Inizializza le collezioni utilizzate per salvare i filtri e le azioni.
 	 *
 	 * @since    1.0.0
 	 */
@@ -41,45 +41,45 @@ class SmartAdInserterLoader {
 	}
 
 	/**
-	 * Add a new action to the collection to be registered with WordPress.
+	 * Aggiunge una nuova azione alla collezione da registrare.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress action that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the callback is defined.
-	 * @param    string               $callback         The name of the function definition on the $component that is the callback.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
+	 * @param    string               $hook             Il nome dell'azione di WordPress.
+	 * @param    object               $component        Riferimento all'istanza dell'oggetto in cui è definito il callback.
+	 * @param    string               $callback         Il nome della funzione di callback.
+	 * @param    int                  $priority         Opzionale. La priorità di esecuzione (default 10).
+	 * @param    int                  $accepted_args    Opzionale. Il numero di argomenti passati al callback (default 1).
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
 	/**
-	 * Add a new filter to the collection to be registered with WordPress.
+	 * Aggiunge un nuovo filtro alla collezione da registrare.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress filter that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the callback is defined.
-	 * @param    string               $callback         The name of the function definition on the $component that is the callback.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
+	 * @param    string               $hook             Il nome del filtro di WordPress.
+	 * @param    object               $component        Riferimento all'istanza dell'oggetto in cui è definito il callback.
+	 * @param    string               $callback         Il nome della funzione di callback.
+	 * @param    int                  $priority         Opzionale. La priorità di esecuzione (default 10).
+	 * @param    int                  $accepted_args    Opzionale. Il numero di argomenti passati al callback (default 1).
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
 	/**
-	 * Utility function to add a hook to the array.
+	 * Funzione di utilità per inserire un hook nell'array interno.
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param    array                $hooks            The collection of hooks (actions or filters).
-	 * @param    string               $hook             The name of the WordPress hook.
-	 * @param    object               $component        A reference to the instance of the object.
-	 * @param    string               $callback         The name of the callback function.
-	 * @param    int                  $priority         The priority value.
-	 * @param    int                  $accepted_args    The number of arguments.
-	 * @return   array                                  The collection of hooks.
+	 * @param    array                $hooks            La collezione di hook (azioni o filtri).
+	 * @param    string               $hook             Il nome dell'hook di WordPress.
+	 * @param    object               $component        Riferimento all'istanza dell'oggetto.
+	 * @param    string               $callback         Il nome della funzione di callback.
+	 * @param    int                  $priority         Il valore di priorità.
+	 * @param    int                  $accepted_args    Il numero di argomenti accettati.
+	 * @return   array                                  La collezione aggiornata degli hook.
 	 */
 	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
 		$hooks[] = [
@@ -94,7 +94,7 @@ class SmartAdInserterLoader {
 	}
 
 	/**
-	 * Register the filters and actions with WordPress.
+	 * Registra effettivamente i filtri e le azioni memorizzati all'interno delle API di WordPress.
 	 *
 	 * @since    1.0.0
 	 */

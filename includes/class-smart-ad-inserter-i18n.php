@@ -2,9 +2,9 @@
 namespace SmartAdInserter;
 
 /**
- * Define the internationalization functionality.
+ * Gestisce l'internazionalizzazione e la localizzazione del plugin.
  *
- * Loads and defines the translation files for this plugin so that it is ready for translation.
+ * Si occupa di caricare i file di traduzione per renderlo multilingua.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -14,7 +14,7 @@ namespace SmartAdInserter;
 class SmartAdInserteri18n {
 
 	/**
-	 * Load the plugin text domain for translation.
+	 * Carica il text domain per le traduzioni.
 	 *
 	 * @since    1.0.0
 	 */

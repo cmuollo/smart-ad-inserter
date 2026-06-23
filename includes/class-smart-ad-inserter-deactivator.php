@@ -2,7 +2,9 @@
 namespace SmartAdInserter;
 
 /**
- * Fired during plugin deactivation.
+ * Gestisce la logica di disattivazione del plugin.
+ *
+ * Si occupa di ripulire transients o stati volatili quando il plugin viene disattivato.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -12,12 +14,12 @@ namespace SmartAdInserter;
 class SmartAdInserterDeactivator {
 
 	/**
-	 * Deactivation tasks.
+	 * Logica eseguita alla disattivazione.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		// Clear transients
+		// Pulisce la cache delle posizioni dei banner per evitare disallineamenti futuri
 		delete_transient( 'sai_structural_ads_locations' );
 	}
 }

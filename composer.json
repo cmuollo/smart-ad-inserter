@@ -1,0 +1,22 @@
+{
+    "name": "cmuollo/smart-ad-inserter",
+    "description": "WordPress server-side ad inserter for Cumulative Layout Shift (CLS) optimization.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Carmine Muollo"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmartAdInserter\\": "includes/",
+            "SmartAdInserter\\Admin\\": "admin/",
+            "SmartAdInserter\\PublicModule\\": "public/"
+        }
+    }
+}

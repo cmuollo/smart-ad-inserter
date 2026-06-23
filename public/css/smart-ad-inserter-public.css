@@ -1,0 +1,23 @@
+/* Public CSS Styles */
+.sai-ad-wrapper {
+	display: block;
+	width: 100%;
+	clear: both;
+	background-color: transparent;
+	margin: 1.5em 0;
+	text-align: center;
+}
+
+.sai-masthead {
+	margin: 0 auto 1.5em auto;
+}
+
+.sai-sidebar-top {
+	margin-bottom: 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+	.sai-ad-wrapper {
+		min-height: var(--min-h-mobile) !important;
+	}
+}

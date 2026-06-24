@@ -4,8 +4,8 @@ namespace SmartAdInserter\Admin;
 /**
  * Gestisce tutte le funzionalità specifiche del pannello di amministrazione (backend).
  *
- * Registra i fogli di stile, gli script JavaScript, crea la pagina delle impostazioni
- * ed inizializza gli endpoint della REST API personalizzata.
+ * Si occupa di caricare i fogli di stile, gli script JavaScript per il pannello amministrativo
+ * e di registrare la voce del sottomenu di configurazione in WordPress.
  *
  * @since      1.0.0
  * @package    Smart_Ad_Inserter
@@ -88,69 +88,11 @@ class SmartAdInserterAdmin {
 	}
 
 	/**
-	 * Esegue il rendering della pagina di configurazione.
+	 * Esegue il rendering della pagina di configurazione caricando il file parziale di vista.
 	 *
 	 * @since    1.0.0
 	 */
 	public function display_settings_page() {
 		require_once plugin_dir_path( __FILE__ ) . 'partials/smart-ad-inserter-admin-display.php';
-	}
-
-	/**
-	 * Registra le rotte della REST API personalizzata per il recupero ed il salvataggio asincrono.
-	 *
-	 * @since    1.0.0
-	 */
-	public function register_rest_routes() {
-		register_rest_route(
-			'smart-ad-inserter/v1',
-			'/settings',
-			[
-				[
-					'methods'             => 'GET',
-					'callback'            => [ $this, 'get_settings' ],
-					'permission_callback' => [ $this, 'check_admin_permissions' ],
-				],
-				[
-					'methods'             => 'POST',
-					'callback'            => [ $this, 'save_settings' ],
-					'permission_callback' => [ $this, 'check_admin_permissions' ],
-				],
-			]
-		);
-	}
-
-	/**
-	 * Callback REST per recuperare le impostazioni attuali.
-	 *
-	 * @since    1.0.0
-	 */
-	public function get_settings() {
-		$settings = get_option( 'smart_ad_inserter_settings', [] );
-		return rest_ensure_response( $settings );
-	}
-
-	/**
-	 * Callback REST per salvare le nuove impostazioni configurate.
-	 *
-	 * @since    1.0.0
-	 */
-	public function save_settings( \WP_REST_Request $request ) {
-		$settings = $request->get_json_params();
-
-		// Pulisce i transient della cache delle posizioni ad ogni modifica
-		delete_transient( 'sai_structural_ads_locations' );
-
-		update_option( 'smart_ad_inserter_settings', $settings );
-		return rest_ensure_response( [ 'success' => true ] );
-	}
-
-	/**
-	 * Verifica che l'utente corrente abbia le autorizzazioni di amministratore.
-	 *
-	 * @since    1.0.0
-	 */
-	public function check_admin_permissions() {
-		return current_user_can( 'manage_options' );
 	}
 }

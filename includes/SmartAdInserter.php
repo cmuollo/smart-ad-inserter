@@ -42,7 +42,7 @@ class SmartAdInserter {
 	 * Costruttore e inizializzazione del plugin.
 	 *
 	 * Imposta il nome, la versione, carica le dipendenze, definisce la lingua locale,
-	 * e registra i vari hook per i moduli amministrativi e pubblici.
+	 * e registra i vari hook per i moduli amministrativi, pubblici e REST API.
 	 *
 	 * @since    1.0.0
 	 */
@@ -54,6 +54,7 @@ class SmartAdInserter {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_rest_api_hooks();
 	}
 
 	/**
@@ -89,7 +90,6 @@ class SmartAdInserter {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
-		$this->loader->add_action( 'rest_api_init', $plugin_admin, 'register_rest_routes' );
 	}
 
 	/**
@@ -108,6 +108,17 @@ class SmartAdInserter {
 		// Aggancio delle strategie di iniezione differita
 		$this->loader->add_filter( 'the_content', $plugin_public, 'inject_content_ads' );
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'setup_structural_ads_buffer' );
+	}
+
+	/**
+	 * Registra gli hook associati alle API REST personalizzate del plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_rest_api_hooks() {
+		$plugin_rest = new SmartAdInserterRest();
+		$this->loader->add_action( 'rest_api_init', $plugin_rest, 'register_routes' );
 	}
 
 	/**

@@ -40,6 +40,9 @@
 	--sai-weight-regular: 400;
 	--sai-weight-medium: 500;
 	--sai-weight-semibold: 600;
+	--sai-input-shadow-color: rgba(0, 0, 0, 0.05);
+	--sai-focus-shadow-color: rgba(190, 90, 45, 0.15);
+	--sai-spinner-track-color: rgba(0, 0, 0, 0.1);
 }
 
 .sai-wrap {
@@ -216,7 +219,7 @@
 	border: 1px solid var(--sai-border-color);
 	border-radius: var(--sai-radius-sm);
 	background: var(--sai-input-bg);
-	box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 1px 2px var(--sai-input-shadow-color);
 	box-sizing: border-box;
 	transition: border-color var(--sai-transition-speed) ease, box-shadow var(--sai-transition-speed) ease;
 }
@@ -225,7 +228,7 @@
 .sai-input-number:focus,
 .sai-textarea:focus {
 	border-color: var(--sai-border-focus);
-	box-shadow: 0 0 0 3px rgba(190, 90, 45, 0.15);
+	box-shadow: 0 0 0 3px var(--sai-focus-shadow-color);
 	outline: none;
 }
 
@@ -288,7 +291,7 @@
 	display: none;
 	width: 20px;
 	height: 20px;
-	border: 3px solid rgba(0, 0, 0, 0.1);
+	border: 3px solid var(--sai-spinner-track-color);
 	border-radius: 50%;
 	border-top-color: var(--sai-accent);
 	animation: sai-spin 1s ease-in-out infinite;

@@ -78,8 +78,8 @@ class StructuralInjector implements AdInjectorInterface {
 		}
 
 		$ad_code       = $this->settings['masthead']['code'];
-		$min_h_desktop = $this->settings['masthead']['min_height_desktop'] ?? 90;
-		$min_h_mobile  = $this->settings['masthead']['min_height_mobile'] ?? 90;
+		$min_h_desktop = $this->settings['masthead']['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $this->settings['masthead']['min_height_mobile'] ?? 100;
 
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-masthead' );
@@ -110,7 +110,7 @@ class StructuralInjector implements AdInjectorInterface {
 
 		$ad_code       = $this->settings['sidebar_top']['code'];
 		$min_h_desktop = $this->settings['sidebar_top']['min_height_desktop'] ?? 250;
-		$min_h_mobile  = $this->settings['sidebar_top']['min_height_mobile'] ?? 250;
+		$min_h_mobile  = $this->settings['sidebar_top']['min_height_mobile'] ?? 0;
 
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-sidebar-top' );

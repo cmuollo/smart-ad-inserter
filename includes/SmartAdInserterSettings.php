@@ -96,15 +96,15 @@ class SmartAdInserterSettings {
 				'masthead' => [
 					'active'              => false,
 					'code'                => '',
-					'min_height_desktop' => 90,
-					'min_height_mobile'  => 90,
+					'min_height_desktop' => 250,
+					'min_height_mobile'  => 100,
 					'custom_selector'     => '',
 				],
 				'sidebar_top' => [
 					'active'              => false,
 					'code'                => '',
 					'min_height_desktop' => 250,
-					'min_height_mobile'  => 250,
+					'min_height_mobile'  => 0,
 					'custom_selector'     => '',
 				],
 			],

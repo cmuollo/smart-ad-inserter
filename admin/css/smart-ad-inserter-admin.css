@@ -1,4 +1,331 @@
-/* Admin CSS placeholder */
-.wrap {
-	margin-top: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+:root {
+	--sai-bg: hsl(215, 25%, 27%);
+	--sai-accent: hsl(190, 90%, 45%);
+	--sai-accent-hover: hsl(190, 90%, 38%);
+	--sai-success: hsl(150, 70%, 40%);
+	--sai-success-light: hsl(150, 70%, 95%);
+	--sai-error: hsl(350, 75%, 50%);
+	--sai-error-light: hsl(350, 75%, 96%);
+	--sai-card-bg: #ffffff;
+	--sai-radius: 8px;
+	--sai-radius-sm: 4px;
+	--sai-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	--sai-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
+	--sai-font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	--sai-border-color: hsl(215, 12%, 85%);
+	--sai-border-focus: hsl(190, 90%, 45%);
+	--sai-input-bg: hsl(0, 0%, 99%);
+	--sai-text-color: hsl(215, 25%, 15%);
+	--sai-text-muted: hsl(215, 12%, 45%);
+	--sai-transition-speed: 0.3s;
+	--sai-gap: 16px;
+	
+	/* Layout & Spacing */
+	--sai-margin-xs: 4px;
+	--sai-margin-sm: 8px;
+	--sai-margin-md: 16px;
+	--sai-margin-lg: 24px;
+	--sai-padding-sm: 10px;
+	--sai-padding-md: 16px;
+	--sai-padding-lg: 24px;
+	
+	/* Font Sizes & Weights */
+	--sai-size-title: 24px;
+	--sai-size-subtitle: 14px;
+	--sai-size-card-title: 18px;
+	--sai-size-label: 13px;
+	--sai-size-text: 14px;
+	--sai-weight-regular: 400;
+	--sai-weight-medium: 500;
+	--sai-weight-semibold: 600;
+}
+
+.sai-wrap {
+	font-family: var(--sai-font-family);
+	color: var(--sai-text-color);
+	max-width: 960px;
+	margin: var(--sai-margin-lg) auto;
+	padding-right: var(--sai-margin-md);
+}
+
+.sai-title {
+	font-size: var(--sai-size-title);
+	font-weight: var(--sai-weight-semibold);
+	color: var(--sai-bg);
+	margin-bottom: var(--sai-margin-xs);
+}
+
+.sai-subtitle {
+	font-size: var(--sai-size-subtitle);
+	color: var(--sai-text-muted);
+	margin-bottom: var(--sai-margin-lg);
+}
+
+/* Navigazione Tab */
+.sai-tabs {
+	display: flex;
+	border-bottom: 2px solid var(--sai-border-color);
+	margin-bottom: var(--sai-margin-lg);
+	gap: var(--sai-margin-xs);
+}
+
+.sai-tab {
+	background: transparent;
+	border: none;
+	border-bottom: 3px solid transparent;
+	padding: var(--sai-padding-sm) var(--sai-padding-lg);
+	font-size: var(--sai-size-text);
+	font-weight: var(--sai-weight-medium);
+	color: var(--sai-text-muted);
+	cursor: pointer;
+	transition: all var(--sai-transition-speed) ease;
+	outline: none;
+}
+
+.sai-tab:hover {
+	color: var(--sai-bg);
+}
+
+.sai-tab.active {
+	color: var(--sai-accent);
+	border-bottom-color: var(--sai-accent);
+	font-weight: var(--sai-weight-semibold);
+}
+
+/* Contenuto Tab */
+.sai-tab-content {
+	display: none;
+	opacity: 0;
+	transform: translateY(10px);
+	transition: opacity var(--sai-transition-speed) ease, transform var(--sai-transition-speed) ease;
+}
+
+.sai-tab-content.active {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Componenti Card */
+.sai-card {
+	background: var(--sai-card-bg);
+	border-radius: var(--sai-radius);
+	box-shadow: var(--sai-shadow);
+	padding: var(--sai-padding-lg);
+	margin-bottom: var(--sai-margin-lg);
+	border: 1px solid var(--sai-border-color);
+	transition: box-shadow var(--sai-transition-speed) ease;
+}
+
+.sai-card:hover {
+	box-shadow: var(--sai-shadow-lg);
+}
+
+.sai-card-header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--sai-margin-sm);
+}
+
+.sai-card-title {
+	font-size: var(--sai-size-card-title);
+	font-weight: var(--sai-weight-semibold);
+	color: var(--sai-bg);
+	margin: 0;
+}
+
+.sai-card-desc {
+	font-size: var(--sai-size-subtitle);
+	color: var(--sai-text-muted);
+	margin-top: var(--sai-margin-xs);
+	margin-bottom: var(--sai-margin-md);
+	line-height: 1.5;
+}
+
+.sai-tag {
+	background-color: var(--sai-bg);
+	color: var(--sai-card-bg);
+	font-size: 11px;
+	font-weight: var(--sai-weight-semibold);
+	padding: 3px 8px;
+	border-radius: 12px;
+	text-transform: uppercase;
+}
+
+/* Campi Form */
+.sai-field-group {
+	margin-bottom: var(--sai-margin-md);
+}
+
+.sai-field-group label {
+	display: block;
+	font-size: var(--sai-size-label);
+	font-weight: var(--sai-weight-medium);
+	margin-bottom: var(--sai-margin-xs);
+	color: var(--sai-bg);
+}
+
+.sai-field-row {
+	display: flex;
+	gap: var(--sai-gap);
+	margin-bottom: var(--sai-margin-md);
+	align-items: flex-end;
+}
+
+.sai-field-col {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.sai-field-col label {
+	font-size: var(--sai-size-label);
+	font-weight: var(--sai-weight-medium);
+	margin-bottom: var(--sai-margin-xs);
+	color: var(--sai-bg);
+}
+
+.sai-checkbox-row {
+	align-items: center;
+	margin-bottom: var(--sai-margin-md);
+	cursor: pointer;
+}
+
+.sai-checkbox-row input[type="checkbox"] {
+	margin: 0 var(--sai-margin-sm) 0 0;
+	cursor: pointer;
+}
+
+.sai-checkbox-row label {
+	margin: 0;
+	cursor: pointer;
+	font-size: var(--sai-size-text);
+}
+
+/* Input e Textarea */
+.sai-input-text,
+.sai-input-number,
+.sai-textarea {
+	width: 100%;
+	padding: var(--sai-padding-sm);
+	font-family: var(--sai-font-family);
+	font-size: var(--sai-size-text);
+	border: 1px solid var(--sai-border-color);
+	border-radius: var(--sai-radius-sm);
+	background: var(--sai-input-bg);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+	box-sizing: border-box;
+	transition: border-color var(--sai-transition-speed) ease, box-shadow var(--sai-transition-speed) ease;
+}
+
+.sai-input-text:focus,
+.sai-input-number:focus,
+.sai-textarea:focus {
+	border-color: var(--sai-border-focus);
+	box-shadow: 0 0 0 3px rgba(190, 90, 45, 0.15);
+	outline: none;
+}
+
+.sai-textarea {
+	resize: vertical;
+}
+
+/* Rendering Condizionale Masthead */
+.sai-conditional {
+	max-height: 0;
+	overflow: hidden;
+	opacity: 0;
+	transition: max-height var(--sai-transition-speed) cubic-bezier(0, 1, 0, 1), opacity var(--sai-transition-speed) ease;
+}
+
+.sai-conditional.sai-show {
+	max-height: 800px;
+	opacity: 1;
+	transition: max-height var(--sai-transition-speed) cubic-bezier(1, 0, 1, 0), opacity var(--sai-transition-speed) ease;
+}
+
+/* Action Bar Sticky */
+.sai-action-bar {
+	position: sticky;
+	bottom: 0;
+	background: var(--sai-card-bg);
+	border-top: 1px solid var(--sai-border-color);
+	padding: var(--sai-padding-md) 0;
+	display: flex;
+	align-items: center;
+	gap: var(--sai-gap);
+	z-index: 100;
+	margin-top: var(--sai-margin-lg);
+}
+
+.sai-btn-primary {
+	background-color: var(--sai-accent);
+	color: var(--sai-card-bg);
+	border: none;
+	border-radius: var(--sai-radius-sm);
+	padding: 12px 24px;
+	font-family: var(--sai-font-family);
+	font-size: var(--sai-size-text);
+	font-weight: var(--sai-weight-semibold);
+	cursor: pointer;
+	transition: background-color var(--sai-transition-speed) ease;
+}
+
+.sai-btn-primary:hover {
+	background-color: var(--sai-accent-hover);
+}
+
+.sai-btn-primary:disabled {
+	background-color: var(--sai-border-color);
+	cursor: not-allowed;
+}
+
+/* Spinner caricamento */
+.sai-spinner {
+	display: none;
+	width: 20px;
+	height: 20px;
+	border: 3px solid rgba(0, 0, 0, 0.1);
+	border-radius: 50%;
+	border-top-color: var(--sai-accent);
+	animation: sai-spin 1s ease-in-out infinite;
+}
+
+.sai-spinner.sai-show {
+	display: inline-block;
+}
+
+@keyframes sai-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Feedback Box */
+.sai-feedback {
+	display: none;
+	font-size: var(--sai-size-text);
+	font-weight: var(--sai-weight-medium);
+	padding: var(--sai-padding-sm) var(--sai-padding-md);
+	border-radius: var(--sai-radius-sm);
+	box-sizing: border-box;
+}
+
+.sai-feedback.sai-show {
+	display: block;
+}
+
+.sai-feedback.success {
+	color: var(--sai-success);
+	background-color: var(--sai-success-light);
+	border: 1px solid var(--sai-success);
+}
+
+.sai-feedback.error {
+	color: var(--sai-error);
+	background-color: var(--sai-error-light);
+	border: 1px solid var(--sai-error);
 }

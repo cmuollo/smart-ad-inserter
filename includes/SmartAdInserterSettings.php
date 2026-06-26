@@ -45,18 +45,22 @@ class SmartAdInserterSettings {
 	public function save_settings( array $settings ): bool {
 		$sanitized_settings = [];
 
-		// Consente il salvataggio di tag script completi per gli utenti amministratori
-		$sanitized_settings['global_scripts'] = isset( $settings['global_scripts'] ) ? trim( $settings['global_scripts'] ) : '';
+		// Consente il salvataggio di tag script completi per gli utenti con capability manage_options
+		$sanitized_settings['global_scripts'] = isset( $settings['global_scripts'] ) ? wp_kses( trim( $settings['global_scripts'] ), $this->get_allowed_html() ) : '';
 
 		$sanitized_settings['positions'] = [];
 		if ( isset( $settings['positions'] ) && is_array( $settings['positions'] ) ) {
 			foreach ( $settings['positions'] as $position_id => $data ) {
 				$sanitized_settings['positions'][ $position_id ] = [
-					'active'              => isset( $data['active'] ) ? (bool) $data['active'] : false,
-					'code'                => isset( $data['code'] ) ? trim( $data['code'] ) : '',
-					'min_height_desktop' => isset( $data['min_height_desktop'] ) ? max( 0, (int) $data['min_height_desktop'] ) : 250,
-					'min_height_mobile'  => isset( $data['min_height_mobile'] ) ? max( 0, (int) $data['min_height_mobile'] ) : 250,
-					'custom_selector'     => isset( $data['custom_selector'] ) ? sanitize_text_field( $data['custom_selector'] ) : '',
+					'active'                => isset( $data['active'] ) ? (bool) $data['active'] : false,
+					'code'                  => isset( $data['code'] ) ? wp_kses( trim( $data['code'] ), $this->get_allowed_html() ) : '',
+					'min_height_desktop'    => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 250,
+					'min_height_mobile'     => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 250,
+					'custom_selector'       => isset( $data['custom_selector'] ) ? sanitize_text_field( $data['custom_selector'] ) : '',
+					'use_default_placement' => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : true,
+					'override_css'          => isset( $data['override_css'] ) ? sanitize_textarea_field( $data['override_css'] ) : '',
+					'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( $data['target_element'] ) : '',
+					'frequency'             => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
 				];
 			}
 		}
@@ -79,37 +83,134 @@ class SmartAdInserterSettings {
 		$defaults = [
 			'global_scripts' => '',
 			'positions'      => [
-				'atf' => [
-					'active'              => false,
-					'code'                => '',
-					'min_height_desktop' => 250,
-					'min_height_mobile'  => 250,
-					'custom_selector'     => '',
+				'atf'            => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 250,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
 				],
-				'btf' => [
-					'active'              => false,
-					'code'                => '',
-					'min_height_desktop' => 250,
-					'min_height_mobile'  => 250,
-					'custom_selector'     => '',
+				'btf'            => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 250,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
 				],
-				'masthead' => [
-					'active'              => false,
-					'code'                => '',
-					'min_height_desktop' => 250,
-					'min_height_mobile'  => 100,
-					'custom_selector'     => '',
+				'masthead'       => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 100,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
 				],
-				'sidebar_top' => [
-					'active'              => false,
-					'code'                => '',
-					'min_height_desktop' => 250,
-					'min_height_mobile'  => 0,
-					'custom_selector'     => '',
+				'sidebar_top'    => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 0,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
+				],
+				'sidebar_sticky' => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 600,
+					'min_height_mobile'     => 0,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
+				],
+				'grid_home'      => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 250,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '.post-card',
+					'frequency'             => 3,
+				],
+				'grid_archive'   => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 250,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '.post-card',
+					'frequency'             => 3,
 				],
 			],
 		];
 
 		return array_replace_recursive( $defaults, $settings );
+	}
+
+	/**
+	 * Restituisce i tag HTML consentiti per i campi degli annunci pubblicitari (allowlist).
+	 *
+	 * Consente script solo se provvisti di attributo src.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return   array    Tag ed attributi consentiti.
+	 */
+	private function get_allowed_html(): array {
+		return [
+			'a'      => [
+				'href'   => true,
+				'title'  => true,
+				'target' => true,
+				'class'  => true,
+				'id'     => true,
+				'style'  => true,
+				'rel'    => true,
+			],
+			'img'    => [
+				'src'    => true,
+				'alt'    => true,
+				'width'  => true,
+				'height' => true,
+				'class'  => true,
+				'id'     => true,
+				'style'  => true,
+			],
+			'div'    => [
+				'class'  => true,
+				'id'     => true,
+				'style'  => true,
+			],
+			'span'   => [
+				'class'  => true,
+				'id'     => true,
+				'style'  => true,
+			],
+			'script' => [
+				'src'    => true,
+				'async'  => true,
+				'defer'  => true,
+				'type'   => true,
+			],
+		];
 	}
 }

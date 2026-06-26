@@ -29,6 +29,7 @@ class ContentInjector implements AdInjectorInterface {
 	 * Inizializza la classe con le opzioni configurate.
 	 *
 	 * @since    1.0.0
+	 * @param    array    $settings    Mappa delle opzioni di configurazione.
 	 */
 	public function __construct( array $settings ) {
 		$this->settings = $settings;
@@ -38,6 +39,8 @@ class ContentInjector implements AdInjectorInterface {
 	 * Esegue l'iniezione in base alle strategie configurate sul contenuto.
 	 *
 	 * @since    1.0.0
+	 * @param    string    $content     L'HTML originario del contenuto.
+	 * @return   string                 L'HTML modificato.
 	 */
 	public function inject( string $content ): string {
 		// Iniezione ATF (Subito prima del primo paragrafo dell'articolo)
@@ -60,6 +63,8 @@ class ContentInjector implements AdInjectorInterface {
 	 * di parsing lato server, azzerando il CLS grazie alle altezze minime pre-allocate.
 	 *
 	 * @since    1.0.0
+	 * @param    string    $content     L'HTML originario del contenuto.
+	 * @return   string                 L'HTML modificato.
 	 */
 	private function inject_atf( string $content ): string {
 		$ad_code       = $this->settings['atf']['code'];
@@ -104,6 +109,8 @@ class ContentInjector implements AdInjectorInterface {
 	 * Inietta il wrapper pubblicitario BTF concatenandolo al fondo del testo.
 	 *
 	 * @since    1.0.0
+	 * @param    string    $content     L'HTML originario del contenuto.
+	 * @return   string                 L'HTML modificato.
 	 */
 	private function inject_btf( string $content ): string {
 		$ad_code       = $this->settings['btf']['code'];

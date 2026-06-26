@@ -36,6 +36,7 @@ class SmartAdInserterAdmin {
 	 * @since    1.0.0
 	 * @param    string    $plugin_name       Il nome univoco del plugin.
 	 * @param    string    $version           La versione del plugin.
+	 * @return   void
 	 */
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
@@ -46,6 +47,7 @@ class SmartAdInserterAdmin {
 	 * Registra ed accoda i fogli di stile per l'area amministrativa.
 	 *
 	 * @since    1.0.0
+	 * @return   void
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style(
@@ -61,6 +63,7 @@ class SmartAdInserterAdmin {
 	 * Registra ed accoda i file Javascript per l'area amministrativa.
 	 *
 	 * @since    1.0.0
+	 * @return   void
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script(

@@ -70,29 +70,28 @@ class SmartAdInserterAdmin {
 			$this->version,
 			false
 		);
-	}
 
-	/**
-	 * Aggiunge la voce di menu all'interno delle impostazioni di WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_plugin_admin_menu() {
-		add_options_page(
-			'Smart Ad Inserter Impostazioni',
-			'Smart Ad Inserter',
-			'manage_options',
-			$this->plugin_name,
-			[ $this, 'display_settings_page' ]
+		wp_localize_script(
+			$this->plugin_name . '-admin',
+			'smartAdInserter',
+			[
+				'restUrl' => esc_url_raw( rest_url( 'smart-ad-inserter/v1/' ) ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+			]
 		);
 	}
 
 	/**
-	 * Esegue il rendering della pagina di configurazione caricando il file parziale di vista.
+	 * Renderizza la pagina admin del plugin caricando la view principale.
+	 * Verificata la capability manage_options prima del rendering.
 	 *
 	 * @since    1.0.0
+	 * @return   void
 	 */
-	public function display_settings_page() {
+	public static function render_admin_page(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Accesso non autorizzato.', 'smart-ad-inserter' ) );
+		}
 		require_once plugin_dir_path( __FILE__ ) . 'partials/smart-ad-inserter-admin-display.php';
 	}
 }

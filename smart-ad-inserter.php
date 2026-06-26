@@ -61,3 +61,25 @@ function run_smart_ad_inserter() {
 	}
 }
 run_smart_ad_inserter();
+
+add_action( 'admin_menu', 'sai_register_admin_menu' );
+
+/**
+ * Registra la voce top-level "Smart Ad Inserter" nella sidebar WP Admin.
+ * Icona: dashicons-megaphone (core WP >= 3.8, nessuna dipendenza esterna).
+ * Posizione 58: tra Aspetto (55) e Plugin (65).
+ *
+ * @return void
+ */
+function sai_register_admin_menu(): void {
+	add_menu_page(
+		__( 'Smart Ad Inserter', 'smart-ad-inserter' ),
+		__( 'Smart Ad Inserter', 'smart-ad-inserter' ),
+		'manage_options',
+		'smart-ad-inserter',
+		[ \SmartAdInserter\Admin\SmartAdInserterAdmin::class, 'render_admin_page' ],
+		'dashicons-megaphone',
+		58
+	);
+}
+

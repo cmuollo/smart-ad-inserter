@@ -1,6 +1,6 @@
 <?php
 /**
- * File di bootstrap principale del plugin
+ * File di bootstrap principale del plugin.
  *
  * Questo file viene letto da WordPress per generare le informazioni del plugin
  * all'interno dell'area amministrativa. Include tutte le dipendenze utilizzate,
@@ -10,14 +10,15 @@
  * @since             1.0.0
  * @package           Smart_Ad_Inserter
  *
- * @wordpress-plugin
  * Plugin Name:       Smart Ad Inserter
  * Plugin URI:        https://github.com/cmuollo/smart-ad-inserter
- * Description:       Plugin WordPress server-side per l'ottimizzazione del Cumulative Layout Shift (CLS).
+ * Description:       Inserimento server-side di banner pubblicitari con controllo granulare per posizione, Zero-CLS garantito.
  * Version:           1.0.0
+ * Requires at least: 6.0
+ * Requires PHP:      8.0
  * Author:            Carmine Muollo
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       smart-ad-inserter
  * Domain Path:       /languages
  */

@@ -67,12 +67,16 @@ class SmartAdInserterRest {
 				[
 					'methods'             => 'GET',
 					'callback'            => [ $this, 'get_settings' ],
-					'permission_callback' => [ $this, 'check_admin_permissions' ],
+					'permission_callback' => function (): bool {
+						return current_user_can( 'manage_options' );
+					},
 				],
 				[
 					'methods'             => 'POST',
 					'callback'            => [ $this, 'save_settings' ],
-					'permission_callback' => [ $this, 'check_admin_permissions' ],
+					'permission_callback' => function (): bool {
+						return current_user_can( 'manage_options' );
+					},
 				],
 			]
 		);
@@ -104,15 +108,5 @@ class SmartAdInserterRest {
 		$success = $this->settings_manager->save_settings( $settings );
 
 		return rest_ensure_response( [ 'success' => $success ] );
-	}
-
-	/**
-	 * Controlla i permessi dell'utente corrente per l'esecuzione della richiesta.
-	 *
-	 * @since    1.0.0
-	 * @return   bool    Vero se l'utente ha la capability 'manage_options', falso altrimenti.
-	 */
-	public function check_admin_permissions() {
-		return current_user_can( 'manage_options' );
 	}
 }

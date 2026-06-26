@@ -23,6 +23,23 @@ class SmartAdInserterSettings {
 	private $option_key = 'smart_ad_inserter_settings';
 
 	/**
+	 * Restituisce l'allowlist HTML per la sanitizzazione dei campi banner.
+	 * Compatibile con wp_kses(). Tag <script> esclusi per design WordPress.
+	 *
+	 * @since    1.0.0
+	 * @return   array<string, array<string, bool>>
+	 */
+	private static function allowed_html(): array {
+		return [
+			'a'    => [ 'href' => true, 'target' => true, 'rel' => true ],
+			'img'  => [ 'src' => true, 'alt' => true, 'width' => true, 'height' => true ],
+			'div'  => [ 'class' => true, 'id' => true, 'style' => true ],
+			'span' => [ 'class' => true, 'id' => true, 'style' => true ],
+			'ins'  => [ 'class' => true, 'style' => true, 'data-ad-client' => true, 'data-ad-slot' => true ],
+		];
+	}
+
+	/**
 	 * Recupera le impostazioni correnti dal database con i valori di default per le chiavi mancanti.
 	 *
 	 * @since    1.0.0
@@ -45,21 +62,24 @@ class SmartAdInserterSettings {
 	public function save_settings( array $settings ): bool {
 		$sanitized_settings = [];
 
-		// Consente il salvataggio di tag script completi per gli utenti con capability manage_options
-		$sanitized_settings['global_scripts'] = isset( $settings['global_scripts'] ) ? wp_kses( trim( $settings['global_scripts'] ), $this->get_allowed_html() ) : '';
+		// Head Scripts — solo admin con unfiltered_html possono salvare tag script
+		$raw_scripts = isset( $settings['global_scripts'] ) ? $settings['global_scripts'] : '';
+		$sanitized_settings['global_scripts'] = current_user_can( 'unfiltered_html' )
+			? wp_unslash( $raw_scripts )
+			: wp_kses( wp_unslash( $raw_scripts ), [] );
 
 		$sanitized_settings['positions'] = [];
 		if ( isset( $settings['positions'] ) && is_array( $settings['positions'] ) ) {
 			foreach ( $settings['positions'] as $position_id => $data ) {
 				$sanitized_settings['positions'][ $position_id ] = [
 					'active'                => isset( $data['active'] ) ? (bool) $data['active'] : false,
-					'code'                  => isset( $data['code'] ) ? wp_kses( trim( $data['code'] ), $this->get_allowed_html() ) : '',
-					'min_height_desktop'    => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 250,
-					'min_height_mobile'     => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 250,
-					'custom_selector'       => isset( $data['custom_selector'] ) ? sanitize_text_field( $data['custom_selector'] ) : '',
-					'use_default_placement' => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : true,
-					'override_css'          => isset( $data['override_css'] ) ? sanitize_textarea_field( $data['override_css'] ) : '',
-					'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( $data['target_element'] ) : '',
+					'code'                  => isset( $data['code'] ) ? wp_kses( wp_unslash( $data['code'] ), self::allowed_html() ) : '',
+					'min_height_desktop'    => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 0,
+					'min_height_mobile'     => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 0,
+					'custom_selector'       => isset( $data['custom_selector'] ) ? sanitize_text_field( wp_unslash( $data['custom_selector'] ) ) : '',
+					'use_default_placement' => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : false,
+					'override_css'          => isset( $data['override_css'] ) ? sanitize_textarea_field( wp_unslash( $data['override_css'] ) ) : '',
+					'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
 					'frequency'             => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
 				];
 			}
@@ -164,53 +184,5 @@ class SmartAdInserterSettings {
 		];
 
 		return array_replace_recursive( $defaults, $settings );
-	}
-
-	/**
-	 * Restituisce i tag HTML consentiti per i campi degli annunci pubblicitari (allowlist).
-	 *
-	 * Consente script solo se provvisti di attributo src.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @return   array    Tag ed attributi consentiti.
-	 */
-	private function get_allowed_html(): array {
-		return [
-			'a'      => [
-				'href'   => true,
-				'title'  => true,
-				'target' => true,
-				'class'  => true,
-				'id'     => true,
-				'style'  => true,
-				'rel'    => true,
-			],
-			'img'    => [
-				'src'    => true,
-				'alt'    => true,
-				'width'  => true,
-				'height' => true,
-				'class'  => true,
-				'id'     => true,
-				'style'  => true,
-			],
-			'div'    => [
-				'class'  => true,
-				'id'     => true,
-				'style'  => true,
-			],
-			'span'   => [
-				'class'  => true,
-				'id'     => true,
-				'style'  => true,
-			],
-			'script' => [
-				'src'    => true,
-				'async'  => true,
-				'defer'  => true,
-				'type'   => true,
-			],
-		];
 	}
 }

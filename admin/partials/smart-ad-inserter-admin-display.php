@@ -2,24 +2,12 @@
 /**
  * Fornisce il codice di markup HTML e PHP per il pannello amministrativo di Smart Ad Inserter.
  *
- * Registra inoltre le variabili globali JavaScript necessarie per le API REST ed i Nonce di sicurezza.
- *
  * @link              https://github.com/cmuollo/smart-ad-inserter
  * @since             1.0.0
  * @package           Smart_Ad_Inserter
  * @subpackage        Smart_Ad_Inserter/admin/partials
  * @author            Carmine Muollo
  */
-
-// Localizza le informazioni REST e il nonce di sicurezza per lo script caricato
-wp_localize_script(
-	'smart-ad-inserter-admin',
-	'smartAdInserter',
-	[
-		'nonce'   => wp_create_nonce( 'wp_rest' ),
-		'restUrl' => esc_url_raw( rest_url( 'smart-ad-inserter/v1/' ) ),
-	]
-);
 ?>
 
 <div class="sai-wrap">
@@ -56,7 +44,7 @@ wp_localize_script(
 					<p class="sai-card-desc">Configura il primo banner pubblicitario visibile sotto l'header globale del sito.</p>
 					
 					<div class="sai-field-row sai-checkbox-row">
-						<input type="checkbox" id="sai-use-default-placement" name="positions[masthead][use_default_placement]" value="1" />
+						<input type="checkbox" id="sai-use-default-placement" name="positions[masthead][use_default_placement]" value="1" checked />
 						<label for="sai-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
 					</div>
 

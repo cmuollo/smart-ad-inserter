@@ -644,4 +644,156 @@ class StructuralInjectorTest extends TestCase {
 
 		$this->assertStringContainsString( 'min-height:380px; --min-h-mobile:120px;', $result );
 	}
+
+	/**
+	 * Test Sidebar Top in Home con use_global_config = true -> deve ereditare dal globale.
+	 */
+	public function test_sidebar_top_home_use_global_config_true() {
+		$this->current_context = 'home';
+
+		$html = '
+		<div class="site-wrap">
+			<aside class="sidebar">Widget</aside>
+		</div>';
+
+		$settings = $this->get_default_settings( [
+			'contexts' => [
+				'global' => [
+					'positions' => [
+						'sidebar_top' => [
+							'active' => true,
+							'code'   => '[GLOBAL SIDEBAR TOP]'
+						]
+					]
+				],
+				'home'   => [
+					'positions' => [
+						'sidebar_top' => [
+							'use_global_config' => true,
+							'active'            => true,
+							'code'              => '[HOME SIDEBAR TOP]'
+						]
+					]
+				]
+			]
+		] );
+
+		$injector = new StructuralInjector( $settings );
+		$result   = $injector->inject( $html );
+
+		$this->assertStringContainsString( '[GLOBAL SIDEBAR TOP]', $result );
+		$this->assertStringNotContainsString( '[HOME SIDEBAR TOP]', $result );
+	}
+
+	/**
+	 * Test Sidebar Top in Home con use_global_config = false e codice vuoto -> nessun output.
+	 */
+	public function test_sidebar_top_home_use_global_config_false_empty() {
+		$this->current_context = 'home';
+
+		$html = '
+		<div class="site-wrap">
+			<aside class="sidebar">Widget</aside>
+		</div>';
+
+		$settings = $this->get_default_settings( [
+			'contexts' => [
+				'global' => [
+					'positions' => [
+						'sidebar_top' => [
+							'active' => true,
+							'code'   => '[GLOBAL SIDEBAR TOP]'
+						]
+					]
+				],
+				'home'   => [
+					'positions' => [
+						'sidebar_top' => [
+							'use_global_config' => false,
+							'active'            => true,
+							'code'              => ''
+						]
+					]
+				]
+			]
+		] );
+
+		$injector = new StructuralInjector( $settings );
+		$result   = $injector->inject( $html );
+
+		$this->assertStringNotContainsString( 'sai-sidebar-top', $result );
+		$this->assertStringNotContainsString( '[GLOBAL SIDEBAR TOP]', $result );
+	}
+
+	/**
+	 * Test Sidebar Sticky in Archive con use_global_config = false e codice valido -> usa la configurazione archive.
+	 */
+	public function test_sidebar_sticky_archive_use_global_config_false_valid() {
+		$this->current_context = 'archive';
+
+		$html = '
+		<div class="site-wrap">
+			<aside class="sidebar">Widget</aside>
+		</div>';
+
+		$settings = $this->get_default_settings( [
+			'contexts' => [
+				'global'  => [
+					'positions' => [
+						'sidebar_sticky' => [
+							'active' => true,
+							'code'   => '[GLOBAL SIDEBAR STICKY]'
+						]
+					]
+				],
+				'archive' => [
+					'positions' => [
+						'sidebar_sticky' => [
+							'use_global_config' => false,
+							'active'            => true,
+							'code'              => '[ARCHIVE SIDEBAR STICKY]'
+						]
+					]
+				]
+			]
+		] );
+
+		$injector = new StructuralInjector( $settings );
+		$result   = $injector->inject( $html );
+
+		$this->assertStringContainsString( '[ARCHIVE SIDEBAR STICKY]', $result );
+		$this->assertStringNotContainsString( '[GLOBAL SIDEBAR STICKY]', $result );
+	}
+
+	/**
+	 * Test iniezione sidebar in assenza di tag sidebar nel tema -> deve fallire silenziosamente senza warning.
+	 */
+	public function test_sidebar_target_missing_silent_fail() {
+		$this->current_context = 'home';
+
+		$html = '
+		<div class="site-wrap">
+			<main>Contenuto senza alcuna barra laterale</main>
+		</div>';
+
+		$settings = $this->get_default_settings( [
+			'contexts' => [
+				'global' => [
+					'positions' => [
+						'sidebar_top' => [
+							'active' => true,
+							'code'   => '[GLOBAL SIDEBAR TOP]'
+						]
+					]
+				]
+			]
+		] );
+
+		$injector = new StructuralInjector( $settings );
+		$result   = $injector->inject( $html );
+
+		// Nessun warning lanciato, HTML restituito pulito
+		$this->assertStringNotContainsString( 'sai-sidebar-top', $result );
+		$this->assertStringContainsString( 'Contenuto senza alcuna barra laterale', $result );
+	}
 }

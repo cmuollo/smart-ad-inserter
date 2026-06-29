@@ -156,17 +156,21 @@ class SmartAdInserterSettings {
 				if ( isset( $context_data['positions'] ) && is_array( $context_data['positions'] ) ) {
 					foreach ( $context_data['positions'] as $position_id => $data ) {
 						$sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] = [
-							'active'                => isset( $data['active'] ) ? (bool) $data['active'] : false,
-							'code'                  => isset( $data['code'] ) ? wp_kses( wp_unslash( $data['code'] ), self::allowed_html() ) : '',
-							'min_height_desktop'    => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 0,
-							'min_height_mobile'     => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 0,
-							'custom_selector'       => isset( $data['custom_selector'] ) ? sanitize_text_field( wp_unslash( $data['custom_selector'] ) ) : '',
-							'use_default_placement' => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : false,
-							'override_css'          => isset( $data['override_css'] ) ? self::sanitize_css( wp_unslash( $data['override_css'] ) ) : '',
-							'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
-							'frequency'             => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
-							'footer_position'       => isset( $data['footer_position'] ) && in_array( $data['footer_position'], [ 'before_footer', 'after_footer' ], true ) ? $data['footer_position'] : 'before_footer',
-							'use_global_config'     => isset( $data['use_global_config'] ) ? (bool) $data['use_global_config'] : false,
+							'active'                    => isset( $data['active'] ) ? (bool) $data['active'] : false,
+							'code'                      => isset( $data['code'] ) ? wp_kses( wp_unslash( $data['code'] ), self::allowed_html() ) : '',
+							'min_height_desktop'        => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 0,
+							'min_height_mobile'         => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 0,
+							'custom_selector'           => isset( $data['custom_selector'] ) ? sanitize_text_field( wp_unslash( $data['custom_selector'] ) ) : '',
+							'use_default_placement'     => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : false,
+							'override_css'              => isset( $data['override_css'] ) ? self::sanitize_css( wp_unslash( $data['override_css'] ) ) : '',
+							'target_element'            => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
+							'frequency'                 => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
+							'footer_position'           => isset( $data['footer_position'] ) && in_array( $data['footer_position'], [ 'before_footer', 'after_footer' ], true ) ? $data['footer_position'] : 'before_footer',
+							'use_global_config'         => isset( $data['use_global_config'] ) ? (bool) $data['use_global_config'] : false,
+							'max_insertions'            => isset( $data['max_insertions'] ) ? absint( $data['max_insertions'] ) : 0,
+							'words_interval'            => isset( $data['words_interval'] ) ? absint( $data['words_interval'] ) : 0,
+							'avoid_btf_single_block'    => isset( $data['avoid_btf_single_block'] ) ? (bool) $data['avoid_btf_single_block'] : false,
+							'excluded_container_tokens' => isset( $data['excluded_container_tokens'] ) ? implode( ', ', self::sanitize_exclusion_tokens( $data['excluded_container_tokens'] ) ) : '',
 						];
 					}
 				}
@@ -200,17 +204,21 @@ class SmartAdInserterSettings {
 		}
 
 		$position_default = [
-			'active'                => false,
-			'code'                  => '',
-			'min_height_desktop'    => 250,
-			'min_height_mobile'     => 100,
-			'custom_selector'       => '',
-			'use_default_placement' => true,
-			'override_css'          => '',
-			'target_element'        => '',
-			'frequency'             => 0,
-			'footer_position'       => 'before_footer',
-			'use_global_config'     => true,
+			'active'                    => false,
+			'code'                      => '',
+			'min_height_desktop'        => 250,
+			'min_height_mobile'         => 100,
+			'custom_selector'           => '',
+			'use_default_placement'     => true,
+			'override_css'              => '',
+			'target_element'            => '',
+			'frequency'                 => 0,
+			'footer_position'           => 'before_footer',
+			'use_global_config'         => true,
+			'max_insertions'            => 3,
+			'words_interval'            => 150,
+			'avoid_btf_single_block'    => true,
+			'excluded_container_tokens' => '',
 		];
 
 		$defaults = [
@@ -226,23 +234,37 @@ class SmartAdInserterSettings {
 				],
 				'home'    => [
 					'positions' => [
-						'masthead'  => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
-						'footer'    => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
-						'grid_home' => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false, 'target_element' => '.post-card', 'frequency' => 3 ] ),
+						'masthead'       => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
+						'footer'         => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
+						'sidebar_top'    => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
+						'sidebar_sticky' => array_merge( $position_default, [ 'min_height_desktop' => 600, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
+						'grid_home'      => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false, 'target_element' => '.post-card', 'frequency' => 3 ] ),
 					]
 				],
 				'single'  => [
 					'positions' => [
-						'masthead' => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
-						'footer'   => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
-						'atf'      => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false ] ),
-						'btf'      => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false ] ),
+						'masthead'       => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
+						'footer'         => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
+						'sidebar_top'    => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
+						'sidebar_sticky' => array_merge( $position_default, [ 'min_height_desktop' => 600, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
+						'atf'            => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false ] ),
+						'btf'            => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false ] ),
+						'in_text'        => array_merge( $position_default, [
+							'min_height_desktop'     => 250,
+							'min_height_mobile'      => 250,
+							'use_global_config'      => false,
+							'max_insertions'         => 3,
+							'words_interval'         => 150,
+							'avoid_btf_single_block' => true,
+						] ),
 					]
 				],
 				'archive' => [
 					'positions' => [
 						'masthead'     => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
 						'footer'       => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 100, 'use_global_config' => true ] ),
+						'sidebar_top'    => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
+						'sidebar_sticky' => array_merge( $position_default, [ 'min_height_desktop' => 600, 'min_height_mobile' => 0, 'use_global_config' => true ] ),
 						'grid_archive' => array_merge( $position_default, [ 'min_height_desktop' => 250, 'min_height_mobile' => 250, 'use_global_config' => false, 'target_element' => '.post-card', 'frequency' => 3 ] ),
 					]
 				],
@@ -250,5 +272,59 @@ class SmartAdInserterSettings {
 		];
 
 		return array_replace_recursive( $defaults, $settings );
+	}
+
+	/**
+	 * Sanitizza una lista di token di classe/ID semplici separati da virgole.
+	 *
+	 * Accetta solo classi semplici (.classe) o ID semplici (#id).
+	 *
+	 * @since    1.0.0
+	 * @param    string $input La stringa di input inserita dall'utente.
+	 * @return   array         L'array di token sanitizzati e validi.
+	 */
+	public static function sanitize_exclusion_tokens( string $input ): array {
+		$raw_tokens = explode( ',', $input );
+		$valid_tokens = [];
+
+		foreach ( $raw_tokens as $raw_token ) {
+			$token = trim( $raw_token );
+			if ( $token === '' ) {
+				continue;
+			}
+
+			// Deve iniziare con . o #
+			$prefix = $token[0];
+			if ( $prefix !== '.' && $prefix !== '#' ) {
+				continue;
+			}
+
+			$name = substr( $token, 1 );
+
+			// Non deve contenere caratteri non ammessi in classi o ID semplici (es. spazi, combinatori, pseudo-classi, discendenti o attributi)
+			if ( ! preg_match( '/^[a-zA-Z0-9\-_]+$/', $name ) ) {
+				continue;
+			}
+
+			// Sanitizza ulteriormente usando sanitize_html_class per le classi se disponibile
+			if ( $prefix === '.' ) {
+				if ( function_exists( 'sanitize_html_class' ) ) {
+					$sanitized_name = sanitize_html_class( $name );
+				} else {
+					$sanitized_name = preg_replace( '/[^a-zA-Z0-9\-_]/', '', $name );
+				}
+				if ( ! empty( $sanitized_name ) ) {
+					$valid_tokens[] = '.' . $sanitized_name;
+				}
+			} else {
+				// Sanitizzazione rigorosa per gli ID
+				$sanitized_name = preg_replace( '/[^a-zA-Z0-9\-_]/', '', $name );
+				if ( ! empty( $sanitized_name ) ) {
+					$valid_tokens[] = '#' . $sanitized_name;
+				}
+			}
+		}
+
+		return $valid_tokens;
 	}
 }

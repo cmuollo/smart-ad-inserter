@@ -347,6 +347,98 @@
 					</div>
 				</div>
 
+				<!-- HOME SIDEBAR TOP -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Top Sidebar</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il primo banner nella colonna laterale destra per la Home Page.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-home-sidebar_top-use-global-config" name="contexts[home][positions][sidebar_top][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-home-sidebar_top-override-container" checked />
+						<label for="sai-home-sidebar_top-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-home-sidebar_top-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_top-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-home-sidebar_top-active" name="contexts[home][positions][sidebar_top][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_top-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-home-sidebar_top-desktop-height" name="contexts[home][positions][sidebar_top][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_top-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-home-sidebar_top-mobile-height" name="contexts[home][positions][sidebar_top][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_top-code">Codice Banner</label>
+							<textarea id="sai-home-sidebar_top-code" name="contexts[home][positions][sidebar_top][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Top..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_top-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-home-sidebar_top-override-css" name="contexts[home][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_top-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-home-sidebar_top-css-selector" name="contexts[home][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- HOME SIDEBAR STICKY -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Sidebar Sticky</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il banner verticale sticky nella colonna laterale per la Home Page.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-home-sidebar_sticky-use-global-config" name="contexts[home][positions][sidebar_sticky][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-home-sidebar_sticky-override-container" checked />
+						<label for="sai-home-sidebar_sticky-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-home-sidebar_sticky-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_sticky-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-home-sidebar_sticky-active" name="contexts[home][positions][sidebar_sticky][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_sticky-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-home-sidebar_sticky-desktop-height" name="contexts[home][positions][sidebar_sticky][min_height_desktop]" class="sai-input-number" min="0" placeholder="600" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-sidebar_sticky-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-home-sidebar_sticky-mobile-height" name="contexts[home][positions][sidebar_sticky][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_sticky-code">Codice Banner</label>
+							<textarea id="sai-home-sidebar_sticky-code" name="contexts[home][positions][sidebar_sticky][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Sticky..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_sticky-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-home-sidebar_sticky-override-css" name="contexts[home][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-sidebar_sticky-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-home-sidebar_sticky-css-selector" name="contexts[home][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
 				<!-- GRID HOME -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
@@ -518,6 +610,98 @@
 					</div>
 				</div>
 
+				<!-- SINGLE SIDEBAR TOP -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Top Sidebar</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il primo banner nella colonna laterale destra per gli Articoli Singoli.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-sidebar_top-use-global-config" name="contexts[single][positions][sidebar_top][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-single-sidebar_top-override-container" checked />
+						<label for="sai-single-sidebar_top-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-single-sidebar_top-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_top-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-single-sidebar_top-active" name="contexts[single][positions][sidebar_top][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_top-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-single-sidebar_top-desktop-height" name="contexts[single][positions][sidebar_top][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_top-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-single-sidebar_top-mobile-height" name="contexts[single][positions][sidebar_top][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_top-code">Codice Banner</label>
+							<textarea id="sai-single-sidebar_top-code" name="contexts[single][positions][sidebar_top][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Top..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_top-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-single-sidebar_top-override-css" name="contexts[single][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_top-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-single-sidebar_top-css-selector" name="contexts[single][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- SINGLE SIDEBAR STICKY -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Sidebar Sticky</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il banner verticale sticky nella colonna laterale per gli Articoli Singoli.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-sidebar_sticky-use-global-config" name="contexts[single][positions][sidebar_sticky][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-single-sidebar_sticky-override-container" checked />
+						<label for="sai-single-sidebar_sticky-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-single-sidebar_sticky-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_sticky-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-single-sidebar_sticky-active" name="contexts[single][positions][sidebar_sticky][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_sticky-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-single-sidebar_sticky-desktop-height" name="contexts[single][positions][sidebar_sticky][min_height_desktop]" class="sai-input-number" min="0" placeholder="600" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-sidebar_sticky-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-single-sidebar_sticky-mobile-height" name="contexts[single][positions][sidebar_sticky][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_sticky-code">Codice Banner</label>
+							<textarea id="sai-single-sidebar_sticky-code" name="contexts[single][positions][sidebar_sticky][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Sticky..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_sticky-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-single-sidebar_sticky-override-css" name="contexts[single][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-sidebar_sticky-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-single-sidebar_sticky-css-selector" name="contexts[single][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
 				<!-- ATF -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
@@ -593,6 +777,62 @@
 					<div class="sai-field-group">
 						<label for="sai-single-btf-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-single-btf-css-selector" name="contexts[single][positions][btf][custom_selector]" class="sai-input-text" />
+					</div>
+				</div>
+
+				<!-- IN TEXT -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">In Text</h2>
+						<span class="sai-tag">Contenuto</span>
+					</div>
+					<p class="sai-card-desc">Inserimento dinamico di banner nel corpo dell'articolo basato sul conteggio delle parole. I blockquote vengono sempre saltati e i tag &lt;br&gt; vengono usati come punti di split.</p>
+					
+					<div class="sai-field-row">
+						<div class="sai-field-col">
+							<label for="sai-single-in_text-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-single-in_text-active" name="contexts[single][positions][in_text][active]" value="1" />
+						</div>
+						<div class="sai-field-col">
+							<label for="sai-single-in_text-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-single-in_text-desktop-height" name="contexts[single][positions][in_text][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+						</div>
+						<div class="sai-field-col">
+							<label for="sai-single-in_text-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-single-in_text-mobile-height" name="contexts[single][positions][in_text][min_height_mobile]" class="sai-input-number" min="0" placeholder="250" />
+						</div>
+					</div>
+
+					<div class="sai-field-row">
+						<div class="sai-field-col">
+							<label for="sai-single-in_text-max-insertions">Numero massimo inserimenti</label>
+							<input type="number" id="sai-single-in_text-max-insertions" name="contexts[single][positions][in_text][max_insertions]" class="sai-input-number" min="1" placeholder="3" />
+						</div>
+						<div class="sai-field-col">
+							<label for="sai-single-in_text-words-interval">Inserisci dopo N parole</label>
+							<input type="number" id="sai-single-in_text-words-interval" name="contexts[single][positions][in_text][words_interval]" class="sai-input-number" min="10" placeholder="150" />
+						</div>
+					</div>
+
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-in_text-avoid-btf-single-block" name="contexts[single][positions][in_text][avoid_btf_single_block]" value="1" checked />
+						<label for="sai-single-in_text-avoid-btf-single-block"><strong>Non aggiungere in posizione BTF se c'è un solo &lt;p&gt; / &lt;br&gt;</strong></label>
+					</div>
+
+					<div class="sai-field-group">
+						<label for="sai-single-in_text-excluded-container-tokens">Esclusione contenitori (Classi / ID semplici)</label>
+						<input type="text" id="sai-single-in_text-excluded-container-tokens" name="contexts[single][positions][in_text][excluded_container_tokens]" class="sai-input-text" placeholder="Es. .toc-box, #inline-note" />
+						<p class="sai-field-desc">Inserisci classi e ID semplici separati da virgola. I contenuti interni saranno comunque conteggiati per la soglia N parole, ma non usati come punti di inserimento.</p>
+					</div>
+
+					<div class="sai-field-group">
+						<label for="sai-single-in_text-code">Codice Banner</label>
+						<textarea id="sai-single-in_text-code" name="contexts[single][positions][in_text][code]" rows="4" class="sai-textarea"></textarea>
+					</div>
+
+					<div class="sai-field-group">
+						<label for="sai-single-in_text-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-single-in_text-override-css" name="contexts[single][positions][in_text][override_css]" rows="2" class="sai-textarea"></textarea>
 					</div>
 				</div>
 			</div>
@@ -713,6 +953,98 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-footer-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-archive-footer-css-selector" name="contexts[archive][positions][footer][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- ARCHIVE SIDEBAR TOP -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Top Sidebar</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il primo banner nella colonna laterale destra per le pagine Categorie e Archivio.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-archive-sidebar_top-use-global-config" name="contexts[archive][positions][sidebar_top][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-archive-sidebar_top-override-container" checked />
+						<label for="sai-archive-sidebar_top-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-archive-sidebar_top-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_top-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-archive-sidebar_top-active" name="contexts[archive][positions][sidebar_top][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_top-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-archive-sidebar_top-desktop-height" name="contexts[archive][positions][sidebar_top][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_top-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-archive-sidebar_top-mobile-height" name="contexts[archive][positions][sidebar_top][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_top-code">Codice Banner</label>
+							<textarea id="sai-archive-sidebar_top-code" name="contexts[archive][positions][sidebar_top][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Top..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_top-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-archive-sidebar_top-override-css" name="contexts[archive][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_top-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-archive-sidebar_top-css-selector" name="contexts[archive][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- ARCHIVE SIDEBAR STICKY -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Sidebar Sticky</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Il banner verticale sticky nella colonna laterale per le pagine Categorie e Archivio.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-archive-sidebar_sticky-use-global-config" name="contexts[archive][positions][sidebar_sticky][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-archive-sidebar_sticky-override-container" checked />
+						<label for="sai-archive-sidebar_sticky-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-archive-sidebar_sticky-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_sticky-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-archive-sidebar_sticky-active" name="contexts[archive][positions][sidebar_sticky][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_sticky-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-archive-sidebar_sticky-desktop-height" name="contexts[archive][positions][sidebar_sticky][min_height_desktop]" class="sai-input-number" min="0" placeholder="600" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-sidebar_sticky-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-archive-sidebar_sticky-mobile-height" name="contexts[archive][positions][sidebar_sticky][min_height_mobile]" class="sai-input-number" min="0" placeholder="0" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_sticky-code">Codice Banner</label>
+							<textarea id="sai-archive-sidebar_sticky-code" name="contexts[archive][positions][sidebar_sticky][code]" rows="3" class="sai-textarea" placeholder="Codice ad specifico per Sidebar Sticky..."></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_sticky-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-archive-sidebar_sticky-override-css" name="contexts[archive][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-sidebar_sticky-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-archive-sidebar_sticky-css-selector" name="contexts[archive][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
 						</div>
 					</div>
 				</div>

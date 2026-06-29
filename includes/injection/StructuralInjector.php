@@ -80,6 +80,12 @@ class StructuralInjector implements AdInjectorInterface {
 			$modified = $this->inject_sidebar_top( $dom, $xpath, $sidebar_top_config ) || $modified;
 		}
 
+		// Iniezione Sidebar Sticky
+		$sidebar_sticky_config = $this->resolve_setting( 'sidebar_sticky', $context );
+		if ( $sidebar_sticky_config && ! empty( $sidebar_sticky_config['active'] ) && trim( $sidebar_sticky_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_sidebar_sticky( $dom, $xpath, $sidebar_sticky_config ) || $modified;
+		}
+
 		// Iniezione Footer
 		$footer_config = $this->resolve_setting( 'footer', $context );
 		if ( $footer_config && ! empty( $footer_config['active'] ) && trim( $footer_config['code'] ?? '' ) !== '' ) {
@@ -229,6 +235,63 @@ class StructuralInjector implements AdInjectorInterface {
 		} else {
 			$sidebar->appendChild( $wrapper );
 		}
+		return true;
+	}
+
+	/**
+	 * Inietta il contenitore pubblicitario Sidebar Sticky in fondo alla colonna laterale.
+	 *
+	 * @since    1.0.0
+	 * @param    DOMDocument $dom    Il documento DOM.
+	 * @param    DOMXPath    $xpath  Il DOMXPath.
+	 * @param    array       $config La configurazione risolta per la posizione.
+	 * @return   bool                Vero in caso di iniezione eseguita, falso altrimenti.
+	 */
+	private function inject_sidebar_sticky( DOMDocument $dom, DOMXPath $xpath, array $config ): bool {
+		$sidebar = null;
+		if ( ! empty( $config['custom_selector'] ) ) {
+			$xpath_selector = $this->css_to_xpath( $config['custom_selector'] );
+			if ( ! empty( $xpath_selector ) ) {
+				$query_result = @$xpath->query( $xpath_selector );
+				if ( $query_result !== false ) {
+					$sidebar = $query_result->item( 0 );
+				}
+			}
+		}
+
+		if ( ! $sidebar ) {
+			$aside_result = @$xpath->query( '//aside' );
+			$sidebar = ( $aside_result !== false ) ? $aside_result->item( 0 ) : null;
+			if ( ! $sidebar ) {
+				$sidebar_class_result = @$xpath->query( '//*[contains(@class, "sidebar")]' );
+				$sidebar = ( $sidebar_class_result !== false ) ? $sidebar_class_result->item( 0 ) : null;
+			}
+		}
+
+		if ( ! $sidebar ) {
+			return false;
+		}
+
+		$ad_code = trim( $config['code'] ?? '' );
+		if ( $ad_code === '' ) {
+			return false;
+		}
+
+		$min_h_desktop = $config['min_height_desktop'] ?? 600;
+		$min_h_mobile  = $config['min_height_mobile'] ?? 0;
+
+		$wrapper = $dom->createElement( 'div' );
+		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-sidebar-sticky' );
+		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
+
+		if ( ! empty( $config['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
+		}
+
+		$this->append_html( $dom, $wrapper, $ad_code );
+
+		// Appende in fondo alla colonna laterale
+		$sidebar->appendChild( $wrapper );
 		return true;
 	}
 

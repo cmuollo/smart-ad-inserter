@@ -36,6 +36,7 @@
 					</div>
 				</div>
 
+				<!-- GLOBALE MASTHEAD -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Masthead</h2>
@@ -44,95 +45,108 @@
 					<p class="sai-card-desc">Configura il primo banner pubblicitario visibile sotto l'header globale del sito.</p>
 					
 					<div class="sai-field-row sai-checkbox-row">
-						<input type="checkbox" id="sai-use-default-placement" name="positions[masthead][use_default_placement]" value="1" checked />
-						<label for="sai-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
+						<input type="checkbox" id="sai-global-masthead-use-default-placement" name="contexts[global][positions][masthead][use_default_placement]" value="1" checked />
+						<label for="sai-global-masthead-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
 					</div>
 
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-masthead-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-masthead-active" name="positions[masthead][active]" value="1" />
+							<label for="sai-global-masthead-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-global-masthead-active" name="contexts[global][positions][masthead][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-masthead-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-masthead-desktop-height" name="positions[masthead][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							<label for="sai-global-masthead-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-global-masthead-desktop-height" name="contexts[global][positions][masthead][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-masthead-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-masthead-mobile-height" name="positions[masthead][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							<label for="sai-global-masthead-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-global-masthead-mobile-height" name="contexts[global][positions][masthead][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-banner-code">Codice Banner Masthead</label>
-						<textarea id="sai-banner-code" name="positions[masthead][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
+						<label for="sai-global-masthead-code">Codice Banner Masthead</label>
+						<textarea id="sai-global-masthead-code" name="contexts[global][positions][masthead][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
 					</div>
 					<div class="sai-field-group">
-						<label for="sai-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-override-css" name="positions[masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+						<label for="sai-global-masthead-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-global-masthead-override-css" name="contexts[global][positions][masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
 						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-css-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-css-selector" name="positions[masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />
-						<p class="sai-field-desc" id="sai-masthead-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
+						<label for="sai-global-masthead-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-global-masthead-css-selector" name="contexts[global][positions][masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />
+						<p class="sai-field-desc" id="sai-global-masthead-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
 					</div>
 				</div>
 
+				<!-- GLOBALE FOOTER -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Footer</h2>
 						<span class="sai-tag">Strutturale</span>
 					</div>
-					<p class="sai-card-desc">Configura il banner pubblicitario da visualizzare immediatamente sopra il footer globale del sito.</p>
+					<p class="sai-card-desc">Configura il banner pubblicitario da visualizzare sopra o sotto il footer globale del sito.</p>
 					
 					<div class="sai-field-row sai-checkbox-row">
-						<input type="checkbox" id="sai-footer-use-default-placement" name="positions[footer][use_default_placement]" value="1" checked />
-						<label for="sai-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
+						<input type="checkbox" id="sai-global-footer-use-default-placement" name="contexts[global][positions][footer][use_default_placement]" value="1" checked />
+						<label for="sai-global-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-footer-position">Posizione Relativa Footer</label>
-						<select id="sai-footer-position" name="positions[footer][footer_position]" class="sai-input-text">
-							<option value="before_footer">Prima del footer (default)</option>
-							<option value="after_footer">Dopo il footer</option>
-						</select>
-						<p class="sai-field-desc">Scegli se inserire il banner subito prima del tag &lt;footer&gt; o subito dopo (alla fine del tag &lt;body&gt;).</p>
+						<label>Posizione Relativa Footer</label>
+						<div class="sai-footer-options-grid">
+							<label class="sai-footer-option-box">
+								<input type="radio" id="sai-global-footer-position-before" name="contexts[global][positions][footer][footer_position]" value="before_footer" checked />
+								<div class="sai-option-desc">
+									<strong>Prima del footer (Default)</strong>
+									<span>Inietta subito prima del tag &lt;footer&gt;</span>
+								</div>
+							</label>
+							<label class="sai-footer-option-box">
+								<input type="radio" id="sai-global-footer-position-after" name="contexts[global][positions][footer][footer_position]" value="after_footer" />
+								<div class="sai-option-desc">
+									<strong>Dopo il footer</strong>
+									<span>Inietta subito dopo il tag &lt;footer&gt; (ultimo figlio del &lt;body&gt;)</span>
+								</div>
+							</label>
+						</div>
 					</div>
 
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-footer-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-footer-active" name="positions[footer][active]" value="1" />
+							<label for="sai-global-footer-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-global-footer-active" name="contexts[global][positions][footer][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-footer-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-footer-desktop-height" name="positions[footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							<label for="sai-global-footer-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-global-footer-desktop-height" name="contexts[global][positions][footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-footer-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-footer-mobile-height" name="positions[footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							<label for="sai-global-footer-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-global-footer-mobile-height" name="contexts[global][positions][footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-footer-code">Codice Banner Footer</label>
-						<textarea id="sai-footer-code" name="positions[footer][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
+						<label for="sai-global-footer-code">Codice Banner Footer</label>
+						<textarea id="sai-global-footer-code" name="contexts[global][positions][footer][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
 					</div>
 					<div class="sai-field-group">
-						<label for="sai-footer-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-footer-override-css" name="positions[footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+						<label for="sai-global-footer-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-global-footer-override-css" name="contexts[global][positions][footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
 						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-footer-css-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-footer-css-selector" name="positions[footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
-						<p class="sai-field-desc" id="sai-footer-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
+						<label for="sai-global-footer-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-global-footer-css-selector" name="contexts[global][positions][footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
+						<p class="sai-field-desc" id="sai-global-footer-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
 					</div>
 				</div>
 
+				<!-- GLOBALE SIDEBAR TOP -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Top Sidebar</h2>
@@ -142,36 +156,37 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-sidebar-top-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-sidebar-top-active" name="positions[sidebar_top][active]" value="1" />
+							<label for="sai-global-sidebar-top-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-global-sidebar-top-active" name="contexts[global][positions][sidebar_top][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-sidebar-top-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-sidebar-top-desktop-height" name="positions[sidebar_top][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-global-sidebar-top-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-global-sidebar-top-desktop-height" name="contexts[global][positions][sidebar_top][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-sidebar-top-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-sidebar-top-mobile-height" name="positions[sidebar_top][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-global-sidebar-top-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-global-sidebar-top-mobile-height" name="contexts[global][positions][sidebar_top][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-top-code">Codice Banner</label>
-						<textarea id="sai-sidebar-top-code" name="positions[sidebar_top][code]" rows="3" class="sai-textarea"></textarea>
+						<label for="sai-global-sidebar-top-code">Codice Banner</label>
+						<textarea id="sai-global-sidebar-top-code" name="contexts[global][positions][sidebar_top][code]" rows="3" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-top-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-sidebar-top-override-css" name="positions[sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						<label for="sai-global-sidebar-top-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-global-sidebar-top-override-css" name="contexts[global][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
 						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-top-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-sidebar-top-selector" name="positions[sidebar_top][custom_selector]" class="sai-input-text" />
+						<label for="sai-global-sidebar-top-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-global-sidebar-top-css-selector" name="contexts[global][positions][sidebar_top][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 
+				<!-- GLOBALE SIDEBAR STICKY -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Sidebar Sticky</h2>
@@ -181,39 +196,158 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-sidebar-sticky-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-sidebar-sticky-active" name="positions[sidebar_sticky][active]" value="1" />
+							<label for="sai-global-sidebar-sticky-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-global-sidebar-sticky-active" name="contexts[global][positions][sidebar_sticky][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-sidebar-sticky-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-sidebar-sticky-desktop-height" name="positions[sidebar_sticky][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-global-sidebar-sticky-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-global-sidebar-sticky-desktop-height" name="contexts[global][positions][sidebar_sticky][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-sidebar-sticky-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-sidebar-sticky-mobile-height" name="positions[sidebar_sticky][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-global-sidebar-sticky-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-global-sidebar-sticky-mobile-height" name="contexts[global][positions][sidebar_sticky][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-sticky-code">Codice Banner</label>
-						<textarea id="sai-sidebar-sticky-code" name="positions[sidebar_sticky][code]" rows="3" class="sai-textarea"></textarea>
+						<label for="sai-global-sidebar-sticky-code">Codice Banner</label>
+						<textarea id="sai-global-sidebar-sticky-code" name="contexts[global][positions][sidebar_sticky][code]" rows="3" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-sticky-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-sidebar-sticky-override-css" name="positions[sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						<label for="sai-global-sidebar-sticky-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-global-sidebar-sticky-override-css" name="contexts[global][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
 						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-sticky-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-sidebar-sticky-selector" name="positions[sidebar_sticky][custom_selector]" class="sai-input-text" />
+						<label for="sai-global-sidebar-sticky-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-global-sidebar-sticky-css-selector" name="contexts[global][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 			</div>
 
 			<!-- TAB 2: HOME -->
 			<div id="sai-tab-home" class="sai-tab-content">
+				<!-- HOME MASTHEAD -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Masthead</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Masthead per la Home Page.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-home-masthead-use-global-config" name="contexts[home][positions][masthead][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-home-masthead-override-container" checked />
+						<label for="sai-home-masthead-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-home-masthead-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-home-masthead-use-default-placement" name="contexts[home][positions][masthead][use_default_placement]" value="1" checked />
+							<label for="sai-home-masthead-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-home-masthead-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-home-masthead-active" name="contexts[home][positions][masthead][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-masthead-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-home-masthead-desktop-height" name="contexts[home][positions][masthead][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-masthead-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-home-masthead-mobile-height" name="contexts[home][positions][masthead][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-masthead-code">Codice Banner Masthead</label>
+							<textarea id="sai-home-masthead-code" name="contexts[home][positions][masthead][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per la Home..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-home-masthead-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-home-masthead-override-css" name="contexts[home][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-home-masthead-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-home-masthead-css-selector" name="contexts[home][positions][masthead][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- HOME FOOTER -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Footer</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Footer per la Home Page.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-home-footer-use-global-config" name="contexts[home][positions][footer][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-home-footer-override-container" checked />
+						<label for="sai-home-footer-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-home-footer-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-home-footer-use-default-placement" name="contexts[home][positions][footer][use_default_placement]" value="1" checked />
+							<label for="sai-home-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-group">
+							<label>Posizione Relativa Footer</label>
+							<div class="sai-footer-options-grid">
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-home-footer-position-before" name="contexts[home][positions][footer][footer_position]" value="before_footer" checked />
+									<div class="sai-option-desc">
+										<strong>Prima del footer (Default)</strong>
+										<span>Inietta subito prima del tag &lt;footer&gt;</span>
+									</div>
+								</label>
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-home-footer-position-after" name="contexts[home][positions][footer][footer_position]" value="after_footer" />
+									<div class="sai-option-desc">
+										<strong>Dopo il footer</strong>
+										<span>Inietta subito dopo il tag &lt;footer&gt; (fine del &lt;body&gt;)</span>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-home-footer-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-home-footer-active" name="contexts[home][positions][footer][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-footer-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-home-footer-desktop-height" name="contexts[home][positions][footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-home-footer-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-home-footer-mobile-height" name="contexts[home][positions][footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-home-footer-code">Codice Banner Footer</label>
+							<textarea id="sai-home-footer-code" name="contexts[home][positions][footer][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per il Footer della Home..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-home-footer-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-home-footer-override-css" name="contexts[home][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-home-footer-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-home-footer-css-selector" name="contexts[home][positions][footer][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- GRID HOME -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Box in Griglia (Home Page)</h2>
@@ -223,50 +357,168 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-grid-home-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-grid-home-active" name="positions[grid_home][active]" value="1" />
+							<label for="sai-home-grid-home-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-home-grid-home-active" name="contexts[home][positions][grid_home][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-home-target-element">Target Element Selector (CSS)</label>
-							<input type="text" id="sai-grid-home-target-element" name="positions[grid_home][target_element]" class="sai-input-text" placeholder="Es. .post-card, article" />
+							<label for="sai-home-grid-home-target-element">Target Element Selector (CSS)</label>
+							<input type="text" id="sai-home-grid-home-target-element" name="contexts[home][positions][grid_home][target_element]" class="sai-input-text" placeholder="Es. .post-card, article" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-home-frequency">Frequenza / Posizione (N° elemento)</label>
-							<input type="number" id="sai-grid-home-frequency" name="positions[grid_home][frequency]" class="sai-input-number" min="1" placeholder="3" />
+							<label for="sai-home-grid-home-frequency">Frequenza / Posizione (N° elemento)</label>
+							<input type="number" id="sai-home-grid-home-frequency" name="contexts[home][positions][grid_home][frequency]" class="sai-input-number" min="1" placeholder="3" />
 						</div>
 					</div>
 
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-grid-home-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-grid-home-desktop-height" name="positions[grid_home][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-home-grid-home-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-home-grid-home-desktop-height" name="contexts[home][positions][grid_home][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-home-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-grid-home-mobile-height" name="positions[grid_home][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-home-grid-home-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-home-grid-home-mobile-height" name="contexts[home][positions][grid_home][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-home-banner-code">Codice Banner</label>
-						<textarea id="sai-grid-home-banner-code" name="positions[grid_home][code]" rows="4" class="sai-textarea"></textarea>
+						<label for="sai-home-grid-home-code">Codice Banner</label>
+						<textarea id="sai-home-grid-home-code" name="contexts[home][positions][grid_home][code]" rows="4" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-home-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-grid-home-override-css" name="positions[grid_home][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<label for="sai-home-grid-home-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-home-grid-home-override-css" name="contexts[home][positions][grid_home][override_css]" rows="2" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-home-custom-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-grid-home-custom-selector" name="positions[grid_home][custom_selector]" class="sai-input-text" />
+						<label for="sai-home-grid-home-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-home-grid-home-css-selector" name="contexts[home][positions][grid_home][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 			</div>
 
 			<!-- TAB 3: ARTICOLO SINGOLO -->
 			<div id="sai-tab-article" class="sai-tab-content">
+				<!-- SINGLE MASTHEAD -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Masthead</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Masthead per gli Articoli Singoli.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-masthead-use-global-config" name="contexts[single][positions][masthead][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-single-masthead-override-container" checked />
+						<label for="sai-single-masthead-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-single-masthead-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-single-masthead-use-default-placement" name="contexts[single][positions][masthead][use_default_placement]" value="1" checked />
+							<label for="sai-single-masthead-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-single-masthead-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-single-masthead-active" name="contexts[single][positions][masthead][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-masthead-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-single-masthead-desktop-height" name="contexts[single][positions][masthead][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-masthead-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-single-masthead-mobile-height" name="contexts[single][positions][masthead][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-masthead-code">Codice Banner Masthead</label>
+							<textarea id="sai-single-masthead-code" name="contexts[single][positions][masthead][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per Articoli..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-single-masthead-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-single-masthead-override-css" name="contexts[single][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-single-masthead-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-single-masthead-css-selector" name="contexts[single][positions][masthead][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- SINGLE FOOTER -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Footer</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Footer per gli Articoli Singoli.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-footer-use-global-config" name="contexts[single][positions][footer][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-single-footer-override-container" checked />
+						<label for="sai-single-footer-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-single-footer-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-single-footer-use-default-placement" name="contexts[single][positions][footer][use_default_placement]" value="1" checked />
+							<label for="sai-single-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-group">
+							<label>Posizione Relativa Footer</label>
+							<div class="sai-footer-options-grid">
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-single-footer-position-before" name="contexts[single][positions][footer][footer_position]" value="before_footer" checked />
+									<div class="sai-option-desc">
+										<strong>Prima del footer (Default)</strong>
+										<span>Inietta subito prima del tag &lt;footer&gt;</span>
+									</div>
+								</label>
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-single-footer-position-after" name="contexts[single][positions][footer][footer_position]" value="after_footer" />
+									<div class="sai-option-desc">
+										<strong>Dopo il footer</strong>
+										<span>Inietta subito dopo il tag &lt;footer&gt; (fine del &lt;body&gt;)</span>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-single-footer-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-single-footer-active" name="contexts[single][positions][footer][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-footer-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-single-footer-desktop-height" name="contexts[single][positions][footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-single-footer-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-single-footer-mobile-height" name="contexts[single][positions][footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-single-footer-code">Codice Banner Footer</label>
+							<textarea id="sai-single-footer-code" name="contexts[single][positions][footer][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per il Footer degli Articoli..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-single-footer-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-single-footer-override-css" name="contexts[single][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-single-footer-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-single-footer-css-selector" name="contexts[single][positions][footer][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- ATF -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">ATF — Above The Fold</h2>
@@ -276,36 +528,36 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-atf-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-atf-active" name="positions[atf][active]" value="1" />
+							<label for="sai-single-atf-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-single-atf-active" name="contexts[single][positions][atf][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-atf-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-atf-desktop-height" name="positions[atf][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-single-atf-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-single-atf-desktop-height" name="contexts[single][positions][atf][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-atf-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-atf-mobile-height" name="positions[atf][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-single-atf-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-single-atf-mobile-height" name="contexts[single][positions][atf][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-atf-banner-code">Codice Banner</label>
-						<textarea id="sai-atf-banner-code" name="positions[atf][code]" rows="4" class="sai-textarea"></textarea>
+						<label for="sai-single-atf-code">Codice Banner</label>
+						<textarea id="sai-single-atf-code" name="contexts[single][positions][atf][code]" rows="4" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-atf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-atf-override-css" name="positions[atf][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<label for="sai-single-atf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-single-atf-override-css" name="contexts[single][positions][atf][override_css]" rows="2" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-atf-custom-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-atf-custom-selector" name="positions[atf][custom_selector]" class="sai-input-text" />
+						<label for="sai-single-atf-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-single-atf-css-selector" name="contexts[single][positions][atf][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 
+				<!-- BTF -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">BTF — Below The Fold</h2>
@@ -315,39 +567,157 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-btf-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-btf-active" name="positions[btf][active]" value="1" />
+							<label for="sai-single-btf-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-single-btf-active" name="contexts[single][positions][btf][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-btf-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-btf-desktop-height" name="positions[btf][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-single-btf-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-single-btf-desktop-height" name="contexts[single][positions][btf][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-btf-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-btf-mobile-height" name="positions[btf][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-single-btf-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-single-btf-mobile-height" name="contexts[single][positions][btf][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-btf-banner-code">Codice Banner</label>
-						<textarea id="sai-btf-banner-code" name="positions[btf][code]" rows="4" class="sai-textarea"></textarea>
+						<label for="sai-single-btf-code">Codice Banner</label>
+						<textarea id="sai-single-btf-code" name="contexts[single][positions][btf][code]" rows="4" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-btf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-btf-override-css" name="positions[btf][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<label for="sai-single-btf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-single-btf-override-css" name="contexts[single][positions][btf][override_css]" rows="2" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-btf-custom-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-btf-custom-selector" name="positions[btf][custom_selector]" class="sai-input-text" />
+						<label for="sai-single-btf-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-single-btf-css-selector" name="contexts[single][positions][btf][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 			</div>
 
 			<!-- TAB 4: CATEGORIE / ARCHIVI -->
 			<div id="sai-tab-archive" class="sai-tab-content">
+				<!-- ARCHIVE MASTHEAD -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Masthead</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Masthead per le pagine Categorie e Archivio.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-archive-masthead-use-global-config" name="contexts[archive][positions][masthead][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-archive-masthead-override-container" checked />
+						<label for="sai-archive-masthead-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-archive-masthead-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-archive-masthead-use-default-placement" name="contexts[archive][positions][masthead][use_default_placement]" value="1" checked />
+							<label for="sai-archive-masthead-use-default-placement"><strong>Usa posizionamento di default (- dopo &lt;header&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-archive-masthead-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-archive-masthead-active" name="contexts[archive][positions][masthead][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-masthead-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-archive-masthead-desktop-height" name="contexts[archive][positions][masthead][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-masthead-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-archive-masthead-mobile-height" name="contexts[archive][positions][masthead][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-masthead-code">Codice Banner Masthead</label>
+							<textarea id="sai-archive-masthead-code" name="contexts[archive][positions][masthead][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per Categorie/Archivi..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-archive-masthead-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-archive-masthead-override-css" name="contexts[archive][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-archive-masthead-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-archive-masthead-css-selector" name="contexts[archive][positions][masthead][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- ARCHIVE FOOTER -->
+				<div class="sai-card">
+					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Footer</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura la posizione Footer per le pagine Categorie e Archivio.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-archive-footer-use-global-config" name="contexts[archive][positions][footer][use_global_config]" value="1" class="sai-use-global-toggle" data-target="sai-archive-footer-override-container" checked />
+						<label for="sai-archive-footer-use-global-config"><strong>Usa configurazione globale</strong></label>
+					</div>
+
+					<div id="sai-archive-footer-override-container" class="sai-override-container sai-hidden">
+						<div class="sai-field-row sai-checkbox-row">
+							<input type="checkbox" id="sai-archive-footer-use-default-placement" name="contexts[archive][positions][footer][use_default_placement]" value="1" checked />
+							<label for="sai-archive-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
+						</div>
+
+						<div class="sai-field-group">
+							<label>Posizione Relativa Footer</label>
+							<div class="sai-footer-options-grid">
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-archive-footer-position-before" name="contexts[archive][positions][footer][footer_position]" value="before_footer" checked />
+									<div class="sai-option-desc">
+										<strong>Prima del footer (Default)</strong>
+										<span>Inietta subito prima del tag &lt;footer&gt;</span>
+									</div>
+								</label>
+								<label class="sai-footer-option-box">
+									<input type="radio" id="sai-archive-footer-position-after" name="contexts[archive][positions][footer][footer_position]" value="after_footer" />
+									<div class="sai-option-desc">
+										<strong>Dopo il footer</strong>
+										<span>Inietta subito dopo il tag &lt;footer&gt; (fine del &lt;body&gt;)</span>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<div class="sai-field-row">
+							<div class="sai-field-col">
+								<label for="sai-archive-footer-active">Abilita Posizione</label>
+								<input type="checkbox" id="sai-archive-footer-active" name="contexts[archive][positions][footer][active]" value="1" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-footer-desktop-height">Altezza Minima Desktop (px)</label>
+								<input type="number" id="sai-archive-footer-desktop-height" name="contexts[archive][positions][footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+							</div>
+							<div class="sai-field-col">
+								<label for="sai-archive-footer-mobile-height">Altezza Minima Mobile (px)</label>
+								<input type="number" id="sai-archive-footer-mobile-height" name="contexts[archive][positions][footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+							</div>
+						</div>
+
+						<div class="sai-field-group">
+							<label for="sai-archive-footer-code">Codice Banner Footer</label>
+							<textarea id="sai-archive-footer-code" name="contexts[archive][positions][footer][code]" rows="4" class="sai-textarea" placeholder="Codice ad specifico per il Footer di Categorie/Archivi..."></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-archive-footer-override-css">Override CSS Wrapper</label>
+							<textarea id="sai-archive-footer-override-css" name="contexts[archive][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						</div>
+						<div class="sai-field-group">
+							<label for="sai-archive-footer-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-archive-footer-css-selector" name="contexts[archive][positions][footer][custom_selector]" class="sai-input-text" />
+						</div>
+					</div>
+				</div>
+
+				<!-- GRID ARCHIVE -->
 				<div class="sai-card">
 					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Box in Griglia (Archivi / Categorie)</h2>
@@ -357,44 +727,43 @@
 					
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-grid-archive-active">Abilita Posizione</label>
-							<input type="checkbox" id="sai-grid-archive-active" name="positions[grid_archive][active]" value="1" />
+							<label for="sai-archive-grid-archive-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-archive-grid-archive-active" name="contexts[archive][positions][grid_archive][active]" value="1" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-archive-target-element">Target Element Selector (CSS)</label>
-							<input type="text" id="sai-grid-archive-target-element" name="positions[grid_archive][target_element]" class="sai-input-text" placeholder="Es. .post-card, article" />
+							<label for="sai-archive-grid-archive-target-element">Target Element Selector (CSS)</label>
+							<input type="text" id="sai-archive-grid-archive-target-element" name="contexts[archive][positions][grid_archive][target_element]" class="sai-input-text" placeholder="Es. .post-card, article" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-archive-frequency">Frequenza / Posizione (N° elemento)</label>
-							<input type="number" id="sai-grid-archive-frequency" name="positions[grid_archive][frequency]" class="sai-input-number" min="1" placeholder="3" />
+							<label for="sai-archive-grid-archive-frequency">Frequenza / Posizione (N° elemento)</label>
+							<input type="number" id="sai-archive-grid-archive-frequency" name="contexts[archive][positions][grid_archive][frequency]" class="sai-input-number" min="1" placeholder="3" />
 						</div>
 					</div>
 
 					<div class="sai-field-row">
 						<div class="sai-field-col">
-							<label for="sai-grid-archive-desktop-height">Altezza Minima Desktop (px)</label>
-							<input type="number" id="sai-grid-archive-desktop-height" name="positions[grid_archive][min_height_desktop]" class="sai-input-number" min="0" />
+							<label for="sai-archive-grid-archive-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-archive-grid-archive-desktop-height" name="contexts[archive][positions][grid_archive][min_height_desktop]" class="sai-input-number" min="0" />
 						</div>
 						<div class="sai-field-col">
-							<label for="sai-grid-archive-mobile-height">Altezza Minima Mobile (px)</label>
-							<input type="number" id="sai-grid-archive-mobile-height" name="positions[grid_archive][min_height_mobile]" class="sai-input-number" min="0" />
+							<label for="sai-archive-grid-archive-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-archive-grid-archive-mobile-height" name="contexts[archive][positions][grid_archive][min_height_mobile]" class="sai-input-number" min="0" />
 						</div>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-archive-banner-code">Codice Banner</label>
-						<textarea id="sai-grid-archive-banner-code" name="positions[grid_archive][code]" rows="4" class="sai-textarea"></textarea>
+						<label for="sai-archive-grid-archive-code">Codice Banner</label>
+						<textarea id="sai-archive-grid-archive-code" name="contexts[archive][positions][grid_archive][code]" rows="4" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-archive-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
-						<textarea id="sai-grid-archive-override-css" name="positions[grid_archive][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<label for="sai-archive-grid-archive-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
+						<textarea id="sai-archive-grid-archive-override-css" name="contexts[archive][positions][grid_archive][override_css]" rows="2" class="sai-textarea"></textarea>
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-archive-custom-selector">Selettore CSS custom (opzionale)</label>
-						<input type="text" id="sai-grid-archive-custom-selector" name="positions[grid_archive][custom_selector]" class="sai-input-text" />
+						<label for="sai-archive-grid-archive-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-archive-grid-archive-css-selector" name="contexts[archive][positions][grid_archive][custom_selector]" class="sai-input-text" />
 					</div>
 				</div>
 			</div>

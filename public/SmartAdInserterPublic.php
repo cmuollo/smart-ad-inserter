@@ -101,12 +101,13 @@ class SmartAdInserterPublic {
 		}
 
 		$settings = get_option( 'smart_ad_inserter_settings', [] );
-		if ( empty( $settings['positions'] ) ) {
+		$positions = $settings['contexts']['single']['positions'] ?? [];
+		if ( empty( $positions ) ) {
 			return $content;
 		}
 
 		if ( class_exists( 'SmartAdInserter\\Injection\\ContentInjector' ) ) {
-			$injector = new ContentInjector( $settings['positions'] );
+			$injector = new ContentInjector( $positions );
 			return $injector->inject( $content );
 		}
 
@@ -141,12 +142,12 @@ class SmartAdInserterPublic {
 		}
 
 		$settings = get_option( 'smart_ad_inserter_settings', [] );
-		if ( empty( $settings['positions'] ) ) {
+		if ( empty( $settings['contexts'] ) ) {
 			return $html;
 		}
 
 		if ( class_exists( 'SmartAdInserter\\Injection\\StructuralInjector' ) ) {
-			$injector = new StructuralInjector( $settings['positions'] );
+			$injector = new StructuralInjector( $settings );
 			return $injector->inject( $html );
 		}
 

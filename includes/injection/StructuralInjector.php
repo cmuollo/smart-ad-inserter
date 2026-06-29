@@ -66,30 +66,36 @@ class StructuralInjector implements AdInjectorInterface {
 
 		$xpath    = new DOMXPath( $dom );
 		$modified = false;
+		$context  = $this->get_current_context();
 
-		// Iniezione Masthead (Sotto l'header globale del sito)
-		if ( ! empty( $this->settings['masthead']['active'] ) && ! empty( trim( $this->settings['masthead']['code'] ?? '' ) ) ) {
-			$modified = $this->inject_masthead( $dom, $xpath ) || $modified;
+		// Iniezione Masthead
+		$masthead_config = $this->resolve_setting( 'masthead', $context );
+		if ( $masthead_config && ! empty( $masthead_config['active'] ) && trim( $masthead_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_masthead( $dom, $xpath, $masthead_config ) || $modified;
 		}
 
-		// Iniezione Sidebar Top (All'inizio della barra laterale)
-		if ( ! empty( $this->settings['sidebar_top']['active'] ) && ! empty( trim( $this->settings['sidebar_top']['code'] ?? '' ) ) ) {
-			$modified = $this->inject_sidebar_top( $dom, $xpath ) || $modified;
+		// Iniezione Sidebar Top
+		$sidebar_top_config = $this->resolve_setting( 'sidebar_top', $context );
+		if ( $sidebar_top_config && ! empty( $sidebar_top_config['active'] ) && trim( $sidebar_top_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_sidebar_top( $dom, $xpath, $sidebar_top_config ) || $modified;
 		}
 
-		// Iniezione Footer (Sopra il footer globale del sito)
-		if ( ! empty( $this->settings['footer']['active'] ) && ! empty( trim( $this->settings['footer']['code'] ?? '' ) ) ) {
-			$modified = $this->inject_footer( $dom, $xpath ) || $modified;
+		// Iniezione Footer
+		$footer_config = $this->resolve_setting( 'footer', $context );
+		if ( $footer_config && ! empty( $footer_config['active'] ) && trim( $footer_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_footer( $dom, $xpath, $footer_config ) || $modified;
 		}
 
-		// Iniezione Griglia Home (Home Page)
-		if ( ( is_home() || is_front_page() ) && ! empty( $this->settings['grid_home']['active'] ) && ! empty( trim( $this->settings['grid_home']['code'] ?? '' ) ) ) {
-			$modified = $this->inject_grid( $dom, $xpath, 'grid_home' ) || $modified;
+		// Iniezione Griglia Home
+		$grid_home_config = $this->resolve_setting( 'grid_home', $context );
+		if ( $context === 'home' && $grid_home_config && ! empty( $grid_home_config['active'] ) && trim( $grid_home_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_grid( $dom, $xpath, 'grid_home', $grid_home_config ) || $modified;
 		}
 
-		// Iniezione Griglia Archivio (Categorie/Archivi)
-		if ( ( is_archive() || is_category() || is_tag() || is_search() || is_author() || is_date() ) && ! empty( $this->settings['grid_archive']['active'] ) && ! empty( trim( $this->settings['grid_archive']['code'] ?? '' ) ) ) {
-			$modified = $this->inject_grid( $dom, $xpath, 'grid_archive' ) || $modified;
+		// Iniezione Griglia Archivio
+		$grid_archive_config = $this->resolve_setting( 'grid_archive', $context );
+		if ( $context === 'archive' && $grid_archive_config && ! empty( $grid_archive_config['active'] ) && trim( $grid_archive_config['code'] ?? '' ) !== '' ) {
+			$modified = $this->inject_grid( $dom, $xpath, 'grid_archive', $grid_archive_config ) || $modified;
 		}
 
 		$output = $modified ? $dom->saveHTML() : $html_clean;
@@ -108,13 +114,17 @@ class StructuralInjector implements AdInjectorInterface {
 	 * Individua l'elemento <header> o classi CSS standard come .site-header.
 	 *
 	 * @since    1.0.0
+	 * @param    DOMDocument $dom    Il documento DOM.
+	 * @param    DOMXPath    $xpath  Il DOMXPath.
+	 * @param    array       $config La configurazione risolta per la posizione.
+	 * @return   bool                Vero in caso di iniezione eseguita, falso altrimenti.
 	 */
-	private function inject_masthead( DOMDocument $dom, DOMXPath $xpath ): bool {
-		$use_default = ! isset( $this->settings['masthead']['use_default_placement'] ) || $this->settings['masthead']['use_default_placement'];
+	private function inject_masthead( DOMDocument $dom, DOMXPath $xpath, array $config ): bool {
+		$use_default = ! isset( $config['use_default_placement'] ) || $config['use_default_placement'];
 		$header      = null;
 
-		if ( ! $use_default && ! empty( $this->settings['masthead']['custom_selector'] ) ) {
-			$xpath_selector = $this->css_to_xpath( $this->settings['masthead']['custom_selector'] );
+		if ( ! $use_default && ! empty( $config['custom_selector'] ) ) {
+			$xpath_selector = $this->css_to_xpath( $config['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
 				$query_result = @$xpath->query( $xpath_selector );
 				if ( $query_result !== false ) {
@@ -136,20 +146,20 @@ class StructuralInjector implements AdInjectorInterface {
 			return false;
 		}
 
-		$ad_code = trim( $this->settings['masthead']['code'] ?? '' );
+		$ad_code = trim( $config['code'] ?? '' );
 		if ( $ad_code === '' ) {
 			return false;
 		}
 
-		$min_h_desktop = $this->settings['masthead']['min_height_desktop'] ?? 250;
-		$min_h_mobile  = $this->settings['masthead']['min_height_mobile'] ?? 100;
+		$min_h_desktop = $config['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $config['min_height_mobile'] ?? 100;
 
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-masthead' );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
 
-		if ( ! empty( $this->settings['masthead']['override_css'] ) ) {
-			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['masthead']['override_css'] );
+		if ( ! empty( $config['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
 		}
 
 		$this->append_html( $dom, $wrapper, $ad_code );
@@ -165,11 +175,15 @@ class StructuralInjector implements AdInjectorInterface {
 	 * Utilizza selettori XPath personalizzati configurabili dall'admin per temi particolari.
 	 *
 	 * @since    1.0.0
+	 * @param    DOMDocument $dom    Il documento DOM.
+	 * @param    DOMXPath    $xpath  Il DOMXPath.
+	 * @param    array       $config La configurazione risolta per la posizione.
+	 * @return   bool                Vero in caso di iniezione eseguita, falso altrimenti.
 	 */
-	private function inject_sidebar_top( DOMDocument $dom, DOMXPath $xpath ): bool {
+	private function inject_sidebar_top( DOMDocument $dom, DOMXPath $xpath, array $config ): bool {
 		$sidebar = null;
-		if ( ! empty( $this->settings['sidebar_top']['custom_selector'] ) ) {
-			$xpath_selector = $this->css_to_xpath( $this->settings['sidebar_top']['custom_selector'] );
+		if ( ! empty( $config['custom_selector'] ) ) {
+			$xpath_selector = $this->css_to_xpath( $config['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
 				$query_result = @$xpath->query( $xpath_selector );
 				if ( $query_result !== false ) {
@@ -191,20 +205,20 @@ class StructuralInjector implements AdInjectorInterface {
 			return false;
 		}
 
-		$ad_code = trim( $this->settings['sidebar_top']['code'] ?? '' );
+		$ad_code = trim( $config['code'] ?? '' );
 		if ( $ad_code === '' ) {
 			return false;
 		}
 
-		$min_h_desktop = $this->settings['sidebar_top']['min_height_desktop'] ?? 250;
-		$min_h_mobile  = $this->settings['sidebar_top']['min_height_mobile'] ?? 0;
+		$min_h_desktop = $config['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $config['min_height_mobile'] ?? 0;
 
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-sidebar-top' );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
 
-		if ( ! empty( $this->settings['sidebar_top']['override_css'] ) ) {
-			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['sidebar_top']['override_css'] );
+		if ( ! empty( $config['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
 		}
 
 		$this->append_html( $dom, $wrapper, $ad_code );
@@ -219,16 +233,20 @@ class StructuralInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Inietta il contenitore pubblicitario Footer sopra l'elemento footer globale del sito.
+	 * Inietta il contenitore pubblicitario Footer sopra o sotto l'elemento footer globale del sito.
 	 *
 	 * @since    1.0.0
+	 * @param    DOMDocument $dom    Il documento DOM.
+	 * @param    DOMXPath    $xpath  Il DOMXPath.
+	 * @param    array       $config La configurazione risolta per la posizione.
+	 * @return   bool                Vero in caso di iniezione eseguita, falso altrimenti.
 	 */
-	private function inject_footer( DOMDocument $dom, DOMXPath $xpath ): bool {
-		$use_default = ! isset( $this->settings['footer']['use_default_placement'] ) || $this->settings['footer']['use_default_placement'];
+	private function inject_footer( DOMDocument $dom, DOMXPath $xpath, array $config ): bool {
+		$use_default = ! isset( $config['use_default_placement'] ) || $config['use_default_placement'];
 		$footer      = null;
 
-		if ( ! $use_default && ! empty( $this->settings['footer']['custom_selector'] ) ) {
-			$xpath_selector = $this->css_to_xpath( $this->settings['footer']['custom_selector'] );
+		if ( ! $use_default && ! empty( $config['custom_selector'] ) ) {
+			$xpath_selector = $this->css_to_xpath( $config['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
 				$query_result = @$xpath->query( $xpath_selector );
 				if ( $query_result !== false ) {
@@ -246,25 +264,25 @@ class StructuralInjector implements AdInjectorInterface {
 			}
 		}
 
-		$ad_code = trim( $this->settings['footer']['code'] ?? '' );
+		$ad_code = trim( $config['code'] ?? '' );
 		if ( $ad_code === '' ) {
 			return false;
 		}
 
-		$min_h_desktop = $this->settings['footer']['min_height_desktop'] ?? 250;
-		$min_h_mobile  = $this->settings['footer']['min_height_mobile'] ?? 100;
+		$min_h_desktop = $config['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $config['min_height_mobile'] ?? 100;
 
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-footer' );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
 
-		if ( ! empty( $this->settings['footer']['override_css'] ) ) {
-			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['footer']['override_css'] );
+		if ( ! empty( $config['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
 		}
 
 		$this->append_html( $dom, $wrapper, $ad_code );
 
-		$footer_pos = $this->settings['footer']['footer_position'] ?? 'before_footer';
+		$footer_pos = $config['footer_position'] ?? 'before_footer';
 
 		if ( $footer && $footer->parentNode ) {
 			if ( $footer_pos === 'after_footer' ) {
@@ -293,20 +311,14 @@ class StructuralInjector implements AdInjectorInterface {
 	/**
 	 * Inietta un banner all'interno della griglia degli articoli.
 	 *
-	 * Individua l'N-esimo elemento corrispondente al target_element e inserisce il banner subito dopo.
-	 *
 	 * @since    1.0.0
 	 * @param    DOMDocument $dom         Il documento DOM.
 	 * @param    DOMXPath    $xpath       Il DOMXPath.
 	 * @param    string      $position_id L'identificatore della posizione ('grid_home' o 'grid_archive').
+	 * @param    array       $config      La configurazione risolta per la posizione.
 	 * @return   bool                     Vero in caso di iniezione eseguita, falso altrimenti.
 	 */
-	private function inject_grid( DOMDocument $dom, DOMXPath $xpath, string $position_id ): bool {
-		$config = $this->settings[ $position_id ] ?? [];
-		if ( empty( $config ) ) {
-			return false;
-		}
-
+	private function inject_grid( DOMDocument $dom, DOMXPath $xpath, string $position_id, array $config ): bool {
 		$target_selector = empty( $config['target_element'] ) ? '.post-card' : $config['target_element'];
 		$xpath_selector  = $this->css_to_xpath( $target_selector );
 		if ( empty( $xpath_selector ) ) {
@@ -337,7 +349,6 @@ class StructuralInjector implements AdInjectorInterface {
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-' . str_replace( '_', '-', $position_id ) );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
 
-		// Se la griglia ha un override CSS, lo applichiamo come stile inline
 		if ( ! empty( $config['override_css'] ) ) {
 			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
 		}
@@ -430,6 +441,69 @@ class StructuralInjector implements AdInjectorInterface {
 				$node->appendChild( $imported );
 			}
 		}
+	}
+
+	/**
+	 * Rileva il contesto WordPress corrente basandosi sui tag condizionali di frontend.
+	 *
+	 * @since    1.0.0
+	 * @return   string Il contesto corrente: 'home', 'single', 'archive' o 'global'.
+	 */
+	private function get_current_context(): string {
+		if ( is_home() || is_front_page() ) {
+			return 'home';
+		}
+		if ( is_singular() ) {
+			return 'single';
+		}
+		if ( is_archive() || is_category() || is_tag() || is_search() || is_author() || is_date() ) {
+			return 'archive';
+		}
+		return 'global';
+	}
+
+	/**
+	 * Risolve la configurazione effettiva per una data posizione dato il contesto corrente.
+	 *
+	 * Applica la strategia di fallback esplicita: se use_global_config è abilitato (o ereditato per assenza),
+	 * restituisce la configurazione globale. Se use_global_config è false (modalità override),
+	 * restituisce la configurazione contestuale (se attiva e con codice ad) oppure null (se inattiva o con codice vuoto).
+	 *
+	 * @since    1.0.0
+	 * @param    string $position_id L'identificatore della posizione (es. 'masthead', 'footer').
+	 * @param    string $context     Il contesto corrente.
+	 * @return   array|null          La configurazione risolta, o null se non deve essere mostrato alcun banner.
+	 */
+	private function resolve_setting( string $position_id, string $context ) {
+		$contexts = $this->settings['contexts'] ?? [];
+
+		// Se siamo nel contesto globale, usiamo sempre e solo la configurazione globale
+		if ( $context === 'global' ) {
+			return $contexts['global']['positions'][ $position_id ] ?? null;
+		}
+
+		$context_config = $contexts[ $context ]['positions'][ $position_id ] ?? null;
+
+		// Se per questa posizione non esiste alcuna configurazione specifica per il contesto, fallback al globale
+		if ( ! $context_config ) {
+			return $contexts['global']['positions'][ $position_id ] ?? null;
+		}
+
+		$use_global = ! isset( $context_config['use_global_config'] ) || $context_config['use_global_config'];
+
+		if ( $use_global ) {
+			// Ereditarietà esplicita/implicita: fallback alla configurazione globale
+			return $contexts['global']['positions'][ $position_id ] ?? null;
+		}
+
+		// Modalità Override Esplicito (use_global_config === false)
+		// Restituiamo la configurazione contestuale se è attiva e con codice non vuoto
+		if ( ! empty( $context_config['active'] ) && trim( $context_config['code'] ?? '' ) !== '' ) {
+			return $context_config;
+		}
+
+		// Altrimenti (override disattivato o codice vuoto), restituiamo null per non emettere alcun wrapper
+		return null;
 	}
 }
 

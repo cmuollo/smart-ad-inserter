@@ -55,13 +55,13 @@
 		function updateAllConditionalRenderings() {
 			const contextsList = ['global', 'home', 'single', 'archive'];
 			contextsList.forEach(function(ctx) {
-				['masthead', 'footer'].forEach(function(pos) {
+				['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'].forEach(function(pos) {
 					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
 
 					// A. Gestione visualizzazione container di override
 					if (ctx !== 'global') {
 						const useGlobalCheckbox = document.getElementById(mapping[prefix + 'use_global_config']);
-						const overrideContainer = document.getElementById('sai-' + ctx + '-' + pos + '-override-container');
+						const overrideContainer = document.getElementById('sai-' + ctx + '-' + pos.replace(/_/g, '-') + '-override-container');
 						if (useGlobalCheckbox && overrideContainer) {
 							if (useGlobalCheckbox.checked) {
 								overrideContainer.classList.add('sai-hidden');
@@ -92,7 +92,7 @@
 		function bindChangeListeners() {
 			const contextsList = ['global', 'home', 'single', 'archive'];
 			contextsList.forEach(function(ctx) {
-				['masthead', 'footer'].forEach(function(pos) {
+				['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'].forEach(function(pos) {
 					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
 
 					// Toggle ereditarietà globale
@@ -137,6 +137,7 @@
 				populateFields(data);
 				updateAllConditionalRenderings();
 				bindChangeListeners();
+				setupInTextValidation();
 				showSpinner(false);
 			})
 			.catch(function(error) {
@@ -277,9 +278,9 @@
 
 			const contexts = {
 				global: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'],
-				home: ['masthead', 'footer', 'grid_home'],
-				single: ['masthead', 'footer', 'atf', 'btf'],
-				archive: ['masthead', 'footer', 'grid_archive']
+				home: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_home'],
+				single: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'atf', 'btf', 'in_text'],
+				archive: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_archive']
 			};
 
 			Object.keys(contexts).forEach(function(ctx) {
@@ -340,10 +341,25 @@
 						data.contexts[ctx].positions[pos].frequency = freqEl ? parseInt(freqEl.value, 10) || 0 : 0;
 					}
 
-					// use_global_config (tutte le tab tranne global e solo masthead/footer)
-					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer')) {
+					// use_global_config (tutte le tab tranne global e posizioni override)
+					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer' || pos === 'sidebar_top' || pos === 'sidebar_sticky')) {
 						const useGlobalEl = document.getElementById(mapping[prefix + 'use_global_config']);
 						data.contexts[ctx].positions[pos].use_global_config = useGlobalEl ? useGlobalEl.checked : true;
+					}
+
+					// in_text specific fields
+					if (pos === 'in_text') {
+						const maxInsEl = document.getElementById(mapping[prefix + 'max_insertions']);
+						data.contexts[ctx].positions[pos].max_insertions = maxInsEl ? parseInt(maxInsEl.value, 10) || 0 : 0;
+
+						const wordsIntEl = document.getElementById(mapping[prefix + 'words_interval']);
+						data.contexts[ctx].positions[pos].words_interval = wordsIntEl ? parseInt(wordsIntEl.value, 10) || 0 : 0;
+
+						const avoidBtfEl = document.getElementById(mapping[prefix + 'avoid_btf_single_block']);
+						data.contexts[ctx].positions[pos].avoid_btf_single_block = avoidBtfEl ? avoidBtfEl.checked : false;
+
+						const exclTokensEl = document.getElementById(mapping[prefix + 'excluded_container_tokens']);
+						data.contexts[ctx].positions[pos].excluded_container_tokens = exclTokensEl ? exclTokensEl.value : '';
 					}
 				});
 			});
@@ -385,9 +401,9 @@
 
 			const contexts = {
 				global: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'],
-				home: ['masthead', 'footer', 'grid_home'],
-				single: ['masthead', 'footer', 'atf', 'btf'],
-				archive: ['masthead', 'footer', 'grid_archive']
+				home: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_home'],
+				single: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'atf', 'btf', 'in_text'],
+				archive: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_archive']
 			};
 
 			Object.keys(contexts).forEach(function(ctx) {
@@ -412,13 +428,78 @@
 						map[prefix + 'target_element'] = domPrefix + 'target-element';
 						map[prefix + 'frequency'] = domPrefix + 'frequency';
 					}
-					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer')) {
+					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer' || pos === 'sidebar_top' || pos === 'sidebar_sticky')) {
 						map[prefix + 'use_global_config'] = domPrefix + 'use-global-config';
+					}
+					if (pos === 'in_text') {
+						map[prefix + 'max_insertions'] = domPrefix + 'max-insertions';
+						map[prefix + 'words_interval'] = domPrefix + 'words-interval';
+						map[prefix + 'avoid_btf_single_block'] = domPrefix + 'avoid-btf-single-block';
+						map[prefix + 'excluded_container_tokens'] = domPrefix + 'excluded-container-tokens';
 					}
 				});
 			});
 
 			return map;
+		}
+
+		// Abilita/disabilita campi e valida esclusioni in tempo reale per la card In Text
+		function setupInTextValidation() {
+			const wordsIntervalInput = document.getElementById('sai-single-in-text-words-interval');
+			const maxInsertionsInput = document.getElementById('sai-single-in-text-max-insertions');
+			const excludedTokensInput = document.getElementById('sai-single-in-text-excluded-container-tokens');
+
+			if (!wordsIntervalInput || !maxInsertionsInput || !excludedTokensInput) {
+				return;
+			}
+
+			function updateInTextState() {
+				const val = parseInt(wordsIntervalInput.value, 10) || 0;
+				if (val <= 0) {
+					maxInsertionsInput.readOnly = true;
+					maxInsertionsInput.classList.add('sai-input-readonly');
+				} else {
+					maxInsertionsInput.readOnly = false;
+					maxInsertionsInput.classList.remove('sai-input-readonly');
+				}
+			}
+
+			function validateExclusionTokens() {
+				const val = excludedTokensInput.value.trim();
+				if (val === '') {
+					excludedTokensInput.style.borderColor = '';
+					return;
+				}
+				const tokens = val.split(',');
+				let allValid = true;
+				for (let i = 0; i < tokens.length; i++) {
+					const token = tokens[i].trim();
+					if (token === '') continue;
+					const prefix = token[0];
+					if (prefix !== '.' && prefix !== '#') {
+						allValid = false;
+						break;
+					}
+					const name = token.substring(1);
+					if (!/^[a-zA-Z0-9\-_]+$/.test(name)) {
+						allValid = false;
+						break;
+					}
+				}
+
+				if (!allValid) {
+					excludedTokensInput.style.borderColor = '#d94f5c'; // Rosso di warning/errore
+				} else {
+					excludedTokensInput.style.borderColor = ''; // Ripristina
+				}
+			}
+
+			wordsIntervalInput.addEventListener('input', updateInTextState);
+			excludedTokensInput.addEventListener('input', validateExclusionTokens);
+
+			// Esegui subito all'avvio
+			updateInTextState();
+			validateExclusionTokens();
 		}
 
 		// Carica i dati iniziali all'avvio

@@ -329,3 +329,10 @@
 	background-color: var(--sai-error-light);
 	border: 1px solid var(--sai-error);
 }
+
+.sai-input-readonly {
+	background-color: hsl(215, 12%, 95%) !important;
+	color: var(--sai-text-muted) !important;
+	border-color: var(--sai-border-color) !important;
+	cursor: not-allowed !important;
+}

@@ -40,6 +40,87 @@ class SmartAdInserterSettings {
 	}
 
 	/**
+	 * Restituisce l'elenco delle proprietà CSS permesse per il wrapper.
+	 *
+	 * @since    1.0.0
+	 * @return   array<string>
+	 */
+	private static function get_allowed_css_properties(): array {
+		return [
+			'margin', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right',
+			'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
+			'background', 'background-color', 'background-image', 'background-position', 'background-repeat', 'background-size',
+			'border', 'border-top', 'border-bottom', 'border-left', 'border-right', 'border-color', 'border-style', 'border-width', 'border-radius',
+			'display', 'visibility', 'opacity',
+			'text-align', 'vertical-align',
+			'float', 'clear',
+			'width', 'min-width', 'max-width',
+			'height', 'min-height', 'max-height',
+			'position', 'top', 'bottom', 'left', 'right', 'z-index',
+			'box-shadow', 'box-sizing', 'overflow',
+			'color', 'font-family', 'font-size', 'font-weight', 'line-height'
+		];
+	}
+
+	/**
+	 * Sanitizza una stringa CSS consentendo solo proprietà valide e sicure.
+	 *
+	 * Scarta silenziosamente le dichiarazioni malformate o non permesse,
+	 * garantendo che il CSS risultante sia sintatticamente corretto e sicuro.
+	 *
+	 * @since    1.0.0
+	 * @param    string $css_string La stringa CSS grezza fornita dall'utente.
+	 * @return   string             La stringa CSS sanitizzata e formattata.
+	 */
+	public static function sanitize_css( string $css_string ): string {
+		$css_string = trim( $css_string );
+		if ( empty( $css_string ) ) {
+			return '';
+		}
+
+		$allowed_properties = self::get_allowed_css_properties();
+		$sanitized_declarations = [];
+
+		// Divide le dichiarazioni per ";"
+		$declarations = explode( ';', $css_string );
+
+		foreach ( $declarations as $declaration ) {
+			$declaration = trim( $declaration );
+			if ( empty( $declaration ) ) {
+				continue;
+			}
+
+			// Deve contenere esattamente un due punti ":" per essere una dichiarazione valida
+			$parts = explode( ':', $declaration, 2 );
+			if ( count( $parts ) !== 2 ) {
+				continue;
+			}
+
+			$property = strtolower( trim( $parts[0] ) );
+			$value    = trim( $parts[1] );
+
+			// 1. Verifica che la proprietà sia nell'allowlist
+			if ( ! in_array( $property, $allowed_properties, true ) ) {
+				continue;
+			}
+
+			// 2. Sanitizza e valida il valore per evitare iniezioni e caratteri di rottura
+			if ( preg_match( '/[{};\\\\<>]/', $value ) ) {
+				continue;
+			}
+
+			// Rimuove eventuali tentativi di url javascript o espressioni CSS vecchie
+			if ( preg_match( '/\b(expression|javascript|eval|behaviour)\b/i', $value ) ) {
+				continue;
+			}
+
+			$sanitized_declarations[] = "$property: $value";
+		}
+
+		return ! empty( $sanitized_declarations ) ? implode( '; ', $sanitized_declarations ) . ';' : '';
+	}
+
+	/**
 	 * Recupera le impostazioni correnti dal database con i valori di default per le chiavi mancanti.
 	 *
 	 * @since    1.0.0
@@ -78,7 +159,7 @@ class SmartAdInserterSettings {
 					'min_height_mobile'     => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 0,
 					'custom_selector'       => isset( $data['custom_selector'] ) ? sanitize_text_field( wp_unslash( $data['custom_selector'] ) ) : '',
 					'use_default_placement' => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : false,
-					'override_css'          => isset( $data['override_css'] ) ? sanitize_textarea_field( wp_unslash( $data['override_css'] ) ) : '',
+					'override_css'          => isset( $data['override_css'] ) ? self::sanitize_css( wp_unslash( $data['override_css'] ) ) : '',
 					'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
 					'frequency'             => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
 				];

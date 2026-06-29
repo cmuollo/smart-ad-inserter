@@ -68,16 +68,15 @@
 						<textarea id="sai-banner-code" name="positions[masthead][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
 					</div>
 					<div class="sai-field-group">
-						<label for="sai-override-css">Override CSS Personalizzato</label>
+						<label for="sai-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-override-css" name="positions[masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
 					</div>
 
-					<!-- Visualizzazione Condizionale per Masthead (nascosta se checked) -->
-					<div id="sai-masthead-conditional" class="sai-conditional">
-						<div class="sai-field-group">
-							<label for="sai-css-selector">Selettore CSS custom (opzionale)</label>
-							<input type="text" id="sai-css-selector" name="positions[masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />
-						</div>
+					<div class="sai-field-group">
+						<label for="sai-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-css-selector" name="positions[masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />
+						<p class="sai-field-desc" id="sai-masthead-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
 					</div>
 				</div>
 
@@ -113,16 +112,15 @@
 						<textarea id="sai-footer-code" name="positions[footer][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
 					</div>
 					<div class="sai-field-group">
-						<label for="sai-footer-override-css">Override CSS Personalizzato</label>
+						<label for="sai-footer-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-footer-override-css" name="positions[footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
 					</div>
 
-					<!-- Visualizzazione Condizionale per Footer (nascosta se checked) -->
-					<div id="sai-footer-conditional" class="sai-conditional">
-						<div class="sai-field-group">
-							<label for="sai-footer-css-selector">Selettore CSS custom (opzionale)</label>
-							<input type="text" id="sai-footer-css-selector" name="positions[footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
-						</div>
+					<div class="sai-field-group">
+						<label for="sai-footer-css-selector">Selettore CSS custom (opzionale)</label>
+						<input type="text" id="sai-footer-css-selector" name="positions[footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
+						<p class="sai-field-desc" id="sai-footer-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
 					</div>
 				</div>
 
@@ -154,8 +152,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-top-override-css">Override CSS</label>
+						<label for="sai-sidebar-top-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-sidebar-top-override-css" name="positions[sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -192,8 +191,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-sidebar-sticky-override-css">Override CSS</label>
+						<label for="sai-sidebar-sticky-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-sidebar-sticky-override-css" name="positions[sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -244,8 +244,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-home-override-css">Override CSS</label>
+						<label for="sai-grid-home-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-grid-home-override-css" name="positions[grid_home][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -285,8 +286,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-atf-override-css">Override CSS</label>
+						<label for="sai-atf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-atf-override-css" name="positions[atf][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -323,8 +325,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-btf-override-css">Override CSS</label>
+						<label for="sai-btf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-btf-override-css" name="positions[btf][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -375,8 +378,9 @@
 					</div>
 
 					<div class="sai-field-group">
-						<label for="sai-grid-archive-override-css">Override CSS</label>
+						<label for="sai-grid-archive-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-grid-archive-override-css" name="positions[grid_archive][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
 					</div>
 
 					<div class="sai-field-group">

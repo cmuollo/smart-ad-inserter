@@ -84,6 +84,10 @@ class ContentInjector implements AdInjectorInterface {
 			$wrapper_el->setAttribute( 'class', 'sai-ad-wrapper sai-atf' );
 			$wrapper_el->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
 
+			if ( ! empty( $this->settings['atf']['override_css'] ) ) {
+				$wrapper_el->setAttribute( 'style', $wrapper_el->getAttribute( 'style' ) . ' ' . $this->settings['atf']['override_css'] );
+			}
+
 			// Carica l'ad_code come HTML e importalo nel wrapper
 			$temp_dom = new DOMDocument();
 			libxml_use_internal_errors( true );
@@ -126,10 +130,14 @@ class ContentInjector implements AdInjectorInterface {
 		$min_h_desktop = $this->settings['btf']['min_height_desktop'] ?? 250;
 		$min_h_mobile  = $this->settings['btf']['min_height_mobile'] ?? 250;
 
+		$style = sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile );
+		if ( ! empty( $this->settings['btf']['override_css'] ) ) {
+			$style .= ' ' . $this->settings['btf']['override_css'];
+		}
+
 		$wrapper = sprintf(
-			'<div class="sai-ad-wrapper sai-btf" style="min-height:%dpx; --min-h-mobile:%dpx;">%s</div>',
-			$min_h_desktop,
-			$min_h_mobile,
+			'<div class="sai-ad-wrapper sai-btf" style="%s">%s</div>',
+			$style,
 			$ad_code
 		);
 

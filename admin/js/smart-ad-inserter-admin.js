@@ -22,9 +22,9 @@
 		const spinner = document.getElementById('sai-spinner');
 		const feedback = document.getElementById('sai-feedback');
 		const mastheadCheckbox = document.getElementById('sai-use-default-placement');
-		const mastheadConditional = document.getElementById('sai-masthead-conditional');
+		const mastheadSelectorInput = document.getElementById('sai-css-selector');
 		const footerCheckbox = document.getElementById('sai-footer-use-default-placement');
-		const footerConditional = document.getElementById('sai-footer-conditional');
+		const footerSelectorInput = document.getElementById('sai-footer-css-selector');
 
 		// Mappatura delle proprietà del modello dati con gli ID del DOM
 		const mapping = getFieldIdMapping();
@@ -57,11 +57,13 @@
 
 		// 2. RENDERING CONDIZIONALE MASTHEAD
 		function updateMastheadVisibility() {
-			if (mastheadCheckbox && mastheadConditional) {
+			if (mastheadCheckbox && mastheadSelectorInput) {
 				if (mastheadCheckbox.checked) {
-					mastheadConditional.classList.remove('sai-show');
+					mastheadSelectorInput.readOnly = true;
+					mastheadSelectorInput.classList.add('sai-input-readonly');
 				} else {
-					mastheadConditional.classList.add('sai-show');
+					mastheadSelectorInput.readOnly = false;
+					mastheadSelectorInput.classList.remove('sai-input-readonly');
 				}
 			}
 		}
@@ -72,11 +74,13 @@
 
 		// 2b. RENDERING CONDIZIONALE FOOTER
 		function updateFooterVisibility() {
-			if (footerCheckbox && footerConditional) {
+			if (footerCheckbox && footerSelectorInput) {
 				if (footerCheckbox.checked) {
-					footerConditional.classList.remove('sai-show');
+					footerSelectorInput.readOnly = true;
+					footerSelectorInput.classList.add('sai-input-readonly');
 				} else {
-					footerConditional.classList.add('sai-show');
+					footerSelectorInput.readOnly = false;
+					footerSelectorInput.classList.remove('sai-input-readonly');
 				}
 			}
 		}

@@ -94,12 +94,20 @@ class StructuralInjector implements AdInjectorInterface {
 		if ( ! $use_default && ! empty( $this->settings['masthead']['custom_selector'] ) ) {
 			$xpath_selector = $this->css_to_xpath( $this->settings['masthead']['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
-				$header = $xpath->query( $xpath_selector )->item( 0 );
+				$query_result = @$xpath->query( $xpath_selector );
+				if ( $query_result !== false ) {
+					$header = $query_result->item( 0 );
+				}
 			}
 		}
 
 		if ( ! $header ) {
-			$header = $xpath->query( '//header' )->item( 0 ) ?? $xpath->query( '//*[contains(@class, "site-header")]' )->item( 0 );
+			$header_result = @$xpath->query( '//header' );
+			$header = ( $header_result !== false ) ? $header_result->item( 0 ) : null;
+			if ( ! $header ) {
+				$header_class_result = @$xpath->query( '//*[contains(@class, "site-header")]' );
+				$header = ( $header_class_result !== false ) ? $header_class_result->item( 0 ) : null;
+			}
 		}
 
 		if ( ! $header || ! $header->parentNode ) {
@@ -117,6 +125,10 @@ class StructuralInjector implements AdInjectorInterface {
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-masthead' );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
+
+		if ( ! empty( $this->settings['masthead']['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['masthead']['override_css'] );
+		}
 
 		$this->append_html( $dom, $wrapper, $ad_code );
 
@@ -137,12 +149,20 @@ class StructuralInjector implements AdInjectorInterface {
 		if ( ! empty( $this->settings['sidebar_top']['custom_selector'] ) ) {
 			$xpath_selector = $this->css_to_xpath( $this->settings['sidebar_top']['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
-				$sidebar = $xpath->query( $xpath_selector )->item( 0 );
+				$query_result = @$xpath->query( $xpath_selector );
+				if ( $query_result !== false ) {
+					$sidebar = $query_result->item( 0 );
+				}
 			}
 		}
 
 		if ( ! $sidebar ) {
-			$sidebar = $xpath->query( '//aside' )->item( 0 ) ?? $xpath->query( '//*[contains(@class, "sidebar")]' )->item( 0 );
+			$aside_result = @$xpath->query( '//aside' );
+			$sidebar = ( $aside_result !== false ) ? $aside_result->item( 0 ) : null;
+			if ( ! $sidebar ) {
+				$sidebar_class_result = @$xpath->query( '//*[contains(@class, "sidebar")]' );
+				$sidebar = ( $sidebar_class_result !== false ) ? $sidebar_class_result->item( 0 ) : null;
+			}
 		}
 
 		if ( ! $sidebar ) {
@@ -160,6 +180,10 @@ class StructuralInjector implements AdInjectorInterface {
 		$wrapper = $dom->createElement( 'div' );
 		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-sidebar-top' );
 		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
+
+		if ( ! empty( $this->settings['sidebar_top']['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['sidebar_top']['override_css'] );
+		}
 
 		$this->append_html( $dom, $wrapper, $ad_code );
 
@@ -184,12 +208,20 @@ class StructuralInjector implements AdInjectorInterface {
 		if ( ! $use_default && ! empty( $this->settings['footer']['custom_selector'] ) ) {
 			$xpath_selector = $this->css_to_xpath( $this->settings['footer']['custom_selector'] );
 			if ( ! empty( $xpath_selector ) ) {
-				$footer = $xpath->query( $xpath_selector )->item( 0 );
+				$query_result = @$xpath->query( $xpath_selector );
+				if ( $query_result !== false ) {
+					$footer = $query_result->item( 0 );
+				}
 			}
 		}
 
 		if ( ! $footer ) {
-			$footer = $xpath->query( '//footer' )->item( 0 ) ?? $xpath->query( '//*[contains(@class, "site-footer")]' )->item( 0 );
+			$footer_result = @$xpath->query( '//footer' );
+			$footer = ( $footer_result !== false ) ? $footer_result->item( 0 ) : null;
+			if ( ! $footer ) {
+				$footer_class_result = @$xpath->query( '//*[contains(@class, "site-footer")]' );
+				$footer = ( $footer_class_result !== false ) ? $footer_class_result->item( 0 ) : null;
+			}
 		}
 
 		if ( ! $footer || ! $footer->parentNode ) {
@@ -242,10 +274,10 @@ class StructuralInjector implements AdInjectorInterface {
 			return false;
 		}
 
-		$cards = $xpath->query( $xpath_selector );
+		$cards = @$xpath->query( $xpath_selector );
 		$frequency = $config['frequency'] ?? 3;
 
-		if ( $cards->length < $frequency || $frequency < 1 ) {
+		if ( $cards === false || $cards->length < $frequency || $frequency < 1 ) {
 			return false;
 		}
 

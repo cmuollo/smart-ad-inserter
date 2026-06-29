@@ -365,4 +365,44 @@ class StructuralInjectorTest extends TestCase {
 
 		$this->assertStringContainsString( 'min-height:350px; --min-h-mobile:150px;', $result );
 	}
+
+	/**
+	 * Test Scenario 9: Verifica che i tag script di tipo template (backbone/underscore) vengano preservati.
+	 */
+	public function test_script_templates_are_preserved() {
+		$html = '
+		<html>
+		<body>
+			<div class="site-wrap">
+				<footer class="my-footer">Footer Content</footer>
+			</div>
+			<script type="text/html" id="tmpl-elementor-templates">
+				<# if ( closeType ) { #>
+					<button class="close-{{{ closeType }}}">
+						<# if ( \'skip\' === closeType ) { #> Salta <# } #> X
+					</button>
+				<# } #>
+			</script>
+		</body>
+		</html>';
+
+		$settings = [
+			'footer' => [
+				'active'                => true,
+				'code'                  => '<div class="ad-footer">[BANNER]</div>',
+				'use_default_placement' => true,
+				'footer_position'       => 'before_footer',
+				'min_height_desktop'    => 250,
+				'min_height_mobile'     => 100,
+				'override_css'          => ''
+			]
+		];
+
+		$injector = new StructuralInjector( $settings );
+		$result   = $injector->inject( $html );
+
+		$this->assertStringContainsString( '<# if ( \'skip\' === closeType ) { #> Salta <# } #> X', $result );
+		$this->assertStringContainsString( '<script type="text/html" id="tmpl-elementor-templates">', $result );
+		$this->assertStringContainsString( '</script>', $result );
+	}
 }

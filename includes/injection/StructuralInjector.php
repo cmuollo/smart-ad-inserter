@@ -43,10 +43,25 @@ class StructuralInjector implements AdInjectorInterface {
 	 * @since    1.0.0
 	 */
 	public function inject( string $html ): string {
+		$placeholders = [];
+		$placeholder_prefix = '<!--SAI_SCRIPT_TEMPLATE_PLACEHOLDER_';
+		$placeholder_suffix = '-->';
+
+		// Estrae temporaneamente i tag script di tipo template (html o template) per evitare la corruzione del parser DOMDocument
+		$html_clean = preg_replace_callback(
+			'/<script\b[^>]*type=["\'](?:text\/html|text\/template)["\'][^>]*>([\s\S]*?)<\/script>/i',
+			function ( $matches ) use ( &$placeholders, $placeholder_prefix, $placeholder_suffix ) {
+				$index = count( $placeholders );
+				$placeholders[] = $matches[0];
+				return $placeholder_prefix . $index . $placeholder_suffix;
+			},
+			$html
+		);
+
 		libxml_use_internal_errors( true );
 		$dom = new DOMDocument();
 		// Forza il caricamento in UTF-8 per evitare la corruzione dei caratteri accentati del tema
-		$dom->loadHTML( '<?xml encoding="UTF-8">' . $html, LIBXML_HTML_NODEFDTD );
+		$dom->loadHTML( '<?xml encoding="UTF-8">' . $html_clean, LIBXML_HTML_NODEFDTD );
 		libxml_clear_errors();
 
 		$xpath    = new DOMXPath( $dom );
@@ -77,7 +92,14 @@ class StructuralInjector implements AdInjectorInterface {
 			$modified = $this->inject_grid( $dom, $xpath, 'grid_archive' ) || $modified;
 		}
 
-		return $modified ? $dom->saveHTML() : $html;
+		$output = $modified ? $dom->saveHTML() : $html_clean;
+
+		// Ripristina i tag script originali estratti
+		foreach ( $placeholders as $index => $original_script ) {
+			$output = str_replace( $placeholder_prefix . $index . $placeholder_suffix, $original_script, $output );
+		}
+
+		return $output;
 	}
 
 	/**

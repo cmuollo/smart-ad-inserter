@@ -62,6 +62,21 @@ class StructuralInjector implements AdInjectorInterface {
 			$modified = $this->inject_sidebar_top( $dom, $xpath ) || $modified;
 		}
 
+		// Iniezione Footer (Sopra il footer globale del sito)
+		if ( ! empty( $this->settings['footer']['active'] ) && ! empty( trim( $this->settings['footer']['code'] ?? '' ) ) ) {
+			$modified = $this->inject_footer( $dom, $xpath ) || $modified;
+		}
+
+		// Iniezione Griglia Home (Home Page)
+		if ( ( is_home() || is_front_page() ) && ! empty( $this->settings['grid_home']['active'] ) && ! empty( trim( $this->settings['grid_home']['code'] ?? '' ) ) ) {
+			$modified = $this->inject_grid( $dom, $xpath, 'grid_home' ) || $modified;
+		}
+
+		// Iniezione Griglia Archivio (Categorie/Archivi)
+		if ( ( is_archive() || is_category() || is_tag() || is_search() || is_author() || is_date() ) && ! empty( $this->settings['grid_archive']['active'] ) && ! empty( trim( $this->settings['grid_archive']['code'] ?? '' ) ) ) {
+			$modified = $this->inject_grid( $dom, $xpath, 'grid_archive' ) || $modified;
+		}
+
 		return $modified ? $dom->saveHTML() : $html;
 	}
 
@@ -154,6 +169,112 @@ class StructuralInjector implements AdInjectorInterface {
 		} else {
 			$sidebar->appendChild( $wrapper );
 		}
+		return true;
+	}
+
+	/**
+	 * Inietta il contenitore pubblicitario Footer sopra l'elemento footer globale del sito.
+	 *
+	 * @since    1.0.0
+	 */
+	private function inject_footer( DOMDocument $dom, DOMXPath $xpath ): bool {
+		$use_default = ! isset( $this->settings['footer']['use_default_placement'] ) || $this->settings['footer']['use_default_placement'];
+		$footer      = null;
+
+		if ( ! $use_default && ! empty( $this->settings['footer']['custom_selector'] ) ) {
+			$xpath_selector = $this->css_to_xpath( $this->settings['footer']['custom_selector'] );
+			if ( ! empty( $xpath_selector ) ) {
+				$footer = $xpath->query( $xpath_selector )->item( 0 );
+			}
+		}
+
+		if ( ! $footer ) {
+			$footer = $xpath->query( '//footer' )->item( 0 ) ?? $xpath->query( '//*[contains(@class, "site-footer")]' )->item( 0 );
+		}
+
+		if ( ! $footer || ! $footer->parentNode ) {
+			return false;
+		}
+
+		$ad_code = trim( $this->settings['footer']['code'] ?? '' );
+		if ( $ad_code === '' ) {
+			return false;
+		}
+
+		$min_h_desktop = $this->settings['footer']['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $this->settings['footer']['min_height_mobile'] ?? 100;
+
+		$wrapper = $dom->createElement( 'div' );
+		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-footer' );
+		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
+
+		if ( ! empty( $this->settings['footer']['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $this->settings['footer']['override_css'] );
+		}
+
+		$this->append_html( $dom, $wrapper, $ad_code );
+
+		// Inserisce il banner prima del footer
+		$footer->parentNode->insertBefore( $wrapper, $footer );
+		return true;
+	}
+
+	/**
+	 * Inietta un banner all'interno della griglia degli articoli.
+	 *
+	 * Individua l'N-esimo elemento corrispondente al target_element e inserisce il banner subito dopo.
+	 *
+	 * @since    1.0.0
+	 * @param    DOMDocument $dom         Il documento DOM.
+	 * @param    DOMXPath    $xpath       Il DOMXPath.
+	 * @param    string      $position_id L'identificatore della posizione ('grid_home' o 'grid_archive').
+	 * @return   bool                     Vero in caso di iniezione eseguita, falso altrimenti.
+	 */
+	private function inject_grid( DOMDocument $dom, DOMXPath $xpath, string $position_id ): bool {
+		$config = $this->settings[ $position_id ] ?? [];
+		if ( empty( $config ) ) {
+			return false;
+		}
+
+		$target_selector = empty( $config['target_element'] ) ? '.post-card' : $config['target_element'];
+		$xpath_selector  = $this->css_to_xpath( $target_selector );
+		if ( empty( $xpath_selector ) ) {
+			return false;
+		}
+
+		$cards = $xpath->query( $xpath_selector );
+		$frequency = $config['frequency'] ?? 3;
+
+		if ( $cards->length < $frequency || $frequency < 1 ) {
+			return false;
+		}
+
+		$target_card = $cards->item( $frequency - 1 );
+		if ( ! $target_card || ! $target_card->parentNode ) {
+			return false;
+		}
+
+		$ad_code = trim( $config['code'] ?? '' );
+		if ( $ad_code === '' ) {
+			return false;
+		}
+
+		$min_h_desktop = $config['min_height_desktop'] ?? 250;
+		$min_h_mobile  = $config['min_height_mobile'] ?? 250;
+
+		$wrapper = $dom->createElement( 'div' );
+		$wrapper->setAttribute( 'class', 'sai-ad-wrapper sai-' . str_replace( '_', '-', $position_id ) );
+		$wrapper->setAttribute( 'style', sprintf( 'min-height:%dpx; --min-h-mobile:%dpx;', $min_h_desktop, $min_h_mobile ) );
+
+		// Se la griglia ha un override CSS, lo applichiamo come stile inline
+		if ( ! empty( $config['override_css'] ) ) {
+			$wrapper->setAttribute( 'style', $wrapper->getAttribute( 'style' ) . ' ' . $config['override_css'] );
+		}
+
+		$this->append_html( $dom, $wrapper, $ad_code );
+
+		// Inserisce il banner subito dopo la card target (come elemento fratello successivo)
+		$target_card->parentNode->insertBefore( $wrapper, $target_card->nextSibling );
 		return true;
 	}
 

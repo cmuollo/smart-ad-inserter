@@ -136,6 +136,17 @@ class SmartAdInserterSettings {
 					'target_element'        => '',
 					'frequency'             => 0,
 				],
+				'footer'         => [
+					'active'                => false,
+					'code'                  => '',
+					'min_height_desktop'    => 250,
+					'min_height_mobile'     => 100,
+					'custom_selector'       => '',
+					'use_default_placement' => true,
+					'override_css'          => '',
+					'target_element'        => '',
+					'frequency'             => 0,
+				],
 				'sidebar_top'    => [
 					'active'                => false,
 					'code'                  => '',

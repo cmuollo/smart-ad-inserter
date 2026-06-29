@@ -23,6 +23,8 @@
 		const feedback = document.getElementById('sai-feedback');
 		const mastheadCheckbox = document.getElementById('sai-use-default-placement');
 		const mastheadConditional = document.getElementById('sai-masthead-conditional');
+		const footerCheckbox = document.getElementById('sai-footer-use-default-placement');
+		const footerConditional = document.getElementById('sai-footer-conditional');
 
 		// Mappatura delle proprietà del modello dati con gli ID del DOM
 		const mapping = getFieldIdMapping();
@@ -68,6 +70,21 @@
 			mastheadCheckbox.addEventListener('change', updateMastheadVisibility);
 		}
 
+		// 2b. RENDERING CONDIZIONALE FOOTER
+		function updateFooterVisibility() {
+			if (footerCheckbox && footerConditional) {
+				if (footerCheckbox.checked) {
+					footerConditional.classList.remove('sai-show');
+				} else {
+					footerConditional.classList.add('sai-show');
+				}
+			}
+		}
+
+		if (footerCheckbox) {
+			footerCheckbox.addEventListener('change', updateFooterVisibility);
+		}
+
 		// 3. CARICAMENTO DELLE IMPOSTAZIONI DAL SERVER
 		function loadSettings() {
 			if (typeof smartAdInserter === 'undefined' || !smartAdInserter.restUrl) {
@@ -92,6 +109,7 @@
 			.then(function(data) {
 				populateFields(data);
 				updateMastheadVisibility();
+				updateFooterVisibility();
 				showSpinner(false);
 			})
 			.catch(function(error) {
@@ -213,7 +231,7 @@
 				positions: {}
 			};
 
-			const positions = ['atf', 'btf', 'masthead', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
+			const positions = ['atf', 'btf', 'masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
 			positions.forEach(function(pos) {
 				data.positions[pos] = {};
 
@@ -241,9 +259,9 @@
 				const selectorEl = document.getElementById(mapping['positions.' + pos + '.custom_selector']);
 				data.positions[pos].custom_selector = selectorEl ? selectorEl.value : '';
 
-				// use_default_placement (solo masthead)
-				if (pos === 'masthead') {
-					const defPlacementEl = document.getElementById(mapping['positions.masthead.use_default_placement']);
+				// use_default_placement (masthead e footer)
+				if (pos === 'masthead' || pos === 'footer') {
+					const defPlacementEl = document.getElementById(mapping['positions.' + pos + '.use_default_placement']);
 					data.positions[pos].use_default_placement = defPlacementEl ? defPlacementEl.checked : true;
 				}
 
@@ -292,7 +310,7 @@
 			const map = {};
 			map['global_scripts'] = 'sai-head-scripts';
 
-			const positions = ['atf', 'btf', 'masthead', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
+			const positions = ['atf', 'btf', 'masthead', 'footer', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
 			positions.forEach(function(pos) {
 				map['positions.' + pos + '.active'] = 'sai-' + pos.replace('_', '-') + '-active';
 				map['positions.' + pos + '.min_height_desktop'] = 'sai-' + pos.replace('_', '-') + '-desktop-height';
@@ -303,6 +321,11 @@
 					map['positions.masthead.override_css'] = 'sai-override-css';
 					map['positions.masthead.custom_selector'] = 'sai-css-selector';
 					map['positions.masthead.use_default_placement'] = 'sai-use-default-placement';
+				} else if (pos === 'footer') {
+					map['positions.footer.code'] = 'sai-footer-code';
+					map['positions.footer.override_css'] = 'sai-footer-override-css';
+					map['positions.footer.custom_selector'] = 'sai-footer-css-selector';
+					map['positions.footer.use_default_placement'] = 'sai-footer-use-default-placement';
 				} else if (pos === 'sidebar_top' || pos === 'sidebar_sticky') {
 					map['positions.' + pos + '.code'] = 'sai-' + pos.replace('_', '-') + '-code';
 					map['positions.' + pos + '.override_css'] = 'sai-' + pos.replace('_', '-') + '-override-css';

@@ -83,6 +83,51 @@
 
 				<div class="sai-card">
 					<div class="sai-card-header-row">
+						<h2 class="sai-card-title">Footer</h2>
+						<span class="sai-tag">Strutturale</span>
+					</div>
+					<p class="sai-card-desc">Configura il banner pubblicitario da visualizzare immediatamente sopra il footer globale del sito.</p>
+					
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-footer-use-default-placement" name="positions[footer][use_default_placement]" value="1" checked />
+						<label for="sai-footer-use-default-placement"><strong>Usa posizionamento di default (- prima di &lt;footer&gt;)</strong></label>
+					</div>
+
+					<div class="sai-field-row">
+						<div class="sai-field-col">
+							<label for="sai-footer-active">Abilita Posizione</label>
+							<input type="checkbox" id="sai-footer-active" name="positions[footer][active]" value="1" />
+						</div>
+						<div class="sai-field-col">
+							<label for="sai-footer-desktop-height">Altezza Minima Desktop (px)</label>
+							<input type="number" id="sai-footer-desktop-height" name="positions[footer][min_height_desktop]" class="sai-input-number" min="0" placeholder="250" />
+						</div>
+						<div class="sai-field-col">
+							<label for="sai-footer-mobile-height">Altezza Minima Mobile (px)</label>
+							<input type="number" id="sai-footer-mobile-height" name="positions[footer][min_height_mobile]" class="sai-input-number" min="0" placeholder="100" />
+						</div>
+					</div>
+
+					<div class="sai-field-group">
+						<label for="sai-footer-code">Codice Banner Footer</label>
+						<textarea id="sai-footer-code" name="positions[footer][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
+					</div>
+					<div class="sai-field-group">
+						<label for="sai-footer-override-css">Override CSS Personalizzato</label>
+						<textarea id="sai-footer-override-css" name="positions[footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+					</div>
+
+					<!-- Visualizzazione Condizionale per Footer (nascosta se checked) -->
+					<div id="sai-footer-conditional" class="sai-conditional">
+						<div class="sai-field-group">
+							<label for="sai-footer-css-selector">Selettore CSS custom (opzionale)</label>
+							<input type="text" id="sai-footer-css-selector" name="positions[footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
+						</div>
+					</div>
+				</div>
+
+				<div class="sai-card">
+					<div class="sai-card-header-row">
 						<h2 class="sai-card-title">Top Sidebar</h2>
 						<span class="sai-tag">Strutturale</span>
 					</div>

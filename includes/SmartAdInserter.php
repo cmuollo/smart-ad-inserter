@@ -104,7 +104,7 @@ class SmartAdInserter {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_head', $plugin_public, 'insert_global_head_scripts' );
 
-		// Aggancio delle strategie di iniezione differita
+		// Aggancio delle strategie di iniezione strutturale e di contenuto
 		$this->loader->add_filter( 'the_content', $plugin_public, 'inject_content_ads' );
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'setup_structural_ads_buffer' );
 	}

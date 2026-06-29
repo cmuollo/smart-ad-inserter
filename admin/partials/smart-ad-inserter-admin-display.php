@@ -63,16 +63,17 @@
 						</div>
 					</div>
 
+					<div class="sai-field-group">
+						<label for="sai-banner-code">Codice Banner Masthead</label>
+						<textarea id="sai-banner-code" name="positions[masthead][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio..."></textarea>
+					</div>
+					<div class="sai-field-group">
+						<label for="sai-override-css">Override CSS Personalizzato</label>
+						<textarea id="sai-override-css" name="positions[masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
+					</div>
+
 					<!-- Visualizzazione Condizionale per Masthead (nascosta se checked) -->
 					<div id="sai-masthead-conditional" class="sai-conditional">
-						<div class="sai-field-group">
-							<label for="sai-banner-code">Codice Banner Masthead Custom</label>
-							<textarea id="sai-banner-code" name="positions[masthead][code]" rows="4" class="sai-textarea" placeholder="Codice HTML/JS per l'annuncio custom..."></textarea>
-						</div>
-						<div class="sai-field-group">
-							<label for="sai-override-css">Override CSS Personalizzato</label>
-							<textarea id="sai-override-css" name="positions[masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
-						</div>
 						<div class="sai-field-group">
 							<label for="sai-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-css-selector" name="positions[masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />

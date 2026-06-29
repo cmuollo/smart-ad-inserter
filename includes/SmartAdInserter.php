@@ -104,9 +104,9 @@ class SmartAdInserter {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_head', $plugin_public, 'insert_global_head_scripts' );
 
-		// Iniezione automatica dei banner tramite il modulo StructuralInjector
-		$injector = new Injection\StructuralInjector();
-		$injector->register_hooks();
+		// Aggancio delle strategie di iniezione strutturale e di contenuto
+		$this->loader->add_filter( 'the_content', $plugin_public, 'inject_content_ads' );
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'setup_structural_ads_buffer' );
 	}
 
 	/**

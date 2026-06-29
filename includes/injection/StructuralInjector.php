@@ -33,7 +33,7 @@ class StructuralInjector implements AdInjectorInterface {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct( array $settings ) {
+	public function __construct( array $settings = [] ) {
 		$this->settings = $settings;
 	}
 

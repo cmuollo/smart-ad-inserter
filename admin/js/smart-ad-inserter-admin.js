@@ -21,8 +21,6 @@
 		const saveBtn = document.getElementById('sai-save-btn');
 		const spinner = document.getElementById('sai-spinner');
 		const feedback = document.getElementById('sai-feedback');
-		const mastheadCheckbox = document.getElementById('sai-use-default-placement');
-		const mastheadConditional = document.getElementById('sai-masthead-conditional');
 
 		// Mappatura delle proprietà del modello dati con gli ID del DOM
 		const mapping = getFieldIdMapping();
@@ -53,19 +51,65 @@
 			});
 		});
 
-		// 2. RENDERING CONDIZIONALE MASTHEAD
-		function updateMastheadVisibility() {
-			if (mastheadCheckbox && mastheadConditional) {
-				if (mastheadCheckbox.checked) {
-					mastheadConditional.classList.remove('sai-show');
-				} else {
-					mastheadConditional.classList.add('sai-show');
-				}
-			}
+		// 2. AGGIORNAMENTO DINAMICO DEI CAMPI CONDIZIONALI
+		function updateAllConditionalRenderings() {
+			const contextsList = ['global', 'home', 'single', 'archive'];
+			contextsList.forEach(function(ctx) {
+				['masthead', 'footer'].forEach(function(pos) {
+					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
+
+					// A. Gestione visualizzazione container di override
+					if (ctx !== 'global') {
+						const useGlobalCheckbox = document.getElementById(mapping[prefix + 'use_global_config']);
+						const overrideContainer = document.getElementById('sai-' + ctx + '-' + pos + '-override-container');
+						if (useGlobalCheckbox && overrideContainer) {
+							if (useGlobalCheckbox.checked) {
+								overrideContainer.classList.add('sai-hidden');
+							} else {
+								overrideContainer.classList.remove('sai-hidden');
+							}
+						}
+					}
+
+					// B. Gestione readonly del selettore CSS personalizzato
+					const defaultPlacementCheckbox = document.getElementById(mapping[prefix + 'use_default_placement']);
+					const customSelectorInput = document.getElementById(mapping[prefix + 'custom_selector']);
+
+					if (defaultPlacementCheckbox && customSelectorInput) {
+						if (defaultPlacementCheckbox.checked) {
+							customSelectorInput.readOnly = true;
+							customSelectorInput.classList.add('sai-input-readonly');
+						} else {
+							customSelectorInput.readOnly = false;
+							customSelectorInput.classList.remove('sai-input-readonly');
+						}
+					}
+				});
+			});
 		}
 
-		if (mastheadCheckbox) {
-			mastheadCheckbox.addEventListener('change', updateMastheadVisibility);
+		// Associa gli ascoltatori agli eventi di cambio stato
+		function bindChangeListeners() {
+			const contextsList = ['global', 'home', 'single', 'archive'];
+			contextsList.forEach(function(ctx) {
+				['masthead', 'footer'].forEach(function(pos) {
+					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
+
+					// Toggle ereditarietà globale
+					if (ctx !== 'global') {
+						const useGlobalCheckbox = document.getElementById(mapping[prefix + 'use_global_config']);
+						if (useGlobalCheckbox) {
+							useGlobalCheckbox.addEventListener('change', updateAllConditionalRenderings);
+						}
+					}
+
+					// Toggle posizionamento di default
+					const defaultPlacementCheckbox = document.getElementById(mapping[prefix + 'use_default_placement']);
+					if (defaultPlacementCheckbox) {
+						defaultPlacementCheckbox.addEventListener('change', updateAllConditionalRenderings);
+					}
+				});
+			});
 		}
 
 		// 3. CARICAMENTO DELLE IMPOSTAZIONI DAL SERVER
@@ -91,7 +135,8 @@
 			})
 			.then(function(data) {
 				populateFields(data);
-				updateMastheadVisibility();
+				updateAllConditionalRenderings();
+				bindChangeListeners();
 				showSpinner(false);
 			})
 			.catch(function(error) {
@@ -110,21 +155,38 @@
 				globalScriptsEl.value = data.global_scripts || '';
 			}
 
-			// Posizioni
-			if (data.positions) {
-				Object.keys(data.positions).forEach(function(pos) {
-					const positionData = data.positions[pos];
-					Object.keys(positionData).forEach(function(key) {
-						const fieldId = mapping['positions.' + pos + '.' + key];
-						const fieldEl = document.getElementById(fieldId);
-						if (!fieldEl) return;
+			// Contexts
+			if (data.contexts) {
+				Object.keys(data.contexts).forEach(function(ctx) {
+					const contextData = data.contexts[ctx];
+					if (contextData && contextData.positions) {
+						Object.keys(contextData.positions).forEach(function(pos) {
+							const positionData = contextData.positions[pos];
+							Object.keys(positionData).forEach(function(key) {
+								// Gestione specifica per i controlli radio della posizione footer
+								if (key === 'footer_position') {
+									const radioBefore = document.getElementById('sai-' + ctx + '-footer-position-before');
+									const radioAfter = document.getElementById('sai-' + ctx + '-footer-position-after');
+									if (positionData[key] === 'after_footer') {
+										if (radioAfter) radioAfter.checked = true;
+									} else {
+										if (radioBefore) radioBefore.checked = true;
+									}
+									return;
+								}
 
-						if (fieldEl.type === 'checkbox') {
-							fieldEl.checked = !!positionData[key];
-						} else {
-							fieldEl.value = positionData[key] !== null ? positionData[key] : '';
-						}
-					});
+								const fieldId = mapping['contexts.' + ctx + '.positions.' + pos + '.' + key];
+								const fieldEl = document.getElementById(fieldId);
+								if (!fieldEl) return;
+
+								if (fieldEl.type === 'checkbox') {
+									fieldEl.checked = !!positionData[key];
+								} else {
+									fieldEl.value = positionData[key] !== null ? positionData[key] : '';
+								}
+							});
+						});
+					}
 				});
 			}
 		}
@@ -210,51 +272,80 @@
 		function collectFormData() {
 			const data = {
 				global_scripts: document.getElementById(mapping['global_scripts']).value,
-				positions: {}
+				contexts: {}
 			};
 
-			const positions = ['atf', 'btf', 'masthead', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
-			positions.forEach(function(pos) {
-				data.positions[pos] = {};
+			const contexts = {
+				global: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'],
+				home: ['masthead', 'footer', 'grid_home'],
+				single: ['masthead', 'footer', 'atf', 'btf'],
+				archive: ['masthead', 'footer', 'grid_archive']
+			};
 
-				// active
-				const activeEl = document.getElementById(mapping['positions.' + pos + '.active']);
-				data.positions[pos].active = activeEl ? activeEl.checked : false;
+			Object.keys(contexts).forEach(function(ctx) {
+				data.contexts[ctx] = { positions: {} };
 
-				// min_height_desktop
-				const desktopHeightEl = document.getElementById(mapping['positions.' + pos + '.min_height_desktop']);
-				data.positions[pos].min_height_desktop = desktopHeightEl ? parseInt(desktopHeightEl.value, 10) || 0 : 0;
+				contexts[ctx].forEach(function(pos) {
+					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
+					const domPrefix = 'sai-' + ctx + '-' + pos.replace(/_/g, '-') + '-';
+					data.contexts[ctx].positions[pos] = {};
 
-				// min_height_mobile
-				const mobileHeightEl = document.getElementById(mapping['positions.' + pos + '.min_height_mobile']);
-				data.positions[pos].min_height_mobile = mobileHeightEl ? parseInt(mobileHeightEl.value, 10) || 0 : 0;
+					// active
+					const activeEl = document.getElementById(mapping[prefix + 'active']);
+					data.contexts[ctx].positions[pos].active = activeEl ? activeEl.checked : false;
 
-				// code
-				const codeEl = document.getElementById(mapping['positions.' + pos + '.code']);
-				data.positions[pos].code = codeEl ? codeEl.value : '';
+					// min_height_desktop
+					const desktopHeightEl = document.getElementById(mapping[prefix + 'min_height_desktop']);
+					data.contexts[ctx].positions[pos].min_height_desktop = desktopHeightEl ? parseInt(desktopHeightEl.value, 10) || 0 : 0;
 
-				// override_css
-				const overrideEl = document.getElementById(mapping['positions.' + pos + '.override_css']);
-				data.positions[pos].override_css = overrideEl ? overrideEl.value : '';
+					// min_height_mobile
+					const mobileHeightEl = document.getElementById(mapping[prefix + 'min_height_mobile']);
+					data.contexts[ctx].positions[pos].min_height_mobile = mobileHeightEl ? parseInt(mobileHeightEl.value, 10) || 0 : 0;
 
-				// custom_selector
-				const selectorEl = document.getElementById(mapping['positions.' + pos + '.custom_selector']);
-				data.positions[pos].custom_selector = selectorEl ? selectorEl.value : '';
+					// code
+					const codeEl = document.getElementById(mapping[prefix + 'code']);
+					data.contexts[ctx].positions[pos].code = codeEl ? codeEl.value : '';
 
-				// use_default_placement (solo masthead)
-				if (pos === 'masthead') {
-					const defPlacementEl = document.getElementById(mapping['positions.masthead.use_default_placement']);
-					data.positions[pos].use_default_placement = defPlacementEl ? defPlacementEl.checked : true;
-				}
+					// override_css
+					const overrideEl = document.getElementById(mapping[prefix + 'override_css']);
+					data.contexts[ctx].positions[pos].override_css = overrideEl ? overrideEl.value : '';
 
-				// target_element e frequency (solo griglie)
-				if (pos === 'grid_home' || pos === 'grid_archive') {
-					const targetEl = document.getElementById(mapping['positions.' + pos + '.target_element']);
-					data.positions[pos].target_element = targetEl ? targetEl.value : '';
+					// custom_selector
+					const selectorEl = document.getElementById(mapping[prefix + 'custom_selector']);
+					data.contexts[ctx].positions[pos].custom_selector = selectorEl ? selectorEl.value : '';
 
-					const freqEl = document.getElementById(mapping['positions.' + pos + '.frequency']);
-					data.positions[pos].frequency = freqEl ? parseInt(freqEl.value, 10) || 0 : 0;
-				}
+					// use_default_placement (masthead e footer)
+					if (pos === 'masthead' || pos === 'footer') {
+						const defPlacementEl = document.getElementById(mapping[prefix + 'use_default_placement']);
+						data.contexts[ctx].positions[pos].use_default_placement = defPlacementEl ? defPlacementEl.checked : true;
+					}
+
+					// footer_position (solo footer)
+					if (pos === 'footer') {
+						const radioBefore = document.getElementById(domPrefix + 'position-before');
+						const radioAfter = document.getElementById(domPrefix + 'position-after');
+						if (radioAfter && radioAfter.checked) {
+							data.contexts[ctx].positions[pos].footer_position = 'after_footer';
+						} else {
+							data.contexts[ctx].positions[pos].footer_position = 'before_footer';
+						}
+					}
+
+					// target_element e frequency (solo griglie)
+					if (pos === 'grid_home' || pos === 'grid_archive') {
+						const targetEl = document.getElementById(mapping[prefix + 'target_element']);
+						data.contexts[ctx].positions[pos].target_element = targetEl ? targetEl.value : '';
+
+						const freqEl = document.getElementById(mapping[prefix + 'frequency']);
+						data.contexts[ctx].positions[pos].frequency = freqEl ? parseInt(freqEl.value, 10) || 0 : 0;
+					}
+
+					// use_global_config (tutte le tab tranne global e solo masthead/footer)
+					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer')) {
+						const useGlobalEl = document.getElementById(mapping[prefix + 'use_global_config']);
+						data.contexts[ctx].positions[pos].use_global_config = useGlobalEl ? useGlobalEl.checked : true;
+					}
+				});
 			});
 
 			return data;
@@ -292,31 +383,39 @@
 			const map = {};
 			map['global_scripts'] = 'sai-head-scripts';
 
-			const positions = ['atf', 'btf', 'masthead', 'sidebar_top', 'sidebar_sticky', 'grid_home', 'grid_archive'];
-			positions.forEach(function(pos) {
-				map['positions.' + pos + '.active'] = 'sai-' + pos.replace('_', '-') + '-active';
-				map['positions.' + pos + '.min_height_desktop'] = 'sai-' + pos.replace('_', '-') + '-desktop-height';
-				map['positions.' + pos + '.min_height_mobile'] = 'sai-' + pos.replace('_', '-') + '-mobile-height';
+			const contexts = {
+				global: ['masthead', 'footer', 'sidebar_top', 'sidebar_sticky'],
+				home: ['masthead', 'footer', 'grid_home'],
+				single: ['masthead', 'footer', 'atf', 'btf'],
+				archive: ['masthead', 'footer', 'grid_archive']
+			};
 
-				if (pos === 'masthead') {
-					map['positions.masthead.code'] = 'sai-banner-code';
-					map['positions.masthead.override_css'] = 'sai-override-css';
-					map['positions.masthead.custom_selector'] = 'sai-css-selector';
-					map['positions.masthead.use_default_placement'] = 'sai-use-default-placement';
-				} else if (pos === 'sidebar_top' || pos === 'sidebar_sticky') {
-					map['positions.' + pos + '.code'] = 'sai-' + pos.replace('_', '-') + '-code';
-					map['positions.' + pos + '.override_css'] = 'sai-' + pos.replace('_', '-') + '-override-css';
-					map['positions.' + pos + '.custom_selector'] = 'sai-' + pos.replace('_', '-') + '-selector';
-				} else {
-					map['positions.' + pos + '.code'] = 'sai-' + pos.replace('_', '-') + '-banner-code';
-					map['positions.' + pos + '.override_css'] = 'sai-' + pos.replace('_', '-') + '-override-css';
-					map['positions.' + pos + '.custom_selector'] = 'sai-' + pos.replace('_', '-') + '-custom-selector';
-				}
+			Object.keys(contexts).forEach(function(ctx) {
+				contexts[ctx].forEach(function(pos) {
+					const prefix = 'contexts.' + ctx + '.positions.' + pos + '.';
+					const domPrefix = 'sai-' + ctx + '-' + pos.replace(/_/g, '-') + '-';
 
-				if (pos === 'grid_home' || pos === 'grid_archive') {
-					map['positions.' + pos + '.target_element'] = 'sai-' + pos.replace('_', '-') + '-target-element';
-					map['positions.' + pos + '.frequency'] = 'sai-' + pos.replace('_', '-') + '-frequency';
-				}
+					map[prefix + 'active'] = domPrefix + 'active';
+					map[prefix + 'min_height_desktop'] = domPrefix + 'desktop-height';
+					map[prefix + 'min_height_mobile'] = domPrefix + 'mobile-height';
+					map[prefix + 'code'] = domPrefix + 'code';
+					map[prefix + 'override_css'] = domPrefix + 'override-css';
+					map[prefix + 'custom_selector'] = domPrefix + 'css-selector';
+
+					if (pos === 'masthead' || pos === 'footer') {
+						map[prefix + 'use_default_placement'] = domPrefix + 'use-default-placement';
+					}
+					if (pos === 'footer') {
+						map[prefix + 'footer_position'] = domPrefix + 'position';
+					}
+					if (pos === 'grid_home' || pos === 'grid_archive') {
+						map[prefix + 'target_element'] = domPrefix + 'target-element';
+						map[prefix + 'frequency'] = domPrefix + 'frequency';
+					}
+					if (ctx !== 'global' && (pos === 'masthead' || pos === 'footer')) {
+						map[prefix + 'use_global_config'] = domPrefix + 'use-global-config';
+					}
+				});
 			});
 
 			return map;

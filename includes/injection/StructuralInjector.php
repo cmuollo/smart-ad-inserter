@@ -224,10 +224,6 @@ class StructuralInjector implements AdInjectorInterface {
 			}
 		}
 
-		if ( ! $footer || ! $footer->parentNode ) {
-			return false;
-		}
-
 		$ad_code = trim( $this->settings['footer']['code'] ?? '' );
 		if ( $ad_code === '' ) {
 			return false;
@@ -246,9 +242,30 @@ class StructuralInjector implements AdInjectorInterface {
 
 		$this->append_html( $dom, $wrapper, $ad_code );
 
-		// Inserisce il banner prima del footer
-		$footer->parentNode->insertBefore( $wrapper, $footer );
-		return true;
+		$footer_pos = $this->settings['footer']['footer_position'] ?? 'before_footer';
+
+		if ( $footer && $footer->parentNode ) {
+			if ( $footer_pos === 'after_footer' ) {
+				if ( $footer->nextSibling ) {
+					$footer->parentNode->insertBefore( $wrapper, $footer->nextSibling );
+				} else {
+					$footer->parentNode->appendChild( $wrapper );
+				}
+			} else {
+				$footer->parentNode->insertBefore( $wrapper, $footer );
+			}
+			return true;
+		}
+
+		// Fallback: inietta in fondo al body (zona wp_footer)
+		$body_result = @$xpath->query( '//body' );
+		$body = ( $body_result !== false ) ? $body_result->item( 0 ) : null;
+		if ( $body ) {
+			$body->appendChild( $wrapper );
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

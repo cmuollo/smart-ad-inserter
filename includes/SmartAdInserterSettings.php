@@ -162,6 +162,7 @@ class SmartAdInserterSettings {
 					'override_css'          => isset( $data['override_css'] ) ? self::sanitize_css( wp_unslash( $data['override_css'] ) ) : '',
 					'target_element'        => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
 					'frequency'             => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
+					'footer_position'       => isset( $data['footer_position'] ) && in_array( $data['footer_position'], [ 'before_footer', 'after_footer' ], true ) ? $data['footer_position'] : 'before_footer',
 				];
 			}
 		}
@@ -227,6 +228,7 @@ class SmartAdInserterSettings {
 					'override_css'          => '',
 					'target_element'        => '',
 					'frequency'             => 0,
+					'footer_position'       => 'before_footer',
 				],
 				'sidebar_top'    => [
 					'active'                => false,

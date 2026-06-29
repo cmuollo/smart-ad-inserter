@@ -89,7 +89,16 @@
 					
 					<div class="sai-field-row sai-checkbox-row">
 						<input type="checkbox" id="sai-footer-use-default-placement" name="positions[footer][use_default_placement]" value="1" checked />
-						<label for="sai-footer-use-default-placement"><strong>Usa posizionamento di default (- prima di &lt;footer&gt;)</strong></label>
+						<label for="sai-footer-use-default-placement"><strong>Usa posizionamento di default (- relativo al tag &lt;footer&gt;)</strong></label>
+					</div>
+
+					<div class="sai-field-group">
+						<label for="sai-footer-position">Posizione Relativa Footer</label>
+						<select id="sai-footer-position" name="positions[footer][footer_position]" class="sai-input-text">
+							<option value="before_footer">Prima del footer (default)</option>
+							<option value="after_footer">Dopo il footer</option>
+						</select>
+						<p class="sai-field-desc">Scegli se inserire il banner subito prima del tag &lt;footer&gt; o subito dopo (alla fine del tag &lt;body&gt;).</p>
 					</div>
 
 					<div class="sai-field-row">

@@ -269,6 +269,12 @@
 					data.positions[pos].use_default_placement = defPlacementEl ? defPlacementEl.checked : true;
 				}
 
+				// footer_position (solo footer)
+				if (pos === 'footer') {
+					const footerPosEl = document.getElementById(mapping['positions.footer.footer_position']);
+					data.positions[pos].footer_position = footerPosEl ? footerPosEl.value : 'before_footer';
+				}
+
 				// target_element e frequency (solo griglie)
 				if (pos === 'grid_home' || pos === 'grid_archive') {
 					const targetEl = document.getElementById(mapping['positions.' + pos + '.target_element']);
@@ -330,6 +336,7 @@
 					map['positions.footer.override_css'] = 'sai-footer-override-css';
 					map['positions.footer.custom_selector'] = 'sai-footer-css-selector';
 					map['positions.footer.use_default_placement'] = 'sai-footer-use-default-placement';
+					map['positions.footer.footer_position'] = 'sai-footer-position';
 				} else if (pos === 'sidebar_top' || pos === 'sidebar_sticky') {
 					map['positions.' + pos + '.code'] = 'sai-' + pos.replace('_', '-') + '-code';
 					map['positions.' + pos + '.override_css'] = 'sai-' + pos.replace('_', '-') + '-override-css';

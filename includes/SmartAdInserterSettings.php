@@ -170,7 +170,8 @@ class SmartAdInserterSettings {
 							'max_insertions'            => isset( $data['max_insertions'] ) ? absint( $data['max_insertions'] ) : 0,
 							'words_interval'            => isset( $data['words_interval'] ) ? absint( $data['words_interval'] ) : 0,
 							'avoid_btf_single_block'    => isset( $data['avoid_btf_single_block'] ) ? (bool) $data['avoid_btf_single_block'] : false,
-							'excluded_container_tokens' => isset( $data['excluded_container_tokens'] ) ? implode( ', ', self::sanitize_exclusion_tokens( $data['excluded_container_tokens'] ) ) : '',
+							'exclude_blockquote'        => isset( $data['exclude_blockquote'] ) ? (bool) $data['exclude_blockquote'] : false,
+							'excluded_container_tokens' => isset( $data['excluded_container_tokens'] ) ? implode( ', ', self::sanitizeSelectorTokens( $data['excluded_container_tokens'] ) ) : '',
 						];
 					}
 				}
@@ -180,7 +181,8 @@ class SmartAdInserterSettings {
 		// Pulisce la cache delle posizioni strutturali (Transients)
 		delete_transient( 'sai_structural_ads_locations' );
 
-		return update_option( $this->option_key, $sanitized_settings );
+		$updated = update_option( $this->option_key, $sanitized_settings );
+		return $updated || get_option( $this->option_key ) === $sanitized_settings;
 	}
 
 	/**
@@ -218,6 +220,7 @@ class SmartAdInserterSettings {
 			'max_insertions'            => 3,
 			'words_interval'            => 150,
 			'avoid_btf_single_block'    => true,
+			'exclude_blockquote'        => true,
 			'excluded_container_tokens' => '',
 		];
 
@@ -256,6 +259,7 @@ class SmartAdInserterSettings {
 							'max_insertions'         => 3,
 							'words_interval'         => 150,
 							'avoid_btf_single_block' => true,
+							'exclude_blockquote'     => true,
 						] ),
 					]
 				],
@@ -275,15 +279,16 @@ class SmartAdInserterSettings {
 	}
 
 	/**
-	 * Sanitizza una lista di token di classe/ID semplici separati da virgole.
+	 * Sanitizza una lista di selettori esclusi (Classi, ID o Tag semplici).
 	 *
-	 * Accetta solo classi semplici (.classe) o ID semplici (#id).
+	 * Accetta classi semplici (.classe), ID semplici (#id) o tag semplici (blockquote, aside, nav).
+	 * Scarta silenziosamente combinatori, pseudo-classi, pseudo-elementi ed attributi CSS.
 	 *
 	 * @since    1.0.0
-	 * @param    string $input La stringa di input inserita dall'utente.
-	 * @return   array         L'array di token sanitizzati e validi.
+	 * @param    string $input La stringa inserita dall'utente.
+	 * @return   array         Elenco di token validati e sanitizzati.
 	 */
-	public static function sanitize_exclusion_tokens( string $input ): array {
+	public static function sanitizeSelectorTokens( string $input ): array {
 		$raw_tokens = explode( ',', $input );
 		$valid_tokens = [];
 
@@ -293,38 +298,49 @@ class SmartAdInserterSettings {
 				continue;
 			}
 
-			// Deve iniziare con . o #
-			$prefix = $token[0];
-			if ( $prefix !== '.' && $prefix !== '#' ) {
-				continue;
-			}
+			// Se inizia con . o #, si tratta di una classe o di un ID
+			$first_char = $token[0];
+			if ( $first_char === '.' || $first_char === '#' ) {
+				$name = substr( $token, 1 );
 
-			$name = substr( $token, 1 );
+				// Consente solo caratteri alfanumerici, trattini e underscores
+				if ( ! preg_match( '/^[a-zA-Z0-9\-_]+$/', $name ) ) {
+					continue;
+				}
 
-			// Non deve contenere caratteri non ammessi in classi o ID semplici (es. spazi, combinatori, pseudo-classi, discendenti o attributi)
-			if ( ! preg_match( '/^[a-zA-Z0-9\-_]+$/', $name ) ) {
-				continue;
-			}
-
-			// Sanitizza ulteriormente usando sanitize_html_class per le classi se disponibile
-			if ( $prefix === '.' ) {
-				if ( function_exists( 'sanitize_html_class' ) ) {
-					$sanitized_name = sanitize_html_class( $name );
+				if ( $first_char === '.' ) {
+					$sanitized_name = function_exists( 'sanitize_html_class' ) 
+						? sanitize_html_class( $name ) 
+						: preg_replace( '/[^a-zA-Z0-9\-_]/', '', $name );
+					
+					if ( ! empty( $sanitized_name ) ) {
+						$valid_tokens[] = '.' . $sanitized_name;
+					}
 				} else {
 					$sanitized_name = preg_replace( '/[^a-zA-Z0-9\-_]/', '', $name );
-				}
-				if ( ! empty( $sanitized_name ) ) {
-					$valid_tokens[] = '.' . $sanitized_name;
+					if ( ! empty( $sanitized_name ) ) {
+						$valid_tokens[] = '#' . $sanitized_name;
+					}
 				}
 			} else {
-				// Sanitizzazione rigorosa per gli ID
-				$sanitized_name = preg_replace( '/[^a-zA-Z0-9\-_]/', '', $name );
-				if ( ! empty( $sanitized_name ) ) {
-					$valid_tokens[] = '#' . $sanitized_name;
+				// Altrimenti, deve essere un tag semplice (solo lettere e numeri, es. blockquote, aside, nav, div)
+				if ( preg_match( '/^[a-zA-Z0-9]+$/', $token ) ) {
+					$valid_tokens[] = strtolower( $token );
 				}
 			}
 		}
 
 		return $valid_tokens;
+	}
+
+	/**
+	 * Mantiene retrocompatibilità per la sanitizzazione dei token.
+	 *
+	 * @since    1.0.0
+	 * @param    string $input La stringa di input.
+	 * @return   array
+	 */
+	public static function sanitize_exclusion_tokens( string $input ): array {
+		return self::sanitizeSelectorTokens( $input );
 	}
 }

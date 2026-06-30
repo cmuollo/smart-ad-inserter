@@ -299,16 +299,74 @@ class ContentInjectorTest extends TestCase {
 	}
 
 	/**
-	 * Test Scenario 10: Sanitizzazione dei token di esclusione.
+	 * Test Scenario 10: Sanitizzazione dei token di esclusione con supporto a tag semplici.
 	 */
 	public function test_exclusion_tokens_sanitization() {
-		$input = ' .pippo, #toc-box , .widget-inline , invalid_token_without_prefix, .invalid space ';
-		$sanitized = SmartAdInserterSettings::sanitize_exclusion_tokens( $input );
+		$input = ' .pippo, #toc-box , .widget-inline , invalid_token_without_prefix, .invalid space , blockquote, aside ';
+		$sanitized = SmartAdInserterSettings::sanitizeSelectorTokens( $input );
 
-		$this->assertCount( 3, $sanitized );
+		$this->assertCount( 5, $sanitized );
 		$this->assertContains( '.pippo', $sanitized );
 		$this->assertContains( '#toc-box', $sanitized );
 		$this->assertContains( '.widget-inline', $sanitized );
+		$this->assertContains( 'blockquote', $sanitized );
+		$this->assertContains( 'aside', $sanitized );
 		$this->assertNotContains( 'invalid_token_without_prefix', $sanitized );
+	}
+
+	/**
+	 * Test Scenario 11: Selettori non consentiti scartati silenziosamente.
+	 */
+	public function test_exclusion_tokens_invalid_discarded() {
+		$input = 'div > p, ::before, :not(...), [attr=value]';
+		$sanitized = SmartAdInserterSettings::sanitizeSelectorTokens( $input );
+		$this->assertEmpty( $sanitized );
+	}
+
+	/**
+	 * Test Scenario 12: In-Text con exclude_blockquote = false -> conteggia le parole del blockquote.
+	 */
+	public function test_in_text_respects_exclude_blockquote_false() {
+		$html = '
+		<p>Uno due tre quattro cinque sei sette otto. <br/> Nove dieci.</p>
+		<blockquote>Questo è un blockquote lungo con esattamente nove parole.</blockquote>
+		<p>Uno due tre quattro. <br/> Cinque sei.</p>
+		<p>Uno due tre quattro cinque sei sette otto nove.</p>';
+
+		// Caso A: exclude_blockquote = false -> parole conteggiate -> 3 banner inseriti
+		$settings_false = [
+			'in_text' => [
+				'active'                 => true,
+				'code'                   => '[BANNER]',
+				'min_height_desktop'     => 250,
+				'min_height_mobile'      => 250,
+				'words_interval'         => 9,
+				'max_insertions'         => 3,
+				'avoid_btf_single_block' => false,
+				'exclude_blockquote'     => false,
+			]
+		];
+
+		$injector_false = new ContentInjector( $settings_false );
+		$result_false   = $injector_false->inject( $html );
+		$this->assertEquals( 3, substr_count( $result_false, 'sai-in-text' ) );
+
+		// Caso B: exclude_blockquote = true -> parole ignorate -> 2 banner inseriti
+		$settings_true = [
+			'in_text' => [
+				'active'                 => true,
+				'code'                   => '[BANNER]',
+				'min_height_desktop'     => 250,
+				'min_height_mobile'      => 250,
+				'words_interval'         => 9,
+				'max_insertions'         => 3,
+				'avoid_btf_single_block' => false,
+				'exclude_blockquote'     => true,
+			]
+		];
+
+		$injector_true = new ContentInjector( $settings_true );
+		$result_true   = $injector_true->inject( $html );
+		$this->assertEquals( 2, substr_count( $result_true, 'sai-in-text' ) );
 	}
 }

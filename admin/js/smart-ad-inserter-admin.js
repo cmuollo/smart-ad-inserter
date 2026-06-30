@@ -221,15 +221,33 @@
 					if (response.ok) {
 						return response.json();
 					} else {
-						if (response.status === 401) {
-							throw new Error('Errore 401 (Non autorizzato): Sessione scaduta. Ricarica la pagina.');
-						} else if (response.status === 403) {
-							throw new Error('Errore 403 (Vietato): Permessi amministrativi insufficienti per questa operazione.');
-						} else if (response.status === 422) {
-							throw new Error('Errore 422 (Dati non validi): Alcuni campi presentano un formato non consentito.');
-						} else {
-							throw new Error('Errore ' + response.status + ': Impossibile completare il salvataggio.');
-						}
+						return response.json().then(function(errBody) {
+							const msg = errBody && errBody.message ? errBody.message : '';
+							const code = errBody && errBody.code ? errBody.code : '';
+							
+							if (response.status === 401 || code === 'rest_not_logged_in') {
+								throw new Error('Errore 401 (Non autorizzato): Sessione scaduta. Ricarica la pagina.');
+							} else if (code === 'rest_cookie_invalid_nonce') {
+								throw new Error('Errore di sicurezza (sessione scaduta o CSRF). Ricarica la pagina.');
+							} else if (response.status === 403) {
+								throw new Error(msg || 'Errore 403 (Vietato): Permessi amministrativi insufficienti per questa operazione.');
+							} else if (response.status === 400) {
+								throw new Error(msg || 'Errore 400 (Dati non validi): Richiesta malformata.');
+							} else {
+								throw new Error(msg || 'Errore ' + response.status + ': Impossibile completare il salvataggio.');
+							}
+						}).catch(function(err) {
+							if (err instanceof Error) {
+								throw err;
+							}
+							if (response.status === 401) {
+								throw new Error('Errore 401 (Non autorizzato): Sessione scaduta. Ricarica la pagina.');
+							} else if (response.status === 403) {
+								throw new Error('Errore 403 (Vietato): Permessi amministrativi insufficienti per questa operazione.');
+							} else {
+								throw new Error('Errore ' + response.status + ': Impossibile completare il salvataggio.');
+							}
+						});
 					}
 				})
 				.then(function(data) {

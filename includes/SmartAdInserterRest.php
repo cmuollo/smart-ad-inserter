@@ -67,15 +67,43 @@ class SmartAdInserterRest {
 				[
 					'methods'             => 'GET',
 					'callback'            => [ $this, 'get_settings' ],
-					'permission_callback' => function (): bool {
-						return current_user_can( 'manage_options' );
+					'permission_callback' => function () {
+						if ( ! is_user_logged_in() ) {
+							return new \WP_Error(
+								'rest_not_logged_in',
+								__( 'Utente non autenticato. Effettua il login.', 'smart-ad-inserter' ),
+								[ 'status' => 401 ]
+							);
+						}
+						if ( ! current_user_can( 'manage_options' ) ) {
+							return new \WP_Error(
+								'rest_forbidden',
+								__( 'Permessi amministrativi insufficienti per questa operazione.', 'smart-ad-inserter' ),
+								[ 'status' => 403 ]
+							);
+						}
+						return true;
 					},
 				],
 				[
 					'methods'             => 'POST',
 					'callback'            => [ $this, 'save_settings' ],
-					'permission_callback' => function (): bool {
-						return current_user_can( 'manage_options' );
+					'permission_callback' => function () {
+						if ( ! is_user_logged_in() ) {
+							return new \WP_Error(
+								'rest_not_logged_in',
+								__( 'Utente non autenticato. Effettua il login.', 'smart-ad-inserter' ),
+								[ 'status' => 401 ]
+							);
+						}
+						if ( ! current_user_can( 'manage_options' ) ) {
+							return new \WP_Error(
+								'rest_forbidden',
+								__( 'Permessi amministrativi insufficienti per questa operazione.', 'smart-ad-inserter' ),
+								[ 'status' => 403 ]
+							);
+						}
+						return true;
 					},
 				],
 			]
@@ -103,6 +131,13 @@ class SmartAdInserterRest {
 	 */
 	public function save_settings( WP_REST_Request $request ) {
 		$params = $request->get_json_params();
+		if ( $params === null ) {
+			return new \WP_Error(
+				'rest_invalid_payload',
+				__( 'Payload non valido o JSON malformato.', 'smart-ad-inserter' ),
+				[ 'status' => 400 ]
+			);
+		}
 		$settings = is_array( $params ) ? $params : [];
 
 		$success = $this->settings_manager->save_settings( $settings );

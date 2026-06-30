@@ -141,38 +141,100 @@ class SmartAdInserterSettings {
 	 * @return   bool                  Vero in caso di successo nel salvataggio, falso altrimenti.
 	 */
 	public function save_settings( array $settings ): bool {
-		$sanitized_settings = [];
+		// Recupera le impostazioni correnti già salvate a database per preservarle
+		$existing_settings = get_option( $this->option_key, [] );
+		if ( ! is_array( $existing_settings ) ) {
+			$existing_settings = [];
+		}
 
-		// Head Scripts — solo admin con unfiltered_html possono salvare tag script
-		$raw_scripts = isset( $settings['global_scripts'] ) ? $settings['global_scripts'] : '';
-		$sanitized_settings['global_scripts'] = current_user_can( 'unfiltered_html' )
-			? wp_unslash( $raw_scripts )
-			: wp_kses( wp_unslash( $raw_scripts ), [] );
+		$sanitized_settings = $existing_settings;
 
-		$sanitized_settings['contexts'] = [];
+		// Head Scripts — solo se esplicitamente passato nel payload
+		if ( isset( $settings['global_scripts'] ) ) {
+			$raw_scripts = $settings['global_scripts'];
+			$sanitized_settings['global_scripts'] = current_user_can( 'unfiltered_html' )
+				? wp_unslash( $raw_scripts )
+				: wp_kses( wp_unslash( $raw_scripts ), [] );
+		}
+
 		if ( isset( $settings['contexts'] ) && is_array( $settings['contexts'] ) ) {
+			if ( ! isset( $sanitized_settings['contexts'] ) || ! is_array( $sanitized_settings['contexts'] ) ) {
+				$sanitized_settings['contexts'] = [];
+			}
+
 			foreach ( $settings['contexts'] as $context_id => $context_data ) {
-				$sanitized_settings['contexts'][ $context_id ] = [ 'positions' => [] ];
+				if ( ! isset( $sanitized_settings['contexts'][ $context_id ] ) || ! is_array( $sanitized_settings['contexts'][ $context_id ] ) ) {
+					$sanitized_settings['contexts'][ $context_id ] = [ 'positions' => [] ];
+				}
+
 				if ( isset( $context_data['positions'] ) && is_array( $context_data['positions'] ) ) {
+					if ( ! isset( $sanitized_settings['contexts'][ $context_id ]['positions'] ) || ! is_array( $sanitized_settings['contexts'][ $context_id ]['positions'] ) ) {
+						$sanitized_settings['contexts'][ $context_id ]['positions'] = [];
+					}
+
 					foreach ( $context_data['positions'] as $position_id => $data ) {
-						$sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] = [
-							'active'                    => isset( $data['active'] ) ? (bool) $data['active'] : false,
-							'code'                      => isset( $data['code'] ) ? wp_kses( wp_unslash( $data['code'] ), self::allowed_html() ) : '',
-							'min_height_desktop'        => isset( $data['min_height_desktop'] ) ? absint( $data['min_height_desktop'] ) : 0,
-							'min_height_mobile'         => isset( $data['min_height_mobile'] ) ? absint( $data['min_height_mobile'] ) : 0,
-							'custom_selector'           => isset( $data['custom_selector'] ) ? sanitize_text_field( wp_unslash( $data['custom_selector'] ) ) : '',
-							'use_default_placement'     => isset( $data['use_default_placement'] ) ? (bool) $data['use_default_placement'] : false,
-							'override_css'              => isset( $data['override_css'] ) ? self::sanitize_css( wp_unslash( $data['override_css'] ) ) : '',
-							'target_element'            => isset( $data['target_element'] ) ? sanitize_text_field( wp_unslash( $data['target_element'] ) ) : '',
-							'frequency'                 => isset( $data['frequency'] ) ? absint( $data['frequency'] ) : 0,
-							'footer_position'           => isset( $data['footer_position'] ) && in_array( $data['footer_position'], [ 'before_footer', 'after_footer' ], true ) ? $data['footer_position'] : 'before_footer',
-							'use_global_config'         => isset( $data['use_global_config'] ) ? (bool) $data['use_global_config'] : false,
-							'max_insertions'            => isset( $data['max_insertions'] ) ? absint( $data['max_insertions'] ) : 0,
-							'words_interval'            => isset( $data['words_interval'] ) ? absint( $data['words_interval'] ) : 0,
-							'avoid_btf_single_block'    => isset( $data['avoid_btf_single_block'] ) ? (bool) $data['avoid_btf_single_block'] : false,
-							'exclude_blockquote'        => isset( $data['exclude_blockquote'] ) ? (bool) $data['exclude_blockquote'] : false,
-							'excluded_container_tokens' => isset( $data['excluded_container_tokens'] ) ? implode( ', ', self::sanitizeSelectorTokens( $data['excluded_container_tokens'] ) ) : '',
-						];
+						if ( ! is_array( $data ) ) {
+							continue;
+						}
+
+						// Se non esiste ancora questa posizione, creala
+						if ( ! isset( $sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] ) || ! is_array( $sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] ) ) {
+							$sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] = [];
+						}
+
+						$current_pos_settings = $sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ];
+
+						// Sanitizza ed unisci solo le chiavi presenti nel payload
+						if ( isset( $data['active'] ) ) {
+							$current_pos_settings['active'] = (bool) $data['active'];
+						}
+						if ( isset( $data['code'] ) ) {
+							$current_pos_settings['code'] = wp_kses( wp_unslash( $data['code'] ), self::allowed_html() );
+						}
+						if ( isset( $data['min_height_desktop'] ) ) {
+							$current_pos_settings['min_height_desktop'] = absint( $data['min_height_desktop'] );
+						}
+						if ( isset( $data['min_height_mobile'] ) ) {
+							$current_pos_settings['min_height_mobile'] = absint( $data['min_height_mobile'] );
+						}
+						if ( isset( $data['custom_selector'] ) ) {
+							$current_pos_settings['custom_selector'] = sanitize_text_field( wp_unslash( $data['custom_selector'] ) );
+						}
+						if ( isset( $data['use_default_placement'] ) ) {
+							$current_pos_settings['use_default_placement'] = (bool) $data['use_default_placement'];
+						}
+						if ( isset( $data['override_css'] ) ) {
+							$current_pos_settings['override_css'] = self::sanitize_css( wp_unslash( $data['override_css'] ) );
+						}
+						if ( isset( $data['target_element'] ) ) {
+							$current_pos_settings['target_element'] = sanitize_text_field( wp_unslash( $data['target_element'] ) );
+						}
+						if ( isset( $data['frequency'] ) ) {
+							$current_pos_settings['frequency'] = absint( $data['frequency'] );
+						}
+						if ( isset( $data['footer_position'] ) ) {
+							$current_pos_settings['footer_position'] = in_array( $data['footer_position'], [ 'before_footer', 'after_footer' ], true ) ? $data['footer_position'] : 'before_footer';
+						}
+						if ( isset( $data['use_global_config'] ) ) {
+							$current_pos_settings['use_global_config'] = (bool) $data['use_global_config'];
+						}
+						if ( isset( $data['max_insertions'] ) ) {
+							$current_pos_settings['max_insertions'] = absint( $data['max_insertions'] );
+						}
+						if ( isset( $data['words_interval'] ) ) {
+							$current_pos_settings['words_interval'] = absint( $data['words_interval'] );
+						}
+						if ( isset( $data['avoid_btf_single_block'] ) ) {
+							$current_pos_settings['avoid_btf_single_block'] = (bool) $data['avoid_btf_single_block'];
+						}
+						if ( isset( $data['exclude_blockquote'] ) ) {
+							$current_pos_settings['exclude_blockquote'] = (bool) $data['exclude_blockquote'];
+						}
+						if ( isset( $data['excluded_container_tokens'] ) ) {
+							$current_pos_settings['excluded_container_tokens'] = implode( ', ', self::sanitizeSelectorTokens( $data['excluded_container_tokens'] ) );
+						}
+
+						$sanitized_settings['contexts'][ $context_id ]['positions'][ $position_id ] = $current_pos_settings;
 					}
 				}
 			}

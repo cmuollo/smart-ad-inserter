@@ -277,6 +277,7 @@ class ContentInjector implements AdInjectorInterface {
 		$insertions = [];
 		$accumulated_words = 0;
 		$insertions_count = 0;
+		$exclude_blockquote = isset( $config['exclude_blockquote'] ) ? (bool) $config['exclude_blockquote'] : true;
 
 		// Raccogliamo prima tutti i paragrafi <p> utili
 		$p_elements = [];
@@ -309,14 +310,14 @@ class ContentInjector implements AdInjectorInterface {
 			$tag_name = strtolower( $child->nodeName );
 
 			// 1. Esclusione Blockquote
-			if ( $tag_name === 'blockquote' ) {
+			if ( $exclude_blockquote && $tag_name === 'blockquote' ) {
 				continue;
 			}
 
-			// 2. Esclusione Contenitori tramite classi/id
+			// 2. Esclusione Contenitori tramite classi/id/tag
 			if ( $this->is_excluded_container( $child, $excluded_tokens ) ) {
 				// Conteggiamo comunque le parole ma non discendiamo per inserimenti
-				$accumulated_words += $this->count_words_in_node( $child );
+				$accumulated_words += $this->count_words_in_node( $child, $exclude_blockquote );
 				continue;
 			}
 
@@ -333,7 +334,7 @@ class ContentInjector implements AdInjectorInterface {
 						$accumulated_words += $this->count_words( $child_node->textContent );
 					} elseif ( $child_node->nodeType === XML_ELEMENT_NODE ) {
 						if ( strtolower( $child_node->nodeName ) !== 'br' ) {
-							$accumulated_words += $this->count_words_in_node( $child_node );
+							$accumulated_words += $this->count_words_in_node( $child_node, $exclude_blockquote );
 						}
 					}
 
@@ -373,7 +374,7 @@ class ContentInjector implements AdInjectorInterface {
 				}
 			} else {
 				// Per gli altri tag non esclusi, contiamo solo le parole
-				$accumulated_words += $this->count_words_in_node( $child );
+				$accumulated_words += $this->count_words_in_node( $child, $exclude_blockquote );
 			}
 		}
 
@@ -462,6 +463,7 @@ class ContentInjector implements AdInjectorInterface {
 
 		$id    = $element->getAttribute( 'id' );
 		$class = $element->getAttribute( 'class' );
+		$tag   = strtolower( $element->nodeName );
 
 		$classes = ! empty( $class ) ? preg_split( '/\s+/', $class ) : [];
 
@@ -476,6 +478,11 @@ class ContentInjector implements AdInjectorInterface {
 				if ( in_array( $token_class, $classes, true ) ) {
 					return true;
 				}
+			} else {
+				// Confronto diretto per tag semplici (es. blockquote, aside, nav)
+				if ( $tag === strtolower( $token ) ) {
+					return true;
+				}
 			}
 		}
 
@@ -483,22 +490,23 @@ class ContentInjector implements AdInjectorInterface {
 	}
 
 	/**
-	 * Conta le parole in modo ricorsivo all'interno di un nodo DOM, escludendo blockquote.
+	 * Conta le parole in modo ricorsivo all'interno di un nodo DOM, escludendo blockquote condizionalmente.
 	 *
 	 * @since    1.0.0
-	 * @param    \DOMNode $node Il nodo DOM.
+	 * @param    \DOMNode $node               Il nodo DOM.
+	 * @param    bool     $exclude_blockquote Se impostato a true, esclude i blockquote dal conteggio.
 	 * @return   int
 	 */
-	private function count_words_in_node( $node ): int {
+	private function count_words_in_node( $node, bool $exclude_blockquote = true ): int {
 		$words = 0;
 		if ( $node->nodeType === XML_TEXT_NODE ) {
 			$words += $this->count_words( $node->textContent );
 		} elseif ( $node->nodeType === XML_ELEMENT_NODE ) {
-			if ( strtolower( $node->nodeName ) === 'blockquote' ) {
+			if ( $exclude_blockquote && strtolower( $node->nodeName ) === 'blockquote' ) {
 				return 0;
 			}
 			foreach ( $node->childNodes as $child ) {
-				$words += $this->count_words_in_node( $child );
+				$words += $this->count_words_in_node( $child, $exclude_blockquote );
 			}
 		}
 		return $words;

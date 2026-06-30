@@ -358,6 +358,9 @@
 						const avoidBtfEl = document.getElementById(mapping[prefix + 'avoid_btf_single_block']);
 						data.contexts[ctx].positions[pos].avoid_btf_single_block = avoidBtfEl ? avoidBtfEl.checked : false;
 
+						const exclBlockquoteEl = document.getElementById(mapping[prefix + 'exclude_blockquote']);
+						data.contexts[ctx].positions[pos].exclude_blockquote = exclBlockquoteEl ? exclBlockquoteEl.checked : false;
+
 						const exclTokensEl = document.getElementById(mapping[prefix + 'excluded_container_tokens']);
 						data.contexts[ctx].positions[pos].excluded_container_tokens = exclTokensEl ? exclTokensEl.value : '';
 					}
@@ -435,6 +438,7 @@
 						map[prefix + 'max_insertions'] = domPrefix + 'max-insertions';
 						map[prefix + 'words_interval'] = domPrefix + 'words-interval';
 						map[prefix + 'avoid_btf_single_block'] = domPrefix + 'avoid-btf-single-block';
+						map[prefix + 'exclude_blockquote'] = domPrefix + 'exclude-blockquote';
 						map[prefix + 'excluded_container_tokens'] = domPrefix + 'excluded-container-tokens';
 					}
 				});
@@ -477,13 +481,17 @@
 					if (token === '') continue;
 					const prefix = token[0];
 					if (prefix !== '.' && prefix !== '#') {
-						allValid = false;
-						break;
-					}
-					const name = token.substring(1);
-					if (!/^[a-zA-Z0-9\-_]+$/.test(name)) {
-						allValid = false;
-						break;
+						// Se non inizia con . o #, deve essere un tag semplice (es. blockquote, aside, nav)
+						if (!/^[a-zA-Z0-9]+$/.test(token)) {
+							allValid = false;
+							break;
+						}
+					} else {
+						const name = token.substring(1);
+						if (!/^[a-zA-Z0-9\-_]+$/.test(name)) {
+							allValid = false;
+							break;
+						}
 					}
 				}
 

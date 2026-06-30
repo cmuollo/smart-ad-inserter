@@ -819,6 +819,11 @@
 						<label for="sai-single-in_text-avoid-btf-single-block"><strong>Non aggiungere in posizione BTF se c'è un solo &lt;p&gt; / &lt;br&gt;</strong></label>
 					</div>
 
+					<div class="sai-field-row sai-checkbox-row">
+						<input type="checkbox" id="sai-single-in-text-exclude-blockquote" name="contexts[single][positions][in_text][exclude_blockquote]" value="1" checked />
+						<label for="sai-single-in-text-exclude-blockquote"><strong>Salta ed escludi i tag &lt;blockquote&gt; dal conteggio e dai punti di split</strong></label>
+					</div>
+
 					<div class="sai-field-group">
 						<label for="sai-single-in_text-excluded-container-tokens">Esclusione contenitori (Classi / ID semplici)</label>
 						<input type="text" id="sai-single-in_text-excluded-container-tokens" name="contexts[single][positions][in_text][excluded_container_tokens]" class="sai-input-text" placeholder="Es. .toc-box, #inline-note" />

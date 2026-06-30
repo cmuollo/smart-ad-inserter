@@ -60,7 +60,9 @@
 	.sai-ad-wrapper.sai-sidebar-top,
 	.sai-ad-wrapper.sai-sidebar-sticky,
 	.sai-ad-wrapper.sai-grid-home,
-	.sai-ad-wrapper.sai-grid-archive {
+	.sai-ad-wrapper.sai-grid-archive,
+	.sai-ad-wrapper.sai-gridhome,
+	.sai-ad-wrapper.sai-gridarchive {
 		width: 100%;
 	}
 

@@ -71,7 +71,7 @@
 					<div class="sai-field-group">
 						<label for="sai-global-masthead-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-masthead-override-css" name="contexts[global][positions][masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -136,7 +136,7 @@
 					<div class="sai-field-group">
 						<label for="sai-global-footer-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-footer-override-css" name="contexts[global][positions][footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -177,7 +177,7 @@
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-top-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-sidebar-top-override-css" name="contexts[global][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -218,7 +218,7 @@
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-sticky-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-sidebar-sticky-override-css" name="contexts[global][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -272,7 +272,7 @@
 						<div class="sai-field-group">
 							<label for="sai-home-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-masthead-override-css" name="contexts[home][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-home-masthead-css-selector">Selettore CSS custom (opzionale)</label>
@@ -343,7 +343,7 @@
 						<div class="sai-field-group">
 							<label for="sai-home-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-footer-override-css" name="contexts[home][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-home-footer-css-selector">Selettore CSS custom (opzionale)</label>
@@ -390,7 +390,7 @@
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-sidebar-top-override-css" name="contexts[home][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -438,7 +438,7 @@
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-sidebar-sticky-override-css" name="contexts[home][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -491,7 +491,7 @@
 					<div class="sai-field-group">
 						<label for="sai-home-grid-home-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-home-grid-home-override-css" name="contexts[home][positions][grid_home][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -545,7 +545,7 @@
 						<div class="sai-field-group">
 							<label for="sai-single-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-masthead-override-css" name="contexts[single][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-single-masthead-css-selector">Selettore CSS custom (opzionale)</label>
@@ -616,7 +616,7 @@
 						<div class="sai-field-group">
 							<label for="sai-single-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-footer-override-css" name="contexts[single][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-single-footer-css-selector">Selettore CSS custom (opzionale)</label>
@@ -663,7 +663,7 @@
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-sidebar-top-override-css" name="contexts[single][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -711,7 +711,7 @@
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-sidebar-sticky-override-css" name="contexts[single][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -753,7 +753,7 @@
 					<div class="sai-field-group">
 						<label for="sai-single-atf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-atf-override-css" name="contexts[single][positions][atf][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -794,7 +794,7 @@
 					<div class="sai-field-group">
 						<label for="sai-single-btf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-btf-override-css" name="contexts[single][positions][btf][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">
@@ -862,7 +862,7 @@
 					<div class="sai-field-group">
 						<label for="sai-single-in-text-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-in-text-override-css" name="contexts[single][positions][in_text][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 				</div>
 			</div>
@@ -910,7 +910,7 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-masthead-override-css" name="contexts[archive][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-archive-masthead-css-selector">Selettore CSS custom (opzionale)</label>
@@ -981,7 +981,7 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-footer-override-css" name="contexts[archive][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-archive-footer-css-selector">Selettore CSS custom (opzionale)</label>
@@ -1028,7 +1028,7 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-sidebar-top-override-css" name="contexts[archive][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -1076,7 +1076,7 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-sidebar-sticky-override-css" name="contexts[archive][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 						</div>
 
 						<div class="sai-field-group">
@@ -1129,7 +1129,7 @@
 					<div class="sai-field-group">
 						<label for="sai-archive-grid-archive-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-archive-grid-archive-override-css" name="contexts[archive][positions][grid_archive][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e rende disponibile un contenitore fluido al 100% (l’effettiva adattabilità del banner dipende anche dal markup interno della creatività).</p>
 					</div>
 
 					<div class="sai-field-group">

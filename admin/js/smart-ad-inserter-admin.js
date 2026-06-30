@@ -465,25 +465,12 @@
 			return map;
 		}
 
-		// Abilita/disabilita campi e valida esclusioni in tempo reale per la card In Text
+		// Valida le esclusioni in tempo reale per la card In Text
 		function setupInTextValidation() {
-			const wordsIntervalInput = document.getElementById('sai-single-in-text-words-interval');
-			const maxInsertionsInput = document.getElementById('sai-single-in-text-max-insertions');
 			const excludedTokensInput = document.getElementById('sai-single-in-text-excluded-container-tokens');
 
-			if (!wordsIntervalInput || !maxInsertionsInput || !excludedTokensInput) {
+			if (!excludedTokensInput) {
 				return;
-			}
-
-			function updateInTextState() {
-				const val = parseInt(wordsIntervalInput.value, 10) || 0;
-				if (val <= 0) {
-					maxInsertionsInput.readOnly = true;
-					maxInsertionsInput.classList.add('sai-input-readonly');
-				} else {
-					maxInsertionsInput.readOnly = false;
-					maxInsertionsInput.classList.remove('sai-input-readonly');
-				}
 			}
 
 			function validateExclusionTokens() {
@@ -520,11 +507,9 @@
 				}
 			}
 
-			wordsIntervalInput.addEventListener('input', updateInTextState);
 			excludedTokensInput.addEventListener('input', validateExclusionTokens);
 
 			// Esegui subito all'avvio
-			updateInTextState();
 			validateExclusionTokens();
 		}
 

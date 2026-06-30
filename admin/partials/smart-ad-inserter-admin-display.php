@@ -71,13 +71,13 @@
 					<div class="sai-field-group">
 						<label for="sai-global-masthead-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-masthead-override-css" name="contexts[global][positions][masthead][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-global-masthead-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-global-masthead-css-selector" name="contexts[global][positions][masthead][custom_selector]" class="sai-input-text" placeholder="Es. #custom-header-wrapper" />
-						<p class="sai-field-desc" id="sai-global-masthead-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 
@@ -136,13 +136,13 @@
 					<div class="sai-field-group">
 						<label for="sai-global-footer-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-footer-override-css" name="contexts[global][positions][footer][override_css]" rows="3" class="sai-textarea" placeholder="Es. margin: 20px 0; text-align: center;"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate direttamente come stile inline sul <strong>&lt;div&gt; wrapper esterno del plugin (.sai-ad-wrapper)</strong>, non sul markup interno del banner.</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-global-footer-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-global-footer-css-selector" name="contexts[global][positions][footer][custom_selector]" class="sai-input-text" placeholder="Es. #custom-footer-wrapper" />
-						<p class="sai-field-desc" id="sai-global-footer-selector-desc">Il selettore custom sarà usato solo se disattivi il posizionamento di default.</p>
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 
@@ -177,12 +177,13 @@
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-top-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-sidebar-top-override-css" name="contexts[global][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-top-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-global-sidebar-top-css-selector" name="contexts[global][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 
@@ -217,12 +218,13 @@
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-sticky-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-global-sidebar-sticky-override-css" name="contexts[global][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
-						<p class="sai-field-desc">Queste dichiarazioni CSS verranno applicate come stile inline sul wrapper esterno del plugin (.sai-ad-wrapper).</p>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-global-sidebar-sticky-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-global-sidebar-sticky-css-selector" name="contexts[global][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 			</div>
@@ -270,10 +272,12 @@
 						<div class="sai-field-group">
 							<label for="sai-home-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-masthead-override-css" name="contexts[home][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-home-masthead-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-home-masthead-css-selector" name="contexts[home][positions][masthead][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -339,10 +343,12 @@
 						<div class="sai-field-group">
 							<label for="sai-home-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-footer-override-css" name="contexts[home][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-home-footer-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-home-footer-css-selector" name="contexts[home][positions][footer][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -384,11 +390,13 @@
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-sidebar-top-override-css" name="contexts[home][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-top-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-home-sidebar-top-css-selector" name="contexts[home][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -430,11 +438,13 @@
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-home-sidebar-sticky-override-css" name="contexts[home][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-home-sidebar-sticky-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-home-sidebar-sticky-css-selector" name="contexts[home][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -481,11 +491,13 @@
 					<div class="sai-field-group">
 						<label for="sai-home-grid-home-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-home-grid-home-override-css" name="contexts[home][positions][grid_home][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-home-grid-home-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-home-grid-home-css-selector" name="contexts[home][positions][grid_home][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 			</div>
@@ -533,10 +545,12 @@
 						<div class="sai-field-group">
 							<label for="sai-single-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-masthead-override-css" name="contexts[single][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-single-masthead-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-single-masthead-css-selector" name="contexts[single][positions][masthead][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -602,10 +616,12 @@
 						<div class="sai-field-group">
 							<label for="sai-single-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-footer-override-css" name="contexts[single][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-single-footer-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-single-footer-css-selector" name="contexts[single][positions][footer][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -647,11 +663,13 @@
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-sidebar-top-override-css" name="contexts[single][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-top-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-single-sidebar-top-css-selector" name="contexts[single][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -693,11 +711,13 @@
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-single-sidebar-sticky-override-css" name="contexts[single][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-single-sidebar-sticky-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-single-sidebar-sticky-css-selector" name="contexts[single][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -733,11 +753,13 @@
 					<div class="sai-field-group">
 						<label for="sai-single-atf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-atf-override-css" name="contexts[single][positions][atf][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-single-atf-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-single-atf-css-selector" name="contexts[single][positions][atf][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 
@@ -772,11 +794,13 @@
 					<div class="sai-field-group">
 						<label for="sai-single-btf-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-btf-override-css" name="contexts[single][positions][btf][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-single-btf-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-single-btf-css-selector" name="contexts[single][positions][btf][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 
@@ -838,6 +862,7 @@
 					<div class="sai-field-group">
 						<label for="sai-single-in-text-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-single-in-text-override-css" name="contexts[single][positions][in_text][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 				</div>
 			</div>
@@ -885,10 +910,12 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-masthead-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-masthead-override-css" name="contexts[archive][positions][masthead][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-archive-masthead-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-archive-masthead-css-selector" name="contexts[archive][positions][masthead][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -954,10 +981,12 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-footer-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-footer-override-css" name="contexts[archive][positions][footer][override_css]" rows="3" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 						<div class="sai-field-group">
 							<label for="sai-archive-footer-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-archive-footer-css-selector" name="contexts[archive][positions][footer][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -999,11 +1028,13 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-top-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-sidebar-top-override-css" name="contexts[archive][positions][sidebar_top][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-top-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-archive-sidebar-top-css-selector" name="contexts[archive][positions][sidebar_top][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -1045,11 +1076,13 @@
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-sticky-override-css">Override CSS Wrapper</label>
 							<textarea id="sai-archive-sidebar-sticky-override-css" name="contexts[archive][positions][sidebar_sticky][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 						</div>
 
 						<div class="sai-field-group">
 							<label for="sai-archive-sidebar-sticky-css-selector">Selettore CSS custom (opzionale)</label>
 							<input type="text" id="sai-archive-sidebar-sticky-css-selector" name="contexts[archive][positions][sidebar_sticky][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 						</div>
 					</div>
 				</div>
@@ -1096,11 +1129,13 @@
 					<div class="sai-field-group">
 						<label for="sai-archive-grid-archive-override-css">Override CSS Wrapper (CSS personalizzato del contenitore banner)</label>
 						<textarea id="sai-archive-grid-archive-override-css" name="contexts[archive][positions][grid_archive][override_css]" rows="2" class="sai-textarea"></textarea>
+						<p class="sai-field-desc"><strong>Attenzione al CLS:</strong> Queste dichiarazioni CSS vengono applicate inline al wrapper esterno .sai-ad-wrapper. Modifiche strutturali come width fisse, height fisse, position, margin o regole non responsive possono aumentare il CLS e compromettere l’adattamento mobile. Se lasci questo campo vuoto, il plugin prealloca automaticamente lo spazio corretto per l’iniezione e il banner userà la larghezza disponibile (100%) nel contenitore.</p>
 					</div>
 
 					<div class="sai-field-group">
 						<label for="sai-archive-grid-archive-css-selector">Selettore CSS custom (opzionale)</label>
 						<input type="text" id="sai-archive-grid-archive-css-selector" name="contexts[archive][positions][grid_archive][custom_selector]" class="sai-input-text" />
+						<p class="sai-field-desc"><strong>Attenzione:</strong> L’uso di selettori strutturali custom è consigliato solo per temi particolari. Un selettore non stabile o troppo specifico può alterare il layout e aumentare il rischio di CLS. Quando possibile, preferisci il posizionamento di default del plugin.</p>
 					</div>
 				</div>
 			</div>

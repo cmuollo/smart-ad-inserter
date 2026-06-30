@@ -81,9 +81,31 @@
 		box-sizing: border-box;
 	}
 
-	.sai-ad-wrapper.sai-sidebar-top,
+	.sai-ad-wrapper.sai-sidebar-top {
+		display: block;
+		width: 100%;
+	}
+
 	.sai-ad-wrapper.sai-sidebar-sticky {
 		display: block;
 		width: 100%;
+		position: -webkit-sticky;
+		position: sticky;
+		top: 30px;
+		z-index: 99;
+		align-self: start;
+	}
+
+	/* Consente al contenitore della sidebar di estendersi per l'altezza della colonna nel tema Newspaperup */
+	aside.sidebar-right,
+	aside.sidebar-left {
+		display: flex;
+		flex-direction: column;
+	}
+
+	aside.sidebar-right > .bs-sidebar,
+	aside.sidebar-left > .bs-sidebar {
+		height: 100%;
+		flex: 1 1 auto;
 	}
 }

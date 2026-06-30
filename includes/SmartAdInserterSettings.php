@@ -192,10 +192,20 @@ class SmartAdInserterSettings {
 							$current_pos_settings['code'] = wp_kses( wp_unslash( $data['code'] ), self::allowed_html() );
 						}
 						if ( isset( $data['min_height_desktop'] ) ) {
-							$current_pos_settings['min_height_desktop'] = absint( $data['min_height_desktop'] );
+							$val = absint( $data['min_height_desktop'] );
+							if ( $val > 0 ) {
+								$current_pos_settings['min_height_desktop'] = $val;
+							} elseif ( ! isset( $current_pos_settings['min_height_desktop'] ) || $current_pos_settings['min_height_desktop'] <= 0 ) {
+								$current_pos_settings['min_height_desktop'] = 250;
+							}
 						}
 						if ( isset( $data['min_height_mobile'] ) ) {
-							$current_pos_settings['min_height_mobile'] = absint( $data['min_height_mobile'] );
+							$val = absint( $data['min_height_mobile'] );
+							if ( $val > 0 ) {
+								$current_pos_settings['min_height_mobile'] = $val;
+							} elseif ( ! isset( $current_pos_settings['min_height_mobile'] ) || $current_pos_settings['min_height_mobile'] <= 0 ) {
+								$current_pos_settings['min_height_mobile'] = 100;
+							}
 						}
 						if ( isset( $data['custom_selector'] ) ) {
 							$current_pos_settings['custom_selector'] = sanitize_text_field( wp_unslash( $data['custom_selector'] ) );
@@ -219,10 +229,20 @@ class SmartAdInserterSettings {
 							$current_pos_settings['use_global_config'] = (bool) $data['use_global_config'];
 						}
 						if ( isset( $data['max_insertions'] ) ) {
-							$current_pos_settings['max_insertions'] = absint( $data['max_insertions'] );
+							$val = absint( $data['max_insertions'] );
+							if ( $val >= 1 ) {
+								$current_pos_settings['max_insertions'] = $val;
+							} elseif ( ! isset( $current_pos_settings['max_insertions'] ) || $current_pos_settings['max_insertions'] < 1 ) {
+								$current_pos_settings['max_insertions'] = 3;
+							}
 						}
 						if ( isset( $data['words_interval'] ) ) {
-							$current_pos_settings['words_interval'] = absint( $data['words_interval'] );
+							$val = absint( $data['words_interval'] );
+							if ( $val >= 10 ) {
+								$current_pos_settings['words_interval'] = $val;
+							} elseif ( ! isset( $current_pos_settings['words_interval'] ) || $current_pos_settings['words_interval'] < 10 ) {
+								$current_pos_settings['words_interval'] = 150;
+							}
 						}
 						if ( isset( $data['avoid_btf_single_block'] ) ) {
 							$current_pos_settings['avoid_btf_single_block'] = (bool) $data['avoid_btf_single_block'];
